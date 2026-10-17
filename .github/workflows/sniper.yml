@@ -1,0 +1,40 @@
+name: ATS Job Sniper 24/7
+
+on:
+  schedule:
+    # S'exécute toutes les 10 minutes, 24h/24
+    - cron: '*/10 * * * *'
+  workflow_dispatch: # Permet aussi de le lancer manuellement en 1 clic
+
+permissions:
+  contents: write
+
+jobs:
+  scan_jobs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. Récupération du code et de la base SQLite
+        uses: actions/checkout@v4
+
+      - name: 2. Installation de Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 3. Installation des dépendances
+        run: pip install -r requirements.txt
+
+      - name: 4. Exécution du Sniper ATS
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python ats_sniper.py
+
+      - name: 5. Sauvegarde des offres vues (SQLite)
+        run: |
+          git config --global user.name "ATS Sniper Bot"
+          git config --global user.email "bot@noreply.github.com"
+          git add jobs_seen.db
+          git diff --staged --quiet || git commit -m "Mise à jour de la base jobs_seen.db"
+          git push

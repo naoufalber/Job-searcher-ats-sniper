@@ -1,312 +1,482 @@
+import html
 import os
 import re
 import sqlite3
 import sys
+import time
+import unicodedata
 import urllib.parse
-from datetime import datetime
+from datetime import datetime, timezone
+
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
-# ==========================================
-# 1. CONFIGURATION & SECRETS
-# ==========================================
 
-# Récupère l'URL du Webhook depuis les variables d'environnement (GitHub Actions) ou en dur en local
+# Sous Windows, une execution non interactive peut heriter de CP-1252 et
+# planter au premier emoji avant meme l'envoi de la notification.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+
 DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL", "")
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
+DB_FILE = os.getenv("ATS_DB_FILE", "jobs_seen.db")
+REQUEST_TIMEOUT = int(os.getenv("ATS_REQUEST_TIMEOUT", "20"))
+WORKDAY_MAX_PAGES = int(os.getenv("WORKDAY_MAX_PAGES", "100"))
 
-DB_FILE = "jobs_seen.db"
 
-# ==========================================
-# 2. FILTRES CIBLÉS (JUNIOR DATA / AI / ML)
-# ==========================================
-
-# Ciblage : Data Scientist, Data Engineer, Data Analyst, AI Engineer, ML Engineer
-POSITIVE_KEYWORDS = [
-    r"data scientist", r"data science",
-    r"data engineer", r"ingénieur data", r"ingenieur data", r"analytics engineer",
-    r"data analyst", r"business data analyst",
-    r"ai engineer", r"ingénieur ia", r"ingenieur ia", r"artificial intelligence", r"genai", r"llm",
-    r"ml engineer", r"machine learning", r"mlops", r"deep learning"
+# Les textes sont normalises sans accents avant application des expressions.
+POSITIVE_PATTERNS = [
+    r"\bdata\s+(?:scientist|science|engineer|analyst)\b",
+    r"\bingenieur\s+(?:data|donnees?)\b",
+    r"\banalytics?\s+engineer\b",
+    r"\b(?:ai|ia|a\.i\.)\s+engineer\b",
+    r"\bingenieur\s+(?:ai|ia|intelligence artificielle)\b",
+    r"\bartificial intelligence\b",
+    r"\b(?:generative\s+ai|genai|llm)\b",
+    r"\bml\s*engineer\b",
+    r"\bmachine learning\b",
+    r"\bmlops\b",
+    r"\bdeep learning\b",
 ]
 
-# Exclusion stricte : Stages, Alternances et profils Seniors/Management
-NEGATIVE_KEYWORDS = [
-    r"\bstage\b", r"stagiaire", r"\bintern\b", r"internship",
-    r"alternance", r"alternant", r"apprentissage", r"apprenti",
-    r"senior", r"sénior", r"\blead\b", r"principal", r"\bstaff\b",
-    r"manager", r"directeur", r"director", r"head of", r"\bvp\b", r"chef de"
+NEGATIVE_PATTERNS = [
+    r"\bstage\b", r"\bstagiaire\b", r"\bintern(?:ship)?\b",
+    r"\balternan(?:ce|t|te)\b", r"\bapprenti(?:e|ssage)?\b",
+    r"\bsenior\b", r"\bsr\.?\b", r"\blead\b", r"\bprincipal\b",
+    r"\bstaff\b", r"\bmanager\b", r"\bmanagement\b",
+    r"\bteam\s+leader\b",
+    r"\bdirecteur\b", r"\bdirector\b", r"\bhead\s+of\b", r"\bvp\b",
+    r"\bchef\s+de\b", r"\bresponsable\b", r"\bexpert(?:e)?\b",
+    r"\bexperimente(?:e)?\b", r"\bconfirme(?:e)?\b",
+    r"\bexperienced\b", r"\bmid[- ]?level\b",
+    r"\bpeople\s+data\b", r"\bworkday\b",
 ]
 
-# Localisations ciblées (France / Île-de-France)
-LOCATIONS = [
-    r"paris", r"france", r"île-de-france", r"ile-de-france", r"la défense",
-    r"puteaux", r"courbevoie", r"montrouge", r"massy", r"saint-denis",
-    r"issy", r"boulogne", r"levallois", r"neuilly", r"châtillon", r"ivry"
+# Les ATS utilisent tantot le nom du pays, tantot le code ISO "FR".
+LOCATION_PATTERNS = [
+    r"\bfrance\b", r"\bfr\b", r"\bile[- ]de[- ]france\b", r"\bparis\b",
+    r"\bla defense\b", r"\bputeaux\b", r"\bcourbevoie\b",
+    r"\bmontrouge\b", r"\bmassy\b", r"\bsaint[- ]denis\b", r"\bissy\b",
+    r"\bboulogne\b", r"\blevallois\b", r"\bneuilly\b", r"\bchatillon\b",
+    r"\bivry\b", r"\blyon\b", r"\blille\b", r"\btoulouse\b",
+    r"\bbordeaux\b", r"\bnantes\b", r"\brennes\b", r"\bnice\b",
+    r"\bsophia[- ]antipolis\b", r"\bgrenoble\b", r"\bstrasbourg\b",
+    r"\bmontpellier\b", r"\bmarseille\b", r"\baix[- ]en[- ]provence\b",
 ]
 
-# ==========================================
-# 3. ENTREPRISES CIBLES PAR MOTEUR ATS
-# ==========================================
 
-# SmartRecruiters (Banques, ESN, Grands Groupes)
+# Endpoints publics verifies. Les noms et les slugs sont separes.
 SMARTRECRUITERS_COMPANIES = [
-    "Natixis",           # BPCE / Natixis
-    "Devoteam",          # ESN Data / IA
-    "PublicisGroupe",    # Epsilon / Publicis Data
-    "Equativ",           # AdTech
-    "Criteo",            # AI / ML / Data
+    ("Natixis", "Natixis"), ("Devoteam", "Devoteam"),
+    ("Publicis Groupe", "PublicisGroupe"), ("Equativ", "Equativ"),
+    ("Criteo", "Criteo"), ("Sia", "Sia"), ("BlaBlaCar", "BlaBlaCar"),
 ]
-
-# Lever (Conseil, Licornes Tech, IA)
-LEVER_COMPANIES = [
-    "sia-partners",      # Conseil Data / IA / Banque
-    "mistral",           # Mistral AI
-    "qonto",             # Fintech
-    "payfit",            # Tech
-    "spendesk",          # Fintech
-    "manomano",          # E-commerce Data
-]
-
-# Greenhouse (Pure Players Data, IA, Tech)
+LEVER_COMPANIES = [("Mistral AI", "mistral"), ("Qonto", "qonto")]
 GREENHOUSE_COMPANIES = [
-    "artefact",          # Conseil Data & AI pur
-    "doctolib",          # HealthTech
-    "contentsquare",     # Data / AI
-    "datadog",           # Tech
-    "alan",              # AssurTech
-    "backmarket",        # Tech
-    "blablacar",         # Tech
-    "huggingface",       # AI / ML
+    ("Artefact", "artefact"), ("Doctolib", "doctolib"),
+    ("Datadog", "datadog"),
 ]
-
-# Workday (Grands Groupes, Banques, Assurances, ESN)
+ASHBY_COMPANIES = [("Alan", "alan")]
 WORKDAY_COMPANIES = [
-    {
-        "name": "AXA",
-        "url": "https://axa.wd3.myworkdayjobs.com/wday/cxs/axa/AXA_External_Career_Site/jobs",
-        "base_link": "https://axa.wd3.myworkdayjobs.com/fr-FR/AXA_External_Career_Site"
-    },
-    {
-        "name": "Capgemini",
-        "url": "https://capgemini.wd3.myworkdayjobs.com/wday/cxs/capgemini/Capgemini_Careers/jobs",
-        "base_link": "https://capgemini.wd3.myworkdayjobs.com/fr-FR/Capgemini_Careers"
-    },
     {
         "name": "Sanofi",
         "url": "https://sanofi.wd3.myworkdayjobs.com/wday/cxs/sanofi/SanofiCareers/jobs",
-        "base_link": "https://sanofi.wd3.myworkdayjobs.com/fr-FR/SanofiCareers"
+        "base_link": "https://sanofi.wd3.myworkdayjobs.com/fr-FR/SanofiCareers",
     },
     {
         "name": "Thales",
         "url": "https://thales.wd3.myworkdayjobs.com/wday/cxs/thales/Careers/jobs",
-        "base_link": "https://thales.wd3.myworkdayjobs.com/fr-FR/Careers"
-    }
+        "base_link": "https://thales.wd3.myworkdayjobs.com/fr-FR/Careers",
+    },
 ]
 
-# ==========================================
-# 4. GESTION SQLITE & DÉDOUBLONNAGE
-# ==========================================
+# Leur ancien endpoint est invalide. Le bilan les signale explicitement au lieu
+# de laisser croire qu'elles sont encore couvertes.
+UNSUPPORTED_COMPANIES = [
+    "AXA", "Capgemini", "Contentsquare", "Back Market", "Hugging Face",
+    "ManoMano", "PayFit", "Spendesk",
+]
+
+
+def normalize_text(value):
+    value = unicodedata.normalize("NFKD", value or "")
+    normalized = "".join(
+        char for char in value if not unicodedata.combining(char)
+    ).lower()
+    return normalized.replace("_", " ")
+
+
+def create_http_session():
+    session = requests.Session()
+    retries = Retry(
+        total=3, connect=3, read=3, backoff_factor=1,
+        status_forcelist=(429, 500, 502, 503, 504),
+        allowed_methods=frozenset(("GET", "POST")),
+    )
+    session.mount("https://", HTTPAdapter(max_retries=retries))
+    session.headers.update({"User-Agent": "ATS-Job-Sniper/2.0"})
+    return session
+
+
+def request_json(session, method, url, source, **kwargs):
+    try:
+        response = session.request(method, url, timeout=REQUEST_TIMEOUT, **kwargs)
+        response.raise_for_status()
+        return response.json()
+    except (requests.RequestException, ValueError) as exc:
+        print(f"[ERREUR API] {source}: {exc}")
+        return None
+
 
 def init_db():
     conn = sqlite3.connect(DB_FILE)
-    cursor = conn.cursor()
-    cursor.execute("""
+    conn.execute(
+        """
         CREATE TABLE IF NOT EXISTS seen_jobs (
             job_id TEXT PRIMARY KEY,
-            company TEXT,
-            title TEXT,
-            url TEXT,
-            detected_at TIMESTAMP
+            company TEXT NOT NULL,
+            title TEXT NOT NULL,
+            url TEXT NOT NULL,
+            detected_at TEXT NOT NULL,
+            notified_at TEXT,
+            notification_status TEXT NOT NULL DEFAULT 'pending'
         )
-    """)
+        """
+    )
+    columns = {row[1] for row in conn.execute("PRAGMA table_info(seen_jobs)")}
+    if "notified_at" not in columns:
+        conn.execute("ALTER TABLE seen_jobs ADD COLUMN notified_at TEXT")
+    if "notification_status" not in columns:
+        conn.execute("ALTER TABLE seen_jobs ADD COLUMN notification_status TEXT")
+        conn.execute(
+            "UPDATE seen_jobs SET notification_status = 'sent' "
+            "WHERE notification_status IS NULL"
+        )
     conn.commit()
-    cursor.execute("SELECT COUNT(*) FROM seen_jobs")
-    count = cursor.fetchone()[0]
-    return conn, (count == 0)
+    count = conn.execute("SELECT COUNT(*) FROM seen_jobs").fetchone()[0]
+    return conn, count == 0
 
-def register_job(conn, job_id, company, title, url):
-    cursor = conn.cursor()
-    cursor.execute("SELECT 1 FROM seen_jobs WHERE job_id = ?", (job_id,))
-    if cursor.fetchone():
-        return False
-    cursor.execute(
-        "INSERT INTO seen_jobs (job_id, company, title, url, detected_at) VALUES (?, ?, ?, ?, ?)",
-        (job_id, company, title, url, datetime.now().isoformat())
+
+def queue_job(conn, job_id, company, title, url):
+    existing = conn.execute(
+        "SELECT notification_status FROM seen_jobs WHERE job_id = ?", (job_id,)
+    ).fetchone()
+    if existing:
+        return existing[0] == "pending"
+    conn.execute(
+        """
+        INSERT INTO seen_jobs
+            (job_id, company, title, url, detected_at, notification_status)
+        VALUES (?, ?, ?, ?, ?, 'pending')
+        """,
+        (job_id, company, title, url, datetime.now(timezone.utc).isoformat()),
     )
     conn.commit()
     return True
 
-# ==========================================
-# 5. FILTRAGE & ENVOI DES NOTIFICATIONS
-# ==========================================
 
-def matches_criteria(title, location):
-    title_low = (title or "").lower()
-    loc_low = (location or "").lower()
+def mark_job(conn, job_id, status):
+    notified_at = datetime.now(timezone.utc).isoformat() if status == "sent" else None
+    conn.execute(
+        "UPDATE seen_jobs SET notification_status = ?, notified_at = ? WHERE job_id = ?",
+        (status, notified_at, job_id),
+    )
+    conn.commit()
 
-    if not any(re.search(loc, loc_low) for loc in LOCATIONS):
+
+def matches_criteria(title, location, description="", experience_level=""):
+    title_text = normalize_text(title)
+    location_text = normalize_text(location)
+    description_text = normalize_text(description)
+    experience_text = normalize_text(experience_level)
+    if not any(re.search(pattern, location_text) for pattern in LOCATION_PATTERNS):
         return False
-    if any(re.search(neg, title_low) for neg in NEGATIVE_KEYWORDS):
+    if any(re.search(pattern, title_text) for pattern in NEGATIVE_PATTERNS):
         return False
-    if any(re.search(pos, title_low) for pos in POSITIVE_KEYWORDS):
-        return True
-    return False
+    if not any(re.search(pattern, title_text) for pattern in POSITIVE_PATTERNS):
+        return False
+    if re.search(r"\b(?:mid[- _]?senior|senior|director|executive)\b", experience_text):
+        return False
+    too_experienced = re.search(
+        r"(?:minimum|min\.?|at least|au moins|experience.{0,25})\s*"
+        r"(?:de\s+)?(?:4|5|6|7|8|9|[1-9]\d)\+?\s*(?:ans|years)",
+        description_text,
+    )
+    return too_experienced is None
+
 
 def build_xray_links(company):
-    comp_clean = company.replace("-", " ").upper()
-    mgr_query = f'site:fr.linkedin.com/in/ "{comp_clean}" ("Head of Data" OR "Lead Data" OR "Manager Data" OR "Head of AI" OR "Data Science Manager")'
-    rec_query = f'site:fr.linkedin.com/in/ "{comp_clean}" ("Talent Acquisition" OR "Recruteur" OR "Recruiter") ("Data" OR "Tech" OR "IT")'
-    
-    mgr_url = f"https://www.google.com/search?q={urllib.parse.quote(mgr_query)}"
-    rec_url = f"https://www.google.com/search?q={urllib.parse.quote(rec_query)}"
-    return mgr_url, rec_url
+    company_clean = company.replace("-", " ")
+    manager_query = (
+        f'site:fr.linkedin.com/in/ "{company_clean}" '
+        '("Head of Data" OR "Lead Data" OR "Manager Data" OR '
+        '"Head of AI" OR "Data Science Manager")'
+    )
+    recruiter_query = (
+        f'site:fr.linkedin.com/in/ "{company_clean}" '
+        '("Talent Acquisition" OR "Recruteur" OR "Recruiter") '
+        '("Data" OR "Tech" OR "IT")'
+    )
+    return (
+        "https://www.google.com/search?q=" + urllib.parse.quote(manager_query),
+        "https://www.google.com/search?q=" + urllib.parse.quote(recruiter_query),
+    )
 
-def send_alert(company, title, location, url, ats_source, silent_init=False):
-    if silent_init:
-        print(f"[INIT SILENCIEUX] Enregistré : {company} - {title}")
-        return
 
-    mgr_url, rec_url = build_xray_links(company)
-    now_str = datetime.now().strftime("%d/%m/%Y à %H:%M")
-
-    msg = (
+def send_alert(company, title, location, url, ats_source, session=None):
+    session = session or create_http_session()
+    manager_url, recruiter_url = build_xray_links(company)
+    now_text = datetime.now().astimezone().strftime("%d/%m/%Y a %H:%M")
+    delivered = False
+    discord_message = (
         f"🚨 **NOUVELLE OFFRE DATA/IA ({ats_source})** 🚨\n"
         f"🏢 **Entreprise :** {company}\n"
         f"💼 **Poste :** {title}\n"
         f"📍 **Lieu :** {location}\n"
-        f"⚡ **Postuler en 1er :** {url}\n\n"
-        f"🎯 **[Chasser le Manager Data sur LinkedIn]({mgr_url})**\n"
-        f"🕵️ **[Chasser le Recruteur Tech sur LinkedIn]({rec_url})**\n"
-        f"⏱️ *Détectée le {now_str}*"
+        f"⚡ **Postuler :** {url}\n\n"
+        f"🎯 **[Manager Data sur LinkedIn]({manager_url})**\n"
+        f"🕵️ **[Recruteur Tech sur LinkedIn]({recruiter_url})**\n"
+        f"⏱️ *Detectee le {now_text}*"
     )
-
     print("\n" + "=" * 55)
-    print(msg)
+    print(discord_message)
     print("=" * 55)
 
-    # 1. Envoi Discord
     if DISCORD_WEBHOOK_URL:
         try:
-            requests.post(DISCORD_WEBHOOK_URL, json={"content": msg}, timeout=10)
-        except Exception as e:
-            print(f"[Erreur Discord] {e}")
+            response = session.post(
+                DISCORD_WEBHOOK_URL, json={"content": discord_message},
+                timeout=REQUEST_TIMEOUT,
+            )
+            response.raise_for_status()
+            delivered = True
+        except requests.RequestException as exc:
+            print(f"[ERREUR DISCORD] {exc}")
 
-    # 2. Envoi Telegram
     if TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID:
-        tg_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-        payload = {
-            "chat_id": TELEGRAM_CHAT_ID,
-            "text": msg,
-            "parse_mode": "Markdown",
-            "disable_web_page_preview": True
-        }
+        telegram_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+        telegram_message = (
+            f"🚨 <b>NOUVELLE OFFRE DATA/IA ({html.escape(ats_source)})</b> 🚨\n"
+            f"🏢 <b>Entreprise :</b> {html.escape(company)}\n"
+            f"💼 <b>Poste :</b> {html.escape(title)}\n"
+            f"📍 <b>Lieu :</b> {html.escape(location)}\n"
+            f'⚡ <a href="{html.escape(url, quote=True)}">Postuler</a>\n\n'
+            f'🎯 <a href="{html.escape(manager_url, quote=True)}">Manager Data</a>\n'
+            f'🕵️ <a href="{html.escape(recruiter_url, quote=True)}">Recruteur Tech</a>\n'
+            f"⏱️ Detectee le {now_text}"
+        )
         try:
-            requests.post(tg_url, json=payload, timeout=10)
-        except Exception as e:
-            print(f"[Erreur Telegram] {e}")
+            response = session.post(
+                telegram_url,
+                json={"chat_id": TELEGRAM_CHAT_ID, "text": telegram_message,
+                      "parse_mode": "HTML", "disable_web_page_preview": True},
+                timeout=REQUEST_TIMEOUT,
+            )
+            response.raise_for_status()
+            delivered = True
+        except requests.RequestException as exc:
+            print(f"[ERREUR TELEGRAM] {exc}")
 
-# ==========================================
-# 6. CONNECTEURS API ATS
-# ==========================================
+    if not DISCORD_WEBHOOK_URL and not (TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID):
+        print("[ERREUR CONFIG] Aucun canal de notification n'est configure.")
+    return delivered
 
-def scan_smartrecruiters(conn, silent_init):
-    for company in SMARTRECRUITERS_COMPANIES:
-        url = f"https://api.smartrecruiters.com/v1/companies/{company}/postings?limit=100"
-        try:
-            r = requests.get(url, timeout=15)
-            if r.status_code == 200:
-                for job in r.json().get("content", []):
-                    job_id = f"sr_{job['id']}"
-                    title = job.get("name", "")
-                    loc_obj = job.get("location", {})
-                    loc = f"{loc_obj.get('city', '')}, {loc_obj.get('country', '')}"
-                    job_url = f"https://jobs.smartrecruiters.com/{company}/{job['id']}"
 
-                    if matches_criteria(title, loc):
-                        if register_job(conn, job_id, company, title, job_url):
-                            send_alert(company, title, loc, job_url, "SmartRecruiters", silent_init)
-        except Exception as e:
-            print(f"[Erreur SmartRecruiters - {company}] {e}")
+def process_job(conn, job_id, company, title, location, url, ats_source,
+                silent_init, session, description="", experience_level=""):
+    if not matches_criteria(title, location, description, experience_level):
+        return 0
+    if not queue_job(conn, job_id, company, title, url):
+        return 0
+    if silent_init:
+        mark_job(conn, job_id, "baseline")
+        print(f"[INITIALISATION] {company} - {title}")
+        return 1
+    if send_alert(company, title, location, url, ats_source, session):
+        mark_job(conn, job_id, "sent")
+        return 1
+    # L'etat pending provoque une nouvelle tentative au prochain scan.
+    return 0
 
-def scan_lever(conn, silent_init):
-    for company in LEVER_COMPANIES:
-        url = f"https://api.lever.co/v0/postings/{company}?mode=json"
-        try:
-            r = requests.get(url, timeout=15)
-            if r.status_code == 200:
-                for job in r.json():
-                    job_id = f"lever_{job['id']}"
-                    title = job.get("text", "")
-                    loc = job.get("categories", {}).get("location", "")
-                    job_url = job.get("hostedUrl", "")
 
-                    if matches_criteria(title, loc):
-                        if register_job(conn, job_id, company.upper(), title, job_url):
-                            send_alert(company.upper(), title, loc, job_url, "Lever", silent_init)
-        except Exception as e:
-            print(f"[Erreur Lever - {company}] {e}")
+def scan_smartrecruiters(conn, silent_init, session):
+    processed = 0
+    for company, slug in SMARTRECRUITERS_COMPANIES:
+        offset = 0
+        while True:
+            data = request_json(
+                session, "GET",
+                f"https://api.smartrecruiters.com/v1/companies/{slug}/postings",
+                f"SmartRecruiters/{company}",
+                params={"limit": 100, "offset": offset},
+            )
+            if data is None:
+                break
+            jobs = data.get("content", [])
+            for job in jobs:
+                location = job.get("location") or {}
+                location_text = location.get("fullLocation") or (
+                    f"{location.get('city', '')}, {location.get('country', '')}"
+                )
+                experience = job.get("experienceLevel") or {}
+                processed += process_job(
+                    conn, f"sr_{job.get('id')}", company, job.get("name", ""),
+                    location_text,
+                    f"https://jobs.smartrecruiters.com/{slug}/{job.get('id')}",
+                    "SmartRecruiters", silent_init, session,
+                    experience_level=(
+                        f"{experience.get('id', '')} {experience.get('label', '')}"
+                    ),
+                )
+            offset += len(jobs)
+            if not jobs or offset >= data.get("totalFound", offset):
+                break
+    return processed
 
-def scan_greenhouse(conn, silent_init):
-    for company in GREENHOUSE_COMPANIES:
-        url = f"https://boards-api.greenhouse.io/v1/boards/{company}/jobs"
-        try:
-            r = requests.get(url, timeout=15)
-            if r.status_code == 200:
-                for job in r.json().get("jobs", []):
-                    job_id = f"gh_{job['id']}"
-                    title = job.get("title", "")
-                    loc = job.get("location", {}).get("name", "")
-                    job_url = job.get("absolute_url", "")
 
-                    if matches_criteria(title, loc):
-                        if register_job(conn, job_id, company.upper(), title, job_url):
-                            send_alert(company.upper(), title, loc, job_url, "Greenhouse", silent_init)
-        except Exception as e:
-            print(f"[Erreur Greenhouse - {company}] {e}")
+def scan_lever(conn, silent_init, session):
+    processed = 0
+    for company, slug in LEVER_COMPANIES:
+        jobs = request_json(
+            session, "GET", f"https://api.lever.co/v0/postings/{slug}",
+            f"Lever/{company}", params={"mode": "json"},
+        )
+        if jobs is None:
+            continue
+        for job in jobs:
+            categories = job.get("categories") or {}
+            processed += process_job(
+                conn, f"lever_{job.get('id')}", company, job.get("text", ""),
+                categories.get("location", ""), job.get("hostedUrl", ""),
+                "Lever", silent_init, session,
+                " ".join((job.get("descriptionPlain", ""),
+                          job.get("additionalPlain", ""))),
+            )
+    return processed
 
-def scan_workday(conn, silent_init):
+
+def scan_greenhouse(conn, silent_init, session):
+    processed = 0
+    for company, slug in GREENHOUSE_COMPANIES:
+        data = request_json(
+            session, "GET",
+            f"https://boards-api.greenhouse.io/v1/boards/{slug}/jobs",
+            f"Greenhouse/{company}", params={"content": "true"},
+        )
+        if data is None:
+            continue
+        for job in data.get("jobs", []):
+            description = re.sub(
+                r"<[^>]+>", " ", html.unescape(job.get("content", ""))
+            )
+            processed += process_job(
+                conn, f"gh_{job.get('id')}", company, job.get("title", ""),
+                (job.get("location") or {}).get("name", ""),
+                job.get("absolute_url", ""), "Greenhouse", silent_init, session,
+                description,
+            )
+    return processed
+
+
+def scan_ashby(conn, silent_init, session):
+    processed = 0
+    for company, slug in ASHBY_COMPANIES:
+        data = request_json(
+            session, "GET",
+            f"https://api.ashbyhq.com/posting-api/job-board/{slug}",
+            f"Ashby/{company}",
+        )
+        if data is None:
+            continue
+        for job in data.get("jobs", []):
+            processed += process_job(
+                conn, f"ashby_{job.get('id')}", company, job.get("title", ""),
+                job.get("location", ""), job.get("jobUrl", ""), "Ashby",
+                silent_init, session, job.get("descriptionPlain", ""),
+            )
+    return processed
+
+
+def scan_workday(conn, silent_init, session):
+    processed = 0
     headers = {"Content-Type": "application/json", "Accept": "application/json"}
-    # On cherche large avec "Data" et "AI", puis notre regex affine sur les 5 métiers
-    for search_term in ["Data", "AI", "Machine Learning"]:
-        payload = {"appliedFacets": {}, "limit": 20, "offset": 0, "searchText": search_term}
-        for comp in WORKDAY_COMPANIES:
-            try:
-                r = requests.post(comp["url"], json=payload, headers=headers, timeout=15)
-                if r.status_code == 200:
-                    for job in r.json().get("jobPostings", []):
-                        ext_path = job.get("externalPath", "")
-                        job_id = f"wd_{comp['name']}_{ext_path}"
-                        title = job.get("title", "")
-                        loc = job.get("locationsText", "")
-                        job_url = f"{comp['base_link']}{ext_path}"
+    for company in WORKDAY_COMPANIES:
+        seen_paths = set()
+        previous_signature = None
+        expected_total = None
+        # Une lecture exhaustive est plus fiable et moins couteuse que trois
+        # recherches dont certains tenants Workday ignorent le texte.
+        for page in range(WORKDAY_MAX_PAGES):
+            data = request_json(
+                session, "POST", company["url"],
+                f"Workday/{company['name']}/page-{page + 1}",
+                json={"appliedFacets": {}, "limit": 20, "offset": page * 20,
+                      "searchText": ""},
+                headers=headers,
+            )
+            if data is None:
+                break
+            jobs = data.get("jobPostings", [])
+            signature = tuple(job.get("externalPath") for job in jobs)
+            if not jobs or signature == previous_signature:
+                break
+            previous_signature = signature
+            for job in jobs:
+                external_path = job.get("externalPath", "")
+                if not external_path or external_path in seen_paths:
+                    continue
+                seen_paths.add(external_path)
+                processed += process_job(
+                    conn, f"wd_{company['name']}_{external_path}",
+                    company["name"], job.get("title", ""),
+                    job.get("locationsText", ""),
+                    f"{company['base_link']}{external_path}", "Workday",
+                    silent_init, session,
+                )
+            total = data.get("total")
+            if isinstance(total, int) and total > 0:
+                expected_total = total
+            if (len(jobs) < 20 or
+                    (expected_total is not None and
+                     (page + 1) * 20 >= expected_total)):
+                break
+        else:
+            print(
+                f"[AVERTISSEMENT] Limite de {WORKDAY_MAX_PAGES} pages "
+                f"atteinte pour Workday/{company['name']}."
+            )
+    return processed
 
-                        if matches_criteria(title, loc):
-                            if register_job(conn, job_id, comp["name"], title, job_url):
-                                send_alert(comp["name"], title, loc, job_url, "Workday", silent_init)
-            except Exception as e:
-                print(f"[Erreur Workday - {comp['name']}] {e}")
 
 def run_single_scan():
     conn, is_first_run = init_db()
+    session = create_http_session()
     if is_first_run:
-        print("Initialisation de la base SQLite : enregistrement silencieux des offres actuelles...")
-    
-    scan_smartrecruiters(conn, is_first_run)
-    scan_lever(conn, is_first_run)
-    scan_greenhouse(conn, is_first_run)
-    scan_workday(conn, is_first_run)
-    conn.close()
-    print(f"[{datetime.now().strftime('%H:%M:%S')}] Scan terminé avec succès.")
+        print("Initialisation: les offres deja presentes seront enregistrees sans alerte.")
+    try:
+        processed = scan_smartrecruiters(conn, is_first_run, session)
+        processed += scan_lever(conn, is_first_run, session)
+        processed += scan_greenhouse(conn, is_first_run, session)
+        processed += scan_ashby(conn, is_first_run, session)
+        processed += scan_workday(conn, is_first_run, session)
+    finally:
+        session.close()
+        conn.close()
+    print(f"[COUVERTURE NON DISPONIBLE] {', '.join(UNSUPPORTED_COMPANIES)}")
+    print(
+        f"[{datetime.now().astimezone().strftime('%H:%M:%S')}] "
+        f"Scan termine: {processed} offre(s) nouvelle(s) traitee(s)."
+    )
+
 
 if __name__ == "__main__":
-    # Si on lance avec "--loop" sur son PC, il tourne en boucle toutes les 5 minutes
     if "--loop" in sys.argv:
-        import time
-        print("Mode continu activé (Scan toutes les 5 minutes)...")
+        print("Mode continu active (scan toutes les 5 minutes).")
         while True:
             run_single_scan()
             time.sleep(300)
     else:
-        # Exécution unique (idéal pour le déclencheur GitHub Actions)
         run_single_scan()

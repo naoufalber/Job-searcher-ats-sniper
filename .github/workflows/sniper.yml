@@ -9,6 +9,12 @@ on:
 permissions:
   contents: write
 
+# Un seul scan a la fois: evite les doublons Discord et les conflits git sur
+# la base SQLite lorsqu'un lancement planifie chevauche un lancement manuel.
+concurrency:
+  group: ats-job-sniper
+  cancel-in-progress: false
+
 jobs:
   scan_jobs:
     runs-on: ubuntu-latest
@@ -23,6 +29,9 @@ jobs:
 
       - name: 3. Installation des dépendances
         run: pip install -r requirements.txt
+
+      - name: Tests automatiques
+        run: python -m unittest -v
 
       - name: 4. Exécution du Sniper ATS
         env:

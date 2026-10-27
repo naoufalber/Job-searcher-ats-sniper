@@ -1,4 +1,5 @@
 import html
+import json
 import os
 import re
 import sqlite3
@@ -7,6 +8,7 @@ import time
 import unicodedata
 import urllib.parse
 from datetime import datetime, timezone
+from html.parser import HTMLParser
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -25,11 +27,43 @@ TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
 DB_FILE = os.getenv("ATS_DB_FILE", "jobs_seen.db")
 REQUEST_TIMEOUT = int(os.getenv("ATS_REQUEST_TIMEOUT", "20"))
 WORKDAY_MAX_PAGES = int(os.getenv("WORKDAY_MAX_PAGES", "100"))
+HELLOWORK_MAX_PAGES = int(os.getenv("HELLOWORK_MAX_PAGES", "2"))
+HELLOWORK_LOCATION = os.getenv("HELLOWORK_LOCATION", "France")
+HELLOWORK_QUERIES = tuple(
+    query.strip()
+    for query in os.getenv(
+        "HELLOWORK_QUERIES",
+        "data,data scientist,data engineer,machine learning,ai engineer,data analyst",
+    ).split(",")
+    if query.strip()
+)
+WTTJ_ENV_URL = "https://www.welcometothejungle.com/api/env"
+WTTJ_SITE_ORIGIN = "https://www.welcometothejungle.com"
+WTTJ_INDEX = "wttj_jobs_production_en"
+WTTJ_ALGOLIA_APP_ID = os.getenv("WTTJ_ALGOLIA_APP_ID", "")
+WTTJ_ALGOLIA_API_KEY = os.getenv("WTTJ_ALGOLIA_API_KEY", "")
+WTTJ_FILTERS = os.getenv(
+    "WTTJ_FILTERS", "offices.country_code:FR AND contract_type:full_time"
+)
+WTTJ_MAX_HITS = min(int(os.getenv("WTTJ_MAX_HITS", "200")), 1000)
+WTTJ_QUERIES = tuple(
+    query.strip()
+    for query in os.getenv(
+        "WTTJ_QUERIES",
+        "data scientist,data engineer,machine learning,ai engineer,data analyst,data architect",
+    ).split(",")
+    if query.strip()
+)
+SCAN_INTERVAL_SECONDS = int(os.getenv("ATS_SCAN_INTERVAL_SECONDS", "300"))
 
 
 # Les textes sont normalises sans accents avant application des expressions.
 POSITIVE_PATTERNS = [
     r"\bdata\s+(?:scientist|science|engineer|analyst)\b",
+    r"\bdata\s+(?:architect|architecte|modeler|modelisation|quality|governance|platform|steward)\b",
+    r"\bdata\s*(?:&|and|et)\s*(?:ai|ml|machine learning)\b",
+    r"\b(?:architecte|consultant(?:e)?)\s+(?:data|data science|ia|ai)\b",
+    r"\b(?:business intelligence|bi analyst|data product)\b",
     r"\bingenieur\s+(?:data|donnees?)\b",
     r"\banalytics?\s+engineer\b",
     r"\b(?:ai|ia|a\.i\.)\s+engineer\b",
@@ -128,6 +162,16 @@ def request_json(session, method, url, source, **kwargs):
         return response.json()
     except (requests.RequestException, ValueError) as exc:
         print(f"[ERREUR API] {source}: {exc}")
+        return None
+
+
+def request_text(session, method, url, source, **kwargs):
+    try:
+        response = session.request(method, url, timeout=REQUEST_TIMEOUT, **kwargs)
+        response.raise_for_status()
+        return response.text
+    except (requests.RequestException, AttributeError) as exc:
+        print(f"[ERREUR HTTP] {source}: {exc}")
         return None
 
 
@@ -302,6 +346,211 @@ def process_job(conn, job_id, company, title, location, url, ats_source,
     return 0
 
 
+class HelloworkOfferParser(HTMLParser):
+    """Extracts the server-rendered offer cards from a HelloWork search page."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.offers = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag != "a":
+            return
+        attributes = dict(attrs)
+        if attributes.get("data-cy") != "offerTitle":
+            return
+        href = attributes.get("href", "")
+        title_attr = html.unescape(attributes.get("title", "")).strip()
+        aria_label = html.unescape(attributes.get("aria-label", "")).strip()
+        if not href or not title_attr:
+            return
+
+        title, separator, company = title_attr.rpartition(" - ")
+        if not separator:
+            title, company = title_attr, "HelloWork"
+        location_match = re.search(
+            r"\b(?:a|à)\s+(.+?),\s+chez\s+", aria_label, re.IGNORECASE
+        )
+        location = location_match.group(1).strip() if location_match else "France"
+        job_id_match = re.search(r"/emplois/(\d+)\.html", href)
+        job_id = job_id_match.group(1) if job_id_match else href
+        self.offers.append({
+            "id": job_id,
+            "title": title.strip(),
+            "company": company.strip(),
+            "location": location,
+            "url": urllib.parse.urljoin("https://www.hellowork.com", href),
+        })
+
+
+def parse_hellowork_offers(markup):
+    parser = HelloworkOfferParser()
+    parser.feed(markup or "")
+    return parser.offers
+
+
+def scan_hellowork(conn, silent_init, session):
+    processed = 0
+    seen_ids = set()
+    for query in HELLOWORK_QUERIES:
+        previous_page_ids = None
+        for page in range(1, HELLOWORK_MAX_PAGES + 1):
+            data = request_text(
+                session, "GET",
+                "https://www.hellowork.com/fr-fr/emploi/recherche.html",
+                f"HelloWork/{query}/page-{page}",
+                params={"k": query, "l": HELLOWORK_LOCATION, "p": page},
+            )
+            if data is None:
+                break
+            offers = parse_hellowork_offers(data)
+            if not offers:
+                if page == 1:
+                    print(f"[AVERTISSEMENT] HelloWork ne renvoie aucune offre pour {query!r}.")
+                break
+            page_ids = {offer["id"] for offer in offers}
+            if page_ids == previous_page_ids:
+                break
+            previous_page_ids = page_ids
+            for offer in offers:
+                if offer["id"] in seen_ids:
+                    continue
+                seen_ids.add(offer["id"])
+                # La recherche est explicitement limitée à la France ; le lieu
+                # d'une carte HelloWork n'inclut généralement que la ville et le
+                # département, pas le pays.
+                location = f"{offer['location']}, France"
+                processed += process_job(
+                    conn, f"hw_{offer['id']}", offer["company"], offer["title"],
+                    location, offer["url"], "HelloWork", silent_init, session,
+                )
+    return processed
+
+
+def parse_wttj_env(payload):
+    """Reads the rotating public Algolia credentials from /api/env."""
+    start = payload.find("{")
+    end = payload.rfind("}")
+    if start < 0 or end <= start:
+        raise ValueError("/api/env ne contient pas d'objet JSON")
+    try:
+        environment = json.loads(payload[start:end + 1])
+    except json.JSONDecodeError as exc:
+        raise ValueError("/api/env ne contient pas un JSON valide") from exc
+    app_id = str(environment.get("PUBLIC_ALGOLIA_APPLICATION_ID", "")).strip()
+    api_key = str(environment.get("PUBLIC_ALGOLIA_API_KEY_CLIENT", "")).strip()
+    if not re.fullmatch(r"[A-Za-z0-9]{6,16}", app_id):
+        raise ValueError("identifiant Algolia inattendu")
+    if not 16 <= len(api_key) <= 500:
+        raise ValueError("clé Algolia inattendue")
+    return app_id, api_key
+
+
+def normalize_wttj_hit(hit):
+    if not isinstance(hit, dict):
+        return None
+    title = str(hit.get("name", "")).strip()
+    organization = hit.get("organization") or {}
+    company = str(organization.get("name", "Welcome to the Jungle")).strip()
+    slug = str(hit.get("slug", "")).strip()
+    organization_slug = str(organization.get("slug", "")).strip()
+    if not title or not slug or not organization_slug:
+        return None
+    if not re.fullmatch(r"[A-Za-z0-9_-]+", slug) or not re.fullmatch(
+        r"[A-Za-z0-9_-]+", organization_slug
+    ):
+        return None
+    office = (hit.get("offices") or [None])[0] or {}
+    location_parts = [
+        str(office.get("city", "")).strip(),
+        str(office.get("country", "")).strip(),
+    ]
+    location_parts = [part for part in location_parts if part]
+    if hit.get("remote") == "fulltime":
+        location_parts.append("Remote")
+    location = ", ".join(location_parts) or "France"
+    return {
+        "id": str(hit.get("objectID") or hit.get("id") or
+                  f"{organization_slug}/{slug}"),
+        "title": title,
+        "company": company or "Welcome to the Jungle",
+        "location": location,
+        "url": f"{WTTJ_SITE_ORIGIN}/fr/companies/{organization_slug}/jobs/{slug}",
+        "description": str(hit.get("description", "")),
+    }
+
+
+def scan_welcome_to_jungle(conn, silent_init, session):
+    if not WTTJ_QUERIES:
+        print("[AVERTISSEMENT] WTTJ_QUERIES est vide.")
+        return 0
+    app_id, api_key = WTTJ_ALGOLIA_APP_ID, WTTJ_ALGOLIA_API_KEY
+    if not app_id or not api_key:
+        payload = request_text(
+            session, "GET", WTTJ_ENV_URL, "WelcomeToTheJungle/env",
+            headers={
+                "User-Agent": (
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) "
+                    "Chrome/131.0.0.0 Safari/537.36"
+                ),
+                "Accept": "application/javascript, text/javascript, */*",
+                "Referer": f"{WTTJ_SITE_ORIGIN}/",
+                "Origin": WTTJ_SITE_ORIGIN,
+                "Accept-Language": "fr-FR,fr;q=0.9,en;q=0.8",
+            },
+        )
+        if payload is None:
+            return 0
+        try:
+            app_id, api_key = parse_wttj_env(payload)
+        except ValueError as exc:
+            print(f"[ERREUR WTTJ] {exc}")
+            return 0
+
+    processed = 0
+    seen_ids = set()
+    algolia_url = f"https://{app_id}-dsn.algolia.net/1/indexes/{WTTJ_INDEX}/query"
+    headers = {
+        "x-algolia-application-id": app_id,
+        "x-algolia-api-key": api_key,
+        "Referer": f"{WTTJ_SITE_ORIGIN}/",
+        "Content-Type": "application/json",
+    }
+    for query in WTTJ_QUERIES:
+        params = {
+            "query": query,
+            "hitsPerPage": WTTJ_MAX_HITS,
+            "attributesToRetrieve": (
+                "name,slug,organization,offices,remote,description,objectID"
+            ),
+        }
+        if WTTJ_FILTERS:
+            params["filters"] = WTTJ_FILTERS
+        data = request_json(
+            session, "POST", algolia_url, f"WelcomeToTheJungle/{query}",
+            headers=headers, json={"params": urllib.parse.urlencode(params)},
+        )
+        if not data:
+            continue
+        for hit in data.get("hits", []):
+            offer = normalize_wttj_hit(hit)
+            if not offer or offer["id"] in seen_ids:
+                continue
+            seen_ids.add(offer["id"])
+            if (
+                "country_code:FR" in WTTJ_FILTERS
+                and not re.search(r"\b(?:france|fr)\b", offer["location"], re.IGNORECASE)
+            ):
+                offer["location"] += ", France"
+            processed += process_job(
+                conn, f"wttj_{offer['id']}", offer["company"], offer["title"],
+                offer["location"], offer["url"], "Welcome to the Jungle",
+                silent_init, session, offer["description"],
+            )
+    return processed
+
+
 def scan_smartrecruiters(conn, silent_init, session):
     processed = 0
     for company, slug in SMARTRECRUITERS_COMPANIES:
@@ -462,6 +711,8 @@ def run_single_scan():
         processed += scan_greenhouse(conn, is_first_run, session)
         processed += scan_ashby(conn, is_first_run, session)
         processed += scan_workday(conn, is_first_run, session)
+        processed += scan_hellowork(conn, is_first_run, session)
+        processed += scan_welcome_to_jungle(conn, is_first_run, session)
     finally:
         session.close()
         conn.close()
@@ -474,9 +725,9 @@ def run_single_scan():
 
 if __name__ == "__main__":
     if "--loop" in sys.argv:
-        print("Mode continu active (scan toutes les 5 minutes).")
+        print(f"Mode continu active (scan toutes les {SCAN_INTERVAL_SECONDS // 60} minutes).")
         while True:
             run_single_scan()
-            time.sleep(300)
+            time.sleep(SCAN_INTERVAL_SECONDS)
     else:
         run_single_scan()

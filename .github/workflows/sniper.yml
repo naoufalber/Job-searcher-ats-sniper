@@ -2,8 +2,9 @@ name: ATS Job Sniper 24/7
 
 on:
   schedule:
-    # S'exécute toutes les 10 minutes, 24h/24
-    - cron: '*/10 * * * *'
+    # S'exécute toutes les 5 minutes, 24h/24. GitHub peut toutefois décaler
+    # une tâche planifiée en période de forte charge.
+    - cron: '*/5 * * * *'
   workflow_dispatch: # Permet aussi de le lancer manuellement en 1 clic
 
 permissions:
@@ -38,6 +39,9 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          HELLOWORK_LOCATION: France
+          HELLOWORK_MAX_PAGES: 2
+          WTTJ_MAX_HITS: 200
         run: python ats_sniper.py
 
       - name: 5. Sauvegarde des offres vues (SQLite)

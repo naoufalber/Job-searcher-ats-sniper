@@ -8,9 +8,10 @@ import ats_sniper as sniper
 
 
 class FakeResponse:
-    def __init__(self, payload, status_code=200):
+    def __init__(self, payload, status_code=200, text=None):
         self.payload = payload
         self.status_code = status_code
+        self.text = text if text is not None else ""
 
     def raise_for_status(self):
         if self.status_code >= 400:
@@ -163,6 +164,86 @@ class NotificationTests(unittest.TestCase):
         self.assertTrue(delivered)
         self.assertEqual(len(session.calls), 1)
         self.assertIn("Data Engineer", session.calls[0][1]["content"])
+
+
+class JobBoardParserTests(unittest.TestCase):
+    def test_parses_hellowork_server_rendered_card(self):
+        markup = """
+        <a data-cy="offerTitle" href="/fr-fr/emplois/123456.html"
+           title="Data Engineer - Data Solutions H/F - Example Corp"
+           aria-label="Voir offre de Data Engineer - Data Solutions H/F à Paris - 75, chez Example Corp, pour un CDI">
+          <h3><span>Data Engineer - Data Solutions H/F</span></h3>
+        </a>
+        """
+        offers = sniper.parse_hellowork_offers(markup)
+        self.assertEqual(len(offers), 1)
+        self.assertEqual(offers[0]["id"], "123456")
+        self.assertEqual(offers[0]["company"], "Example Corp")
+        self.assertEqual(offers[0]["title"], "Data Engineer - Data Solutions H/F")
+        self.assertEqual(offers[0]["location"], "Paris - 75")
+
+    def test_normalizes_welcome_to_the_jungle_hit(self):
+        offer = sniper.normalize_wttj_hit({
+            "objectID": "abc123",
+            "name": "Data Architect",
+            "slug": "data-architect_paris_abc123",
+            "organization": {"name": "Example", "slug": "example"},
+            "offices": [{"city": "Paris", "country": "France"}],
+            "remote": "fulltime",
+        })
+        self.assertEqual(offer["id"], "abc123")
+        self.assertIn("Paris", offer["location"])
+        self.assertIn("Remote", offer["location"])
+        self.assertIn("/fr/companies/example/jobs/", offer["url"])
+
+    def test_parses_rotating_welcome_to_the_jungle_credentials(self):
+        app_id, api_key = sniper.parse_wttj_env(
+            'window.env = {"PUBLIC_ALGOLIA_APPLICATION_ID":"ABC12345",'
+            '"PUBLIC_ALGOLIA_API_KEY_CLIENT":"0123456789abcdef0123"};'
+        )
+        self.assertEqual(app_id, "ABC12345")
+        self.assertEqual(api_key, "0123456789abcdef0123")
+
+
+class WelcomeToTheJungleScanTests(unittest.TestCase):
+    def test_scans_public_algolia_results(self):
+        class Session:
+            def request(self, method, url, timeout, **kwargs):
+                if url == sniper.WTTJ_ENV_URL:
+                    return FakeResponse(
+                        {}, text=(
+                            'window.env = {"PUBLIC_ALGOLIA_APPLICATION_ID":"ABC12345",'
+                            '"PUBLIC_ALGOLIA_API_KEY_CLIENT":"0123456789abcdef0123"};'
+                        )
+                    )
+                return FakeResponse({
+                    "hits": [{
+                        "objectID": "job-1",
+                        "name": "Data Engineer",
+                        "slug": "data-engineer_paris_job-1",
+                        "organization": {"name": "Example", "slug": "example"},
+                        "offices": [{"city": "Paris"}],
+                    }]
+                })
+
+        with tempfile.TemporaryDirectory() as directory:
+            db_path = os.path.join(directory, "jobs.db")
+            with patch.object(sniper, "DB_FILE", db_path):
+                conn, _ = sniper.init_db()
+            try:
+                with patch.object(sniper, "WTTJ_ALGOLIA_APP_ID", ""), \
+                     patch.object(sniper, "WTTJ_ALGOLIA_API_KEY", ""), \
+                     patch.object(sniper, "WTTJ_QUERIES", ("data engineer",)), \
+                     patch.object(sniper, "WTTJ_FILTERS", "country_code:FR"):
+                    self.assertEqual(
+                        sniper.scan_welcome_to_jungle(conn, True, Session()), 1
+                    )
+                row = conn.execute(
+                    "SELECT company, title, notification_status FROM seen_jobs"
+                ).fetchone()
+                self.assertEqual(row, ("Example", "Data Engineer", "baseline"))
+            finally:
+                conn.close()
 
 
 class PaginationTests(unittest.TestCase):

@@ -1,0 +1,42 @@
+# Local-only Supabase configuration for ATS Sniper.
+# Do not use `supabase link` or `supabase db push` from this checkout for hosted projects.
+
+project_id = "ats-sniper-local"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+major_version = 17
+
+[studio]
+enabled = true
+port = 54323
+
+[local_smtp]
+enabled = true
+port = 54324
+smtp_port = 54325
+pop3_port = 54326
+admin_email = "admin@example.com"
+sender_name = "ATS Sniper Local"
+
+[auth]
+enabled = true
+site_url = "http://127.0.0.1:3000"
+additional_redirect_urls = ["http://localhost:3000/**", "http://127.0.0.1:3000/**"]
+enable_signup = true
+enable_anonymous_sign_ins = false
+
+[auth.email]
+enabled = true
+enable_confirmations = true
+double_confirm_changes = true
+max_frequency = "1s"
+otp_expiry = 3600
+

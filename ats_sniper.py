@@ -7,7 +7,7 @@ import sys
 import time
 import unicodedata
 import urllib.parse
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from html.parser import HTMLParser
 
 import requests
@@ -55,6 +55,10 @@ WTTJ_QUERIES = tuple(
     if query.strip()
 )
 SCAN_INTERVAL_SECONDS = int(os.getenv("ATS_SCAN_INTERVAL_SECONDS", "300"))
+INGESTION_API_URL = os.getenv("ATS_INGESTION_API_URL", "").strip().rstrip("/")
+INGESTION_SHARED_SECRET = os.getenv("ATS_INGESTION_SHARED_SECRET", "")
+INGESTION_TIMEOUT = min(int(os.getenv("ATS_INGESTION_TIMEOUT", "8")), REQUEST_TIMEOUT)
+INGESTION_BATCH_SIZE = int(os.getenv("ATS_INGESTION_BATCH_SIZE", "50"))
 
 
 # Les textes sont normalises sans accents avant application des expressions.
@@ -190,6 +194,20 @@ def init_db():
         )
         """
     )
+    conn.execute(
+        """
+        CREATE TABLE IF NOT EXISTS supabase_ingestion_queue (
+            job_id TEXT PRIMARY KEY,
+            payload_json TEXT NOT NULL,
+            queued_at TEXT NOT NULL,
+            sent_at TEXT,
+            status TEXT NOT NULL DEFAULT 'pending',
+            attempts INTEGER NOT NULL DEFAULT 0,
+            next_attempt_at TEXT,
+            last_error TEXT
+        )
+        """
+    )
     columns = {row[1] for row in conn.execute("PRAGMA table_info(seen_jobs)")}
     if "notified_at" not in columns:
         conn.execute("ALTER TABLE seen_jobs ADD COLUMN notified_at TEXT")
@@ -229,6 +247,130 @@ def mark_job(conn, job_id, status):
         (status, notified_at, job_id),
     )
     conn.commit()
+
+
+def ingestion_enabled():
+    return bool(INGESTION_API_URL and INGESTION_SHARED_SECRET)
+
+
+def build_ingestion_payload(job_id, company, title, location, url, ats_source,
+                            description="", experience_level=""):
+    source = re.sub(r"[^a-z0-9]+", "_", ats_source.lower()).strip("_")
+    location_value = (location or "").strip() or None
+    country = "France" if re.search(r"\b(?:france|fr)\b", location_value or "", re.IGNORECASE) else None
+    return {
+        "source": source,
+        "external_job_id": str(job_id),
+        "company_name": company,
+        "title": title,
+        "location": location_value,
+        "country": country,
+        "contract_type": None,
+        "remote_type": "remote" if re.search(r"\bremote\b", location_value or "", re.IGNORECASE) else None,
+        "canonical_url": url,
+        "description": description or None,
+        "first_seen_at": datetime.now(timezone.utc).isoformat(),
+        "publication_date": None,
+        "metadata": {"experience_level": experience_level or None},
+    }
+
+
+def queue_ingestion(conn, payload):
+    if not ingestion_enabled():
+        return
+    queued_at = datetime.now(timezone.utc).isoformat()
+    payload_json = json.dumps(payload, ensure_ascii=False, sort_keys=True)
+    conn.execute(
+        """
+        INSERT INTO supabase_ingestion_queue
+            (job_id, payload_json, queued_at, status, attempts, next_attempt_at, last_error)
+        VALUES (?, ?, ?, 'pending', 0, NULL, NULL)
+        ON CONFLICT(job_id) DO UPDATE SET
+            payload_json = excluded.payload_json
+        """,
+        (payload["external_job_id"], payload_json, queued_at),
+    )
+    conn.commit()
+
+
+def try_queue_ingestion(conn, job_id, company, title, location, url,
+                        ats_source, description="", experience_level=""):
+    """Best-effort ingestion boundary; never interrupts notifications."""
+    if not ingestion_enabled():
+        return
+    try:
+        payload = build_ingestion_payload(
+            job_id, company, title, location, url, ats_source,
+            description, experience_level,
+        )
+        queue_ingestion(conn, payload)
+    except Exception as exc:  # Keep failures isolated to the additive path.
+        print(f"[ERREUR SUPABASE] Mise en file ignoree: {type(exc).__name__}: {str(exc)[:300]}")
+
+
+def flush_ingestion_queue(conn, session):
+    if not ingestion_enabled():
+        return 0
+    try:
+        now = datetime.now(timezone.utc)
+        rows = conn.execute(
+            """
+            SELECT job_id, payload_json, attempts
+            FROM supabase_ingestion_queue
+            WHERE status = 'pending'
+              AND (next_attempt_at IS NULL OR next_attempt_at <= ?)
+            ORDER BY queued_at
+            LIMIT ?
+            """,
+            (now.isoformat(), INGESTION_BATCH_SIZE),
+        ).fetchall()
+    except Exception as exc:
+        print(f"[ERREUR SUPABASE] Lecture de file ignoree: {type(exc).__name__}: {str(exc)[:300]}")
+        return 0
+    sent = 0
+    for job_id, payload_json, attempts in rows:
+        try:
+            response = session.post(
+                f"{INGESTION_API_URL}/api/ingest/jobs",
+                headers={"X-ATS-Ingestion-Secret": INGESTION_SHARED_SECRET},
+                json=json.loads(payload_json),
+                timeout=INGESTION_TIMEOUT,
+            )
+            response.raise_for_status()
+        except (requests.RequestException, ValueError) as exc:
+            next_attempt = now + timedelta(
+                seconds=min(900, 30 * (2 ** min(attempts + 1, 5)))
+            )
+            try:
+                conn.execute(
+                    """
+                    UPDATE supabase_ingestion_queue
+                    SET attempts = attempts + 1, next_attempt_at = ?, last_error = ?, status = 'pending'
+                    WHERE job_id = ?
+                    """,
+                    (next_attempt.isoformat(), str(exc)[:500], job_id),
+                )
+            except Exception as db_exc:
+                print(f"[ERREUR SUPABASE] Echec mise a jour retry: {type(db_exc).__name__}: {str(db_exc)[:300]}")
+            continue
+        try:
+            conn.execute(
+                """
+                UPDATE supabase_ingestion_queue
+                SET status = 'sent', sent_at = ?, next_attempt_at = NULL, last_error = NULL
+                WHERE job_id = ?
+                """,
+                (datetime.now(timezone.utc).isoformat(), job_id),
+            )
+        except Exception as exc:
+            print(f"[ERREUR SUPABASE] Echec confirmation: {type(exc).__name__}: {str(exc)[:300]}")
+            continue
+        sent += 1
+    try:
+        conn.commit()
+    except Exception as exc:
+        print(f"[ERREUR SUPABASE] Commit de file ignore: {type(exc).__name__}: {str(exc)[:300]}")
+    return sent
 
 
 def matches_criteria(title, location, description="", experience_level=""):
@@ -335,6 +477,10 @@ def process_job(conn, job_id, company, title, location, url, ats_source,
         return 0
     if not queue_job(conn, job_id, company, title, url):
         return 0
+    try_queue_ingestion(
+        conn, job_id, company, title, location, url, ats_source,
+        description, experience_level,
+    )
     if silent_init:
         mark_job(conn, job_id, "baseline")
         print(f"[INITIALISATION] {company} - {title}")
@@ -713,6 +859,7 @@ def run_single_scan():
         processed += scan_workday(conn, is_first_run, session)
         processed += scan_hellowork(conn, is_first_run, session)
         processed += scan_welcome_to_jungle(conn, is_first_run, session)
+        ingested = flush_ingestion_queue(conn, session)
     finally:
         session.close()
         conn.close()
@@ -721,6 +868,8 @@ def run_single_scan():
         f"[{datetime.now().astimezone().strftime('%H:%M:%S')}] "
         f"Scan termine: {processed} offre(s) nouvelle(s) traitee(s)."
     )
+    if ingestion_enabled():
+        print(f"[SUPABASE] {ingested} offre(s) envoyee(s), file locale independante active.")
 
 
 if __name__ == "__main__":

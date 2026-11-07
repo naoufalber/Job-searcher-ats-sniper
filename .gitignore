@@ -11,11 +11,47 @@ __pycache__/
 
 # Fichiers de configuration & secrets locaux
 .env
+.env.*
+!.env.example
+!.env.*.example
 *.local
+*.secret
+*.secrets
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+
+# Supabase local state and temporary CLI files
+.supabase/
+supabase/.temp/
+supabase/.branches/
 
 # IDEs
 .vscode/
 .idea/
+
+# Next.js local build artifacts
+node_modules/
+.next/
+out/
+dist/
+build/
+coverage/
+.turbo/
+.cache/
+*.tsbuildinfo
+
+# Package-manager and frontend tool caches
+.eslintcache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# jobs_seen.db is intentionally not ignored: the existing GitHub Actions
+# workflow persists this SQLite state through Git commits.
 
 # Logs & temp
 *.log

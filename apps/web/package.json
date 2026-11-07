@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "test:auth": "node --test tests/auth.integration.test.mjs"
+    "test:auth": "node --test tests/auth.integration.test.mjs",
+    "test:ingestion": "node --test tests/ingestion.integration.test.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",

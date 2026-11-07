@@ -2,6 +2,7 @@ import os
 import sqlite3
 import tempfile
 import unittest
+from contextlib import ExitStack
 from unittest.mock import patch
 
 import ats_sniper as sniper
@@ -140,6 +141,149 @@ class DatabaseTests(unittest.TestCase):
         finally:
             conn.close()
 
+    def test_supabase_ingestion_failure_does_not_change_notification_state(self):
+        patches = ExitStack()
+        patches.enter_context(patch.object(sniper, "DB_FILE", self.db_path))
+        patches.enter_context(patch.object(sniper, "INGESTION_API_URL", "http://ingest.test"))
+        patches.enter_context(patch.object(sniper, "INGESTION_SHARED_SECRET", "local-secret"))
+        conn, _ = sniper.init_db()
+        try:
+            args = (
+                conn, "job-queue-1", "Test", "Data Engineer", "Paris, France",
+                "https://example.test/job", "TestATS", False, object(),
+            )
+            with patch.object(sniper, "send_alert", return_value=True), \
+                 patch.object(sniper, "flush_ingestion_queue", return_value=0):
+                self.assertEqual(sniper.process_job(*args), 1)
+            status = conn.execute(
+                "SELECT notification_status FROM seen_jobs WHERE job_id = 'job-queue-1'"
+            ).fetchone()[0]
+            queue_status = conn.execute(
+                "SELECT status FROM supabase_ingestion_queue WHERE job_id = 'job-queue-1'"
+            ).fetchone()[0]
+            self.assertEqual(status, "sent")
+            self.assertEqual(queue_status, "pending")
+        finally:
+            conn.close()
+            patches.close()
+
+    def test_supabase_ingestion_queue_retries_independently(self):
+        class Session:
+            def __init__(self):
+                self.fail = True
+                self.calls = 0
+
+            def post(self, url, **kwargs):
+                self.calls += 1
+                if self.fail:
+                    raise sniper.requests.Timeout("temporary outage")
+                return FakeResponse({})
+
+        patches = ExitStack()
+        patches.enter_context(patch.object(sniper, "DB_FILE", self.db_path))
+        patches.enter_context(patch.object(sniper, "INGESTION_API_URL", "http://ingest.test"))
+        patches.enter_context(patch.object(sniper, "INGESTION_SHARED_SECRET", "local-secret"))
+        conn, _ = sniper.init_db()
+        try:
+            payload = sniper.build_ingestion_payload(
+                "job-queue-2", "Test", "Data Engineer", "Paris, France",
+                "https://example.test/job-2", "TestATS",
+            )
+            sniper.queue_ingestion(conn, payload)
+            session = Session()
+            self.assertEqual(sniper.flush_ingestion_queue(conn, session), 0)
+            row = conn.execute(
+                "SELECT status, attempts FROM supabase_ingestion_queue WHERE job_id = 'job-queue-2'"
+            ).fetchone()
+            self.assertEqual(row, ("pending", 1))
+            conn.execute("UPDATE supabase_ingestion_queue SET next_attempt_at = NULL")
+            conn.commit()
+            session.fail = False
+            self.assertEqual(sniper.flush_ingestion_queue(conn, session), 1)
+            status = conn.execute(
+                "SELECT status FROM supabase_ingestion_queue WHERE job_id = 'job-queue-2'"
+            ).fetchone()[0]
+            self.assertEqual(status, "sent")
+        finally:
+            conn.close()
+            patches.close()
+
+    def test_ingestion_queue_write_failure_does_not_block_discord(self):
+        patches = ExitStack()
+        patches.enter_context(patch.object(sniper, "DB_FILE", self.db_path))
+        patches.enter_context(patch.object(sniper, "INGESTION_API_URL", "http://ingest.test"))
+        patches.enter_context(patch.object(sniper, "INGESTION_SHARED_SECRET", "local-secret"))
+        conn, _ = sniper.init_db()
+        try:
+            args = (
+                conn, "job-queue-write", "Test", "Data Engineer", "Paris, France",
+                "https://example.test/job-write", "TestATS", False, object(),
+            )
+            with patch.object(sniper, "queue_ingestion", side_effect=sqlite3.OperationalError("locked")), \
+                 patch.object(sniper, "send_alert", return_value=True) as send:
+                self.assertEqual(sniper.process_job(*args), 1)
+                send.assert_called_once()
+            status = conn.execute(
+                "SELECT notification_status FROM seen_jobs WHERE job_id = 'job-queue-write'"
+            ).fetchone()[0]
+            self.assertEqual(status, "sent")
+        finally:
+            conn.close()
+            patches.close()
+
+    def test_ingestion_serialization_failure_does_not_block_telegram(self):
+        patches = ExitStack()
+        patches.enter_context(patch.object(sniper, "DB_FILE", self.db_path))
+        patches.enter_context(patch.object(sniper, "INGESTION_API_URL", "http://ingest.test"))
+        patches.enter_context(patch.object(sniper, "INGESTION_SHARED_SECRET", "local-secret"))
+        conn, _ = sniper.init_db()
+        try:
+            args = (
+                conn, "job-serialize", "Test", "Data Engineer", "Paris, France",
+                "https://example.test/job-serialize", "TestATS", False, object(),
+            )
+            with patch.object(sniper, "queue_ingestion", side_effect=TypeError("not serializable")), \
+                 patch.object(sniper, "send_alert", return_value=True) as send:
+                self.assertEqual(sniper.process_job(*args), 1)
+                send.assert_called_once()
+            status = conn.execute(
+                "SELECT notification_status FROM seen_jobs WHERE job_id = 'job-serialize'"
+            ).fetchone()[0]
+            self.assertEqual(status, "sent")
+        finally:
+            conn.close()
+            patches.close()
+
+    def test_pending_ingestion_preserves_retry_state(self):
+        patches = ExitStack()
+        patches.enter_context(patch.object(sniper, "DB_FILE", self.db_path))
+        patches.enter_context(patch.object(sniper, "INGESTION_API_URL", "http://ingest.test"))
+        patches.enter_context(patch.object(sniper, "INGESTION_SHARED_SECRET", "local-secret"))
+        conn, _ = sniper.init_db()
+        try:
+            payload = sniper.build_ingestion_payload(
+                "job-retry-state", "Test", "Data Engineer", "Paris, France",
+                "https://example.test/job-retry-state", "TestATS",
+            )
+            sniper.queue_ingestion(conn, payload)
+            next_retry = "2099-01-01T00:00:00+00:00"
+            conn.execute(
+                "UPDATE supabase_ingestion_queue SET attempts = 4, next_attempt_at = ?, last_error = ? WHERE job_id = ?",
+                (next_retry, "temporary failure", "job-retry-state"),
+            )
+            conn.commit()
+            payload["title"] = "Updated Data Engineer"
+            sniper.queue_ingestion(conn, payload)
+            row = conn.execute(
+                "SELECT payload_json, attempts, next_attempt_at, last_error, status FROM supabase_ingestion_queue WHERE job_id = ?",
+                ("job-retry-state",),
+            ).fetchone()
+            self.assertIn("Updated Data Engineer", row[0])
+            self.assertEqual(row[1:], (4, next_retry, "temporary failure", "pending"))
+        finally:
+            conn.close()
+            patches.close()
+
 
 class NotificationTests(unittest.TestCase):
     def test_discord_success_is_reported(self):
@@ -164,6 +308,28 @@ class NotificationTests(unittest.TestCase):
         self.assertTrue(delivered)
         self.assertEqual(len(session.calls), 1)
         self.assertIn("Data Engineer", session.calls[0][1]["content"])
+
+    def test_discord_and_telegram_failures_are_independent(self):
+        class FailingSession:
+            def __init__(self):
+                self.calls = []
+
+            def post(self, url, json, timeout):
+                self.calls.append(url)
+                raise sniper.requests.Timeout("simulated notification outage")
+
+        session = FailingSession()
+        with (
+            patch.object(sniper, "DISCORD_WEBHOOK_URL", "https://discord.test/webhook"),
+            patch.object(sniper, "TELEGRAM_BOT_TOKEN", "telegram-token"),
+            patch.object(sniper, "TELEGRAM_CHAT_ID", "telegram-chat"),
+        ):
+            delivered = sniper.send_alert(
+                "Test", "Data Engineer", "Paris", "https://example.test/job",
+                "TestATS", session,
+            )
+        self.assertFalse(delivered)
+        self.assertEqual(len(session.calls), 2)
 
 
 class JobBoardParserTests(unittest.TestCase):

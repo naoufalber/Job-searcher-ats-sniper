@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ATS Sniper">
+  <rect width="64" height="64" rx="16" fill="#356b58"/>
+  <path d="M18 45 29 18h7l11 27h-7l-2.5-7H27.5L25 45h-7Zm12-13h5l-2.5-7L30 32Z" fill="white"/>
+</svg>

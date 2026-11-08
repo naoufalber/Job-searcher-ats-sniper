@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { timingSafeEqual } from "node:crypto";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { analysisInputHash, isDescriptionComplete } from "@/lib/analysis";
+import { isDescriptionComplete } from "@/lib/analysis";
 import { jobIngestionSchema } from "@/lib/validation";
 
 export const runtime = "nodejs";
@@ -54,24 +54,10 @@ export async function POST(request: Request) {
   await admin.rpc("record_staging_collector_state", { p_source: job.source, p_external_job_id: job.external_job_id, p_job_id: result.result_job_id, p_canonical_url: job.canonical_url, p_status: complete ? "complete" : "needs_description" });
   let autoMatch = "disabled";
   if (process.env.ATS_AUTO_MATCH_ENABLED === "true" && complete) {
-    let userId = process.env.ATS_AUTO_MATCH_USER_ID;
-    if (!userId) {
-      const { data: activeCvs } = await admin.from("cv_documents").select("user_id").eq("is_active", true).limit(2);
-      if (activeCvs?.length === 1) userId = activeCvs[0].user_id as string;
-    }
-    if (userId) {
-      const [{ data: cv }, { data: storedJob }] = await Promise.all([
-        admin.from("cv_documents").select("id,content_hash").eq("user_id", userId).eq("is_active", true).maybeSingle(),
-        admin.from("jobs").select("id,description").eq("id", result.result_job_id).single(),
-      ]);
-      if (cv && storedJob?.description) {
-        const model = process.env.GEMINI_MODEL || "gemini-2.0-flash";
-        const rubric = process.env.GEMINI_RUBRIC_VERSION || "v1";
-        const inputHash = analysisInputHash(cv.content_hash, storedJob.id, storedJob.description, model, rubric);
-        const { error } = await admin.rpc("enqueue_gemini_analysis_atomic", { p_user_id: userId, p_job_id: storedJob.id, p_cv_document_id: cv.id, p_model_id: model, p_rubric_version: rubric, p_input_hash: inputHash });
-        autoMatch = error ? "failed" : "queued";
-      } else autoMatch = "cv_required";
-    } else autoMatch = "user_not_configured";
+    const model = process.env.GEMINI_MODEL || "gemini-2.0-flash";
+    const rubric = process.env.GEMINI_RUBRIC_VERSION || "v1";
+    const { data: queued, error } = await admin.rpc("enqueue_matching_for_job", { p_job_id: result.result_job_id, p_model_id: model, p_rubric_version: rubric });
+    autoMatch = error ? "failed" : Number(queued ?? 0) > 0 ? `queued:${queued}` : "no_eligible_users";
   } else if (!complete) autoMatch = "needs_description";
   return NextResponse.json({ ok: true, job_id: result.result_job_id, source_id: result.result_source_id, description_status: complete ? "complete" : "needs_description", auto_match: autoMatch });
 }

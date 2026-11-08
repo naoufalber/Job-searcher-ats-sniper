@@ -1,0 +1,35 @@
+name: ATS staging Gemini worker
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ats-staging-gemini
+  cancel-in-progress: false
+
+jobs:
+  worker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - run: npm ci
+        working-directory: apps/web
+      - name: Process at most two queued analyses
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.ATS_STAGING_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.ATS_STAGING_SUPABASE_SERVICE_ROLE_KEY }}
+          GEMINI_API_KEY: ${{ secrets.ATS_STAGING_GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ vars.ATS_STAGING_GEMINI_MODEL }}
+          GEMINI_RATE_LIMIT_RPM: '14'
+          GEMINI_DAILY_REQUEST_BUDGET: '2'
+          GEMINI_WORKER_MAX_TASKS: '2'
+        run: node scripts/gemini-worker.mjs --max-tasks 2

@@ -9,6 +9,7 @@ import unicodedata
 import urllib.parse
 from datetime import datetime, timedelta, timezone
 from html.parser import HTMLParser
+from pathlib import Path
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -59,6 +60,17 @@ INGESTION_API_URL = os.getenv("ATS_INGESTION_API_URL", "").strip().rstrip("/")
 INGESTION_SHARED_SECRET = os.getenv("ATS_INGESTION_SHARED_SECRET", "")
 INGESTION_TIMEOUT = min(int(os.getenv("ATS_INGESTION_TIMEOUT", "8")), REQUEST_TIMEOUT)
 INGESTION_BATCH_SIZE = int(os.getenv("ATS_INGESTION_BATCH_SIZE", "50"))
+WEB_ONLY_MODE = False
+WEB_ONLY_DETAIL_MAX_REQUESTS = int(os.getenv("ATS_WEB_ONLY_DETAIL_MAX_REQUESTS", "50"))
+WEB_ONLY_MAX_JOBS = max(1, int(os.getenv("ATS_WEB_ONLY_MAX_JOBS", "50")))
+WEB_ONLY_DETAIL_WORKERS = max(1, min(int(os.getenv("ATS_WEB_ONLY_DETAIL_WORKERS", "4")), 8))
+WEB_ONLY_DETAIL_DELAY = max(0.0, float(os.getenv("ATS_WEB_ONLY_DETAIL_DELAY", "0.2")))
+WEB_ONLY_DETAIL_CACHE = {}
+WEB_ONLY_DETAIL_STATS = {}
+WEB_ONLY_DETAIL_REQUESTS = 0
+WEB_ONLY_ACCEPTED_JOBS = 0
+WEB_ONLY_DETAIL_LAST_ERROR = {}
+WEB_ONLY_ENRICH_MAX_ATTEMPTS = max(1, int(os.getenv("ATS_WEB_ONLY_ENRICH_MAX_ATTEMPTS", "4")))
 
 
 # Les textes sont normalises sans accents avant application des expressions.
@@ -179,6 +191,216 @@ def request_text(session, method, url, source, **kwargs):
         return None
 
 
+def normalize_job_description(value):
+    if not value:
+        return ""
+    text = html.unescape(str(value))
+    text = re.sub(r"<br\s*/?>", "\n", text, flags=re.IGNORECASE)
+    text = re.sub(r"</(?:p|div|li|h[1-6])\s*>", "\n", text, flags=re.IGNORECASE)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = re.sub(r"[ \t]+", " ", text)
+    text = re.sub(r"\n\s*\n+", "\n\n", text)
+    return text.strip()
+
+
+def extract_jsonld_job_data(markup):
+    decoded_markup = html.unescape(markup or "")
+    for raw in re.findall(
+        r'<script[^>]+type=["\']application/ld\+json["\'][^>]*>(.*?)</script>',
+        decoded_markup, re.IGNORECASE | re.DOTALL,
+    ):
+        try:
+            payload = json.loads(html.unescape(raw.strip()))
+        except (TypeError, json.JSONDecodeError):
+            continue
+        candidates = []
+        if isinstance(payload, dict):
+            candidates.append(payload)
+            if isinstance(payload.get("@graph"), list):
+                candidates.extend(payload["@graph"])
+        elif isinstance(payload, list):
+            candidates.extend(payload)
+        for candidate in candidates:
+            if isinstance(candidate, dict) and (
+                candidate.get("@type") == "JobPosting" or candidate.get("description")
+            ):
+                return candidate
+    return {}
+
+
+def extract_jsonld_job_description(markup):
+    data = extract_jsonld_job_data(markup)
+    return normalize_job_description(data.get("description"))
+
+
+def extract_hellowork_job_detail(markup):
+    """Extract HelloWork's JobPosting JSON-LD, including HTML description."""
+    data = extract_jsonld_job_data(markup)
+    organization = data.get("hiringOrganization") or {}
+    location = data.get("jobLocation") or {}
+    address = location.get("address") if isinstance(location, dict) else {}
+    return {
+        "title": data.get("title"),
+        "company": organization.get("name") if isinstance(organization, dict) else None,
+        "description": normalize_job_description(data.get("description")),
+        "location": ", ".join(
+            str(value) for value in (
+                (address or {}).get("addressLocality"),
+                (address or {}).get("addressRegion"),
+                (address or {}).get("addressCountry"),
+            ) if value
+        ),
+        "publication_date": data.get("datePosted"),
+        "contract_type": data.get("employmentType"),
+    }
+
+
+def is_description_complete(description):
+    text = normalize_job_description(description)
+    if len(text) < 240:
+        return False
+    sentence_count = len(re.findall(r"[.!?](?:\s|$)", text))
+    section_signals = sum(
+        bool(re.search(pattern, text, re.IGNORECASE))
+        for pattern in (r"responsib", r"qualif", r"requirement", r"mission", r"profil", r"avantage")
+    )
+    return sentence_count >= 3 or section_signals >= 2
+
+
+def _path_parts(url):
+    return [part for part in urllib.parse.urlparse(url).path.split("/") if part]
+
+
+def fetch_web_only_description(provider, url, session):
+    """Fetch only public detail data, and only from the explicit web-only path."""
+    if not WEB_ONLY_MODE or not url:
+        return ""
+    global WEB_ONLY_DETAIL_REQUESTS
+    if url in WEB_ONLY_DETAIL_CACHE:
+        return WEB_ONLY_DETAIL_CACHE[url]
+    if WEB_ONLY_DETAIL_REQUESTS >= WEB_ONLY_DETAIL_MAX_REQUESTS:
+        return ""
+    WEB_ONLY_DETAIL_REQUESTS += 1
+    if WEB_ONLY_DETAIL_DELAY:
+        time.sleep(WEB_ONLY_DETAIL_DELAY)
+    provider_key = re.sub(r"[^a-z0-9]+", "_", provider.lower()).strip("_")
+    parts = _path_parts(url)
+    try:
+        value = ""
+        if provider_key == "smartrecruiters" and len(parts) >= 2:
+            data = request_json(
+                session, "GET",
+                f"https://api.smartrecruiters.com/v1/companies/{parts[-2]}/postings/{parts[-1]}",
+                "SmartRecruiters/detail",
+            ) or {}
+            sections = (data.get("jobAd") or {}).get("sections") or []
+            value = "\n\n".join(str(section.get("content", "")) for section in sections if isinstance(section, dict))
+        elif provider_key == "lever" and len(parts) >= 2:
+            data = request_json(
+                session, "GET", f"https://api.lever.co/v0/postings/{parts[-2]}",
+                "Lever/detail", params={"mode": "json"},
+            ) or []
+            jobs = data if isinstance(data, list) else [data]
+            match = next((job for job in jobs if str(job.get("id", "")) in url), jobs[0] if jobs else {})
+            value = "\n\n".join((match.get("descriptionPlain", ""), match.get("additionalPlain", "")))
+        elif provider_key == "greenhouse" and len(parts) >= 2:
+            data = request_json(
+                session, "GET", f"https://boards-api.greenhouse.io/v1/jobs/{parts[-1]}",
+                "Greenhouse/detail", params={"content": "true"},
+            ) or {}
+            value = data.get("content", "")
+        elif provider_key == "ashby" and len(parts) >= 2:
+            data = request_json(
+                session, "GET", f"https://api.ashbyhq.com/posting-api/job-board/{parts[-2]}",
+                "Ashby/detail",
+            ) or {}
+            jobs = data.get("jobs", []) if isinstance(data, dict) else []
+            match = next((job for job in jobs if str(job.get("jobUrl", "")) == url or str(job.get("id", "")) in url), jobs[0] if jobs else {})
+            value = match.get("descriptionPlain", "")
+        elif provider_key == "hellowork":
+            markup = request_text(session, "GET", url, "HelloWork/detail") or ""
+            value = extract_hellowork_job_detail(markup).get("description", "")
+        elif provider_key in {"workday", "welcome_to_the_jungle"}:
+            markup = request_text(session, "GET", url, f"{provider}/detail") or ""
+            value = extract_jsonld_job_description(markup)
+        description = normalize_job_description(value)
+        WEB_ONLY_DETAIL_CACHE[url] = description
+        stats = WEB_ONLY_DETAIL_STATS.setdefault(provider_key, {"attempted": 0, "with_description": 0, "failed": 0})
+        stats["attempted"] += 1
+        if description:
+            stats["with_description"] += 1
+        return description
+    except (requests.RequestException, ValueError, TypeError, KeyError) as exc:
+        WEB_ONLY_DETAIL_CACHE[url] = ""
+        WEB_ONLY_DETAIL_LAST_ERROR[url] = f"{type(exc).__name__}: {str(exc)[:300]}"
+        stats = WEB_ONLY_DETAIL_STATS.setdefault(provider_key, {"attempted": 0, "with_description": 0, "failed": 0})
+        stats["attempted"] += 1
+        stats["failed"] += 1
+        print(f"[WEB ONLY][DETAIL {provider}] {type(exc).__name__}: {str(exc)[:200]}")
+        return ""
+
+
+def web_only_enrichment_due(conn, job_id, url):
+    if not WEB_ONLY_MODE:
+        return False
+    row = conn.execute(
+        "SELECT status, attempts, next_attempt_at FROM web_only_enrichment WHERE job_id = ?",
+        (job_id,),
+    ).fetchone()
+    if not row:
+        conn.execute(
+            "INSERT OR IGNORE INTO web_only_enrichment(job_id, url, updated_at) VALUES (?, ?, ?)",
+            (job_id, url, datetime.now(timezone.utc).isoformat()),
+        )
+        conn.commit()
+        return True
+    status, attempts, next_attempt_at = row
+    if status in {"complete", "terminal"} or attempts >= WEB_ONLY_ENRICH_MAX_ATTEMPTS:
+        return False
+    if not next_attempt_at:
+        return True
+    try:
+        return datetime.fromisoformat(next_attempt_at) <= datetime.now(timezone.utc)
+    except ValueError:
+        return True
+
+
+def record_web_only_enrichment(conn, job_id, url, description):
+    now = datetime.now(timezone.utc)
+    if description:
+        conn.execute(
+            """
+            UPDATE web_only_enrichment
+            SET url = ?, status = 'complete', attempts = attempts + 1,
+                next_attempt_at = NULL, last_error = NULL, updated_at = ?
+            WHERE job_id = ?
+            """,
+            (url, now.isoformat(), job_id),
+        )
+    else:
+        row = conn.execute(
+            "SELECT attempts FROM web_only_enrichment WHERE job_id = ?", (job_id,)
+        ).fetchone()
+        attempts = (row[0] if row else 0) + 1
+        terminal = attempts >= WEB_ONLY_ENRICH_MAX_ATTEMPTS
+        delay = min(86_400, 300 * (2 ** min(attempts - 1, 5)))
+        conn.execute(
+            """
+            UPDATE web_only_enrichment
+            SET url = ?, status = ?, attempts = ?, next_attempt_at = ?,
+                last_error = ?, updated_at = ?
+            WHERE job_id = ?
+            """,
+            (
+                url, "terminal" if terminal else "retry", attempts,
+                None if terminal else (now + timedelta(seconds=delay)).isoformat(),
+                WEB_ONLY_DETAIL_LAST_ERROR.get(url) or "No description returned",
+                now.isoformat(), job_id,
+            ),
+        )
+    conn.commit()
+
+
 def init_db():
     conn = sqlite3.connect(DB_FILE)
     conn.execute(
@@ -194,6 +416,20 @@ def init_db():
         )
         """
     )
+    if WEB_ONLY_MODE:
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS web_only_enrichment (
+                job_id TEXT PRIMARY KEY,
+                url TEXT NOT NULL,
+                status TEXT NOT NULL DEFAULT 'pending',
+                attempts INTEGER NOT NULL DEFAULT 0,
+                next_attempt_at TEXT,
+                last_error TEXT,
+                updated_at TEXT NOT NULL
+            )
+            """
+        )
     conn.execute(
         """
         CREATE TABLE IF NOT EXISTS supabase_ingestion_queue (
@@ -253,6 +489,15 @@ def ingestion_enabled():
     return bool(INGESTION_API_URL and INGESTION_SHARED_SECRET)
 
 
+def ingestion_timestamp(value=None):
+    parsed = datetime.now(timezone.utc) if value is None else datetime.fromisoformat(
+        str(value).replace("Z", "+00:00")
+    )
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
+
+
 def build_ingestion_payload(job_id, company, title, location, url, ats_source,
                             description="", experience_level=""):
     source = re.sub(r"[^a-z0-9]+", "_", ats_source.lower()).strip("_")
@@ -269,7 +514,7 @@ def build_ingestion_payload(job_id, company, title, location, url, ats_source,
         "remote_type": "remote" if re.search(r"\bremote\b", location_value or "", re.IGNORECASE) else None,
         "canonical_url": url,
         "description": description or None,
-        "first_seen_at": datetime.now(timezone.utc).isoformat(),
+        "first_seen_at": ingestion_timestamp(),
         "publication_date": None,
         "metadata": {"experience_level": experience_level or None},
     }
@@ -330,10 +575,13 @@ def flush_ingestion_queue(conn, session):
     sent = 0
     for job_id, payload_json, attempts in rows:
         try:
+            payload = json.loads(payload_json)
+            if payload.get("first_seen_at"):
+                payload["first_seen_at"] = ingestion_timestamp(payload["first_seen_at"])
             response = session.post(
                 f"{INGESTION_API_URL}/api/ingest/jobs",
                 headers={"X-ATS-Ingestion-Secret": INGESTION_SHARED_SECRET},
-                json=json.loads(payload_json),
+                json=payload,
                 timeout=INGESTION_TIMEOUT,
             )
             response.raise_for_status()
@@ -473,17 +721,38 @@ def send_alert(company, title, location, url, ats_source, session=None):
 
 def process_job(conn, job_id, company, title, location, url, ats_source,
                 silent_init, session, description="", experience_level=""):
+    global WEB_ONLY_ACCEPTED_JOBS
+    if not matches_criteria(title, location, "", experience_level):
+        return 0
+    if WEB_ONLY_MODE and not description:
+        if web_only_enrichment_due(conn, job_id, url):
+            description = fetch_web_only_description(ats_source, url, session)
+            record_web_only_enrichment(conn, job_id, url, description)
+        else:
+            description = WEB_ONLY_DETAIL_CACHE.get(url, "")
     if not matches_criteria(title, location, description, experience_level):
         return 0
-    if not queue_job(conn, job_id, company, title, url):
+    if WEB_ONLY_MODE and WEB_ONLY_ACCEPTED_JOBS >= WEB_ONLY_MAX_JOBS:
         return 0
+    queued = queue_job(conn, job_id, company, title, url)
+    if not queued:
+        if WEB_ONLY_MODE and description:
+            try_queue_ingestion(
+                conn, job_id, company, title, location, url, ats_source,
+                description, experience_level,
+            )
+            print(f"[WEB ONLY] Enriched existing job: {company} - {title}")
+        return 0
+    if WEB_ONLY_MODE:
+        WEB_ONLY_ACCEPTED_JOBS += 1
     try_queue_ingestion(
         conn, job_id, company, title, location, url, ats_source,
         description, experience_level,
     )
-    if silent_init:
+    if silent_init or WEB_ONLY_MODE:
         mark_job(conn, job_id, "baseline")
-        print(f"[INITIALISATION] {company} - {title}")
+        prefix = "[WEB ONLY]" if WEB_ONLY_MODE else "[INITIALISATION]"
+        print(f"{prefix} {company} - {title}")
         return 1
     if send_alert(company, title, location, url, ats_source, session):
         mark_job(conn, job_id, "sent")
@@ -846,23 +1115,92 @@ def scan_workday(conn, silent_init, session):
     return processed
 
 
-def run_single_scan():
+def validate_web_only_config():
+    if not ingestion_enabled():
+        raise RuntimeError(
+            "Web-only mode requires ATS_INGESTION_API_URL and "
+            "ATS_INGESTION_SHARED_SECRET."
+        )
+    host = urllib.parse.urlparse(INGESTION_API_URL).hostname
+    if host not in {"127.0.0.1", "localhost", "::1", "host.docker.internal"}:
+        raise RuntimeError("Web-only mode only accepts a localhost ingestion API.")
+    if DISCORD_WEBHOOK_URL or TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID:
+        raise RuntimeError(
+            "Web-only mode refuses to start while Discord or Telegram credentials are set."
+        )
+
+
+def web_only_db_file():
+    path = Path(os.getenv("ATS_WEB_ONLY_DB_FILE", "local_jobs_seen.db"))
+    path.parent.mkdir(parents=True, exist_ok=True)
+    return str(path)
+
+
+def run_single_scan(db_file=None, web_only=False):
+    global DB_FILE, WEB_ONLY_MODE, WEB_ONLY_DETAIL_CACHE, WEB_ONLY_DETAIL_STATS, WEB_ONLY_DETAIL_REQUESTS, WEB_ONLY_ACCEPTED_JOBS, WEB_ONLY_DETAIL_LAST_ERROR
+    previous_db_file = DB_FILE
+    previous_web_only = WEB_ONLY_MODE
+    previous_detail_cache = WEB_ONLY_DETAIL_CACHE
+    previous_detail_stats = WEB_ONLY_DETAIL_STATS
+    previous_detail_requests = WEB_ONLY_DETAIL_REQUESTS
+    previous_accepted_jobs = WEB_ONLY_ACCEPTED_JOBS
+    previous_detail_errors = WEB_ONLY_DETAIL_LAST_ERROR
+    if db_file:
+        DB_FILE = db_file
+    WEB_ONLY_MODE = web_only
+    WEB_ONLY_DETAIL_CACHE = {}
+    WEB_ONLY_DETAIL_STATS = {}
+    WEB_ONLY_DETAIL_REQUESTS = 0
+    WEB_ONLY_ACCEPTED_JOBS = 0
+    WEB_ONLY_DETAIL_LAST_ERROR = {}
     conn, is_first_run = init_db()
     session = create_http_session()
     if is_first_run:
         print("Initialisation: les offres deja presentes seront enregistrees sans alerte.")
     try:
-        processed = scan_smartrecruiters(conn, is_first_run, session)
-        processed += scan_lever(conn, is_first_run, session)
-        processed += scan_greenhouse(conn, is_first_run, session)
-        processed += scan_ashby(conn, is_first_run, session)
-        processed += scan_workday(conn, is_first_run, session)
-        processed += scan_hellowork(conn, is_first_run, session)
-        processed += scan_welcome_to_jungle(conn, is_first_run, session)
+        providers = (
+            ("SmartRecruiters", scan_smartrecruiters),
+            ("Lever", scan_lever),
+            ("Greenhouse", scan_greenhouse),
+            ("Ashby", scan_ashby),
+            ("Workday", scan_workday),
+            ("HelloWork", scan_hellowork),
+            ("WelcomeToTheJungle", scan_welcome_to_jungle),
+        )
+        processed = 0
+        for provider_name, scanner in providers:
+            try:
+                found = scanner(conn, is_first_run, session)
+                processed += found
+                if web_only:
+                    print(f"[WEB ONLY] {provider_name}: {found} nouvelle(s) offre(s).")
+            except Exception as exc:
+                if not web_only:
+                    raise
+                print(
+                    f"[WEB ONLY][ERREUR {provider_name}] {type(exc).__name__}: "
+                    f"{str(exc)[:300]}"
+                )
         ingested = flush_ingestion_queue(conn, session)
+        if web_only:
+            pending = conn.execute(
+                "SELECT COUNT(*) FROM supabase_ingestion_queue WHERE status = 'pending'"
+            ).fetchone()[0]
+            print(
+                f"[WEB ONLY] discovered={processed} delivered={ingested} "
+                f"pending={pending} notifications=disabled "
+                f"accepted={WEB_ONLY_ACCEPTED_JOBS} details={json.dumps(WEB_ONLY_DETAIL_STATS, sort_keys=True)}"
+            )
     finally:
         session.close()
         conn.close()
+        DB_FILE = previous_db_file
+        WEB_ONLY_MODE = previous_web_only
+        WEB_ONLY_DETAIL_CACHE = previous_detail_cache
+        WEB_ONLY_DETAIL_STATS = previous_detail_stats
+        WEB_ONLY_DETAIL_REQUESTS = previous_detail_requests
+        WEB_ONLY_ACCEPTED_JOBS = previous_accepted_jobs
+        WEB_ONLY_DETAIL_LAST_ERROR = previous_detail_errors
     print(f"[COUVERTURE NON DISPONIBLE] {', '.join(UNSUPPORTED_COMPANIES)}")
     print(
         f"[{datetime.now().astimezone().strftime('%H:%M:%S')}] "
@@ -873,7 +1211,27 @@ def run_single_scan():
 
 
 if __name__ == "__main__":
-    if "--loop" in sys.argv:
+    if "--web-only" in sys.argv:
+        try:
+            validate_web_only_config()
+            local_db = web_only_db_file()
+        except RuntimeError as exc:
+            print(f"[WEB ONLY][ERREUR CONFIG] {exc}")
+            raise SystemExit(2)
+        if "--loop" in sys.argv:
+            print(
+                f"Mode web-only continu active (scan toutes les "
+                f"{SCAN_INTERVAL_SECONDS // 60} minutes)."
+            )
+            try:
+                while True:
+                    run_single_scan(local_db, web_only=True)
+                    time.sleep(SCAN_INTERVAL_SECONDS)
+            except KeyboardInterrupt:
+                print("[WEB ONLY] Arret demande par l'utilisateur.")
+        else:
+            run_single_scan(local_db, web_only=True)
+    elif "--loop" in sys.argv:
         print(f"Mode continu active (scan toutes les {SCAN_INTERVAL_SECONDS // 60} minutes).")
         while True:
             run_single_scan()

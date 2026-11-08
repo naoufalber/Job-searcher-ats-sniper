@@ -1,0 +1,11 @@
+"use client";
+import { useState } from "react";
+import { updateApplication } from "@/app/actions";
+import type { ApplicationStatus } from "@/lib/types";
+
+const statuses: ApplicationStatus[] = ["to_review", "ready_to_apply", "applied", "interview", "offer", "rejected", "withdrawn", "closed"];
+export function ApplicationsTable({ rows }: { rows: Array<{ job: { id: string; title: string; company_name: string; canonical_url: string }; application_status: ApplicationStatus; notes?: string | null; recruiter_contact?: string | null; next_follow_up_at?: string | null }> }) {
+  const [message, setMessage] = useState("");
+  async function save(form: HTMLFormElement, jobId: string) { const data = new FormData(form); const result = await updateApplication({ jobId, applicationStatus: data.get("status"), notes: data.get("notes"), recruiterContact: data.get("contact") }); setMessage(result.ok ? "Saved." : result.error ?? "Unable to save."); }
+  return <div className="space-y-4">{rows.map((row) => <form key={row.job.id} onSubmit={(event) => { event.preventDefault(); void save(event.currentTarget, row.job.id); }} className="rounded-2xl border border-line bg-white p-5"><div className="flex flex-wrap items-start justify-between gap-3"><div><a href={`/jobs/${row.job.id}`} className="font-semibold text-ink hover:text-moss hover:underline">{row.job.title}</a><p className="text-sm text-slate-500">{row.job.company_name}</p></div><a href={row.job.canonical_url} target="_blank" rel="noreferrer" className="text-sm text-moss underline">Original listing</a></div><div className="mt-4 grid gap-3 md:grid-cols-3"><select name="status" defaultValue={row.application_status} className="rounded-xl border border-line px-3 py-2 text-sm">{statuses.map((status) => <option key={status} value={status}>{status.replaceAll("_", " ")}</option>)}</select><input name="contact" defaultValue={row.recruiter_contact ?? ""} placeholder="Recruiter contact" className="rounded-xl border border-line px-3 py-2 text-sm" /><input name="notes" defaultValue={row.notes ?? ""} placeholder="Notes" className="rounded-xl border border-line px-3 py-2 text-sm" /></div><button className="mt-3 rounded-full bg-moss px-4 py-2 text-sm font-semibold text-white" type="submit">Save application</button></form>)}{message && <p className="text-sm text-slate-600">{message}</p>}</div>;
+}

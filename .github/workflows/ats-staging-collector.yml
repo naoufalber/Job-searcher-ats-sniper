@@ -1,0 +1,35 @@
+name: ATS staging collector
+
+# Manual-only until Supabase Cloud, Vercel, and staging secrets are approved.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ats-staging-collector
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - name: Run bounded web-only collection
+        env:
+          ATS_INGESTION_API_URL: ${{ secrets.ATS_STAGING_INGESTION_API_URL }}
+          ATS_INGESTION_SHARED_SECRET: ${{ secrets.ATS_STAGING_INGESTION_SHARED_SECRET }}
+          ATS_WEB_ONLY_DB_FILE: ${{ runner.temp }}/ats-staging-state.db
+          ATS_WEB_ONLY_MAX_JOBS: '10'
+          ATS_WEB_ONLY_DETAIL_MAX_REQUESTS: '10'
+          ATS_WEB_ONLY_ENRICH_MAX_ATTEMPTS: '4'
+          DISCORD_WEBHOOK_URL: ''
+          TELEGRAM_BOT_TOKEN: ''
+          TELEGRAM_CHAT_ID: ''
+        run: python ats_sniper.py --web-only

@@ -1,0 +1,12 @@
+"use client";
+import { useEffect, useState } from "react";
+
+type DocumentRow = { id: string; original_name: string; size_bytes: number; is_active: boolean; created_at: string };
+export function CvManager() {
+  const [documents, setDocuments] = useState<DocumentRow[]>([]); const [message, setMessage] = useState("");
+  async function load() { const response = await fetch("/api/cv"); const body = await response.json(); setDocuments(body.documents ?? []); }
+  useEffect(() => { void load(); }, []);
+  async function upload(event: React.FormEvent<HTMLFormElement>) { event.preventDefault(); setMessage(""); const formElement = event.currentTarget; const form = new FormData(formElement); const response = await fetch("/api/cv", { method: "POST", body: form }); const body = await response.json(); setMessage(body.error ?? "CV uploaded."); if (response.ok) { formElement.reset(); await load(); } }
+  async function remove(id: string) { const response = await fetch(`/api/cv?id=${encodeURIComponent(id)}`, { method: "DELETE" }); const body = await response.json(); setMessage(body.error ?? "CV deleted."); await load(); }
+  return <div className="rounded-2xl border border-line bg-white p-6"><form onSubmit={upload} className="flex flex-wrap items-center gap-3"><input name="file" type="file" accept="application/pdf" required className="text-sm" /><button className="rounded-full bg-moss px-4 py-2 text-sm font-semibold text-white" type="submit">Upload PDF</button></form>{message && <p className="mt-4 text-sm text-slate-600">{message}</p>}<div className="mt-6 space-y-3">{documents.map((document) => <div key={document.id} className="flex items-center justify-between rounded-xl bg-paper p-3 text-sm"><span>{document.original_name} · {(document.size_bytes / 1024).toFixed(0)} KB {document.is_active && <strong className="ml-2 text-moss">Active</strong>}</span><button onClick={() => void remove(document.id)} className="text-red-700 underline" type="button">Delete</button></div>)}{!documents.length && <p className="text-sm text-slate-500">No private CV uploaded.</p>}</div></div>;
+}

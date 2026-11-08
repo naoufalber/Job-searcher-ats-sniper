@@ -52,6 +52,7 @@ pnpm-debug.log*
 
 # jobs_seen.db is intentionally not ignored: the existing GitHub Actions
 # workflow persists this SQLite state through Git commits.
+local_jobs_seen.db
 
 # Logs & temp
 *.log

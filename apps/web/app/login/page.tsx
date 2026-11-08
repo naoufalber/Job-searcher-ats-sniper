@@ -23,7 +23,8 @@ export default function LoginPage() {
       if (mode === "signup") {
         const parsed = signupSchema.safeParse(values);
         if (!parsed.success) { setMessage(parsed.error.issues[0]?.message ?? "Check your registration details."); return; }
-        const result = await supabase.auth.signUp({ email: parsed.data.email, password: parsed.data.password, options: { emailRedirectTo: callback, data: { first_name: parsed.data.firstName, last_name: parsed.data.lastName } } });
+        const signupCallback = `${origin}/auth/callback?next=${encodeURIComponent("/onboarding")}`;
+        const result = await supabase.auth.signUp({ email: parsed.data.email, password: parsed.data.password, options: { emailRedirectTo: signupCallback, data: { first_name: parsed.data.firstName, last_name: parsed.data.lastName } } });
         if (result.error) throw result.error;
         setMessage("Check the local inbox to confirm your email before signing in.");
       } else if (mode === "recovery") {

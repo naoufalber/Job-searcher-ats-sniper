@@ -17,12 +17,22 @@ export async function middleware(request: NextRequest) {
       },
     },
   });
-  await supabase.auth.getUser();
   const pathname = request.nextUrl.pathname;
-  const protectedPath = ["/saved", "/tracker", "/settings"].some((path) => pathname === path || pathname.startsWith(`${path}/`));
-  if (protectedPath) {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return NextResponse.redirect(new URL(`/login?next=${encodeURIComponent(pathname)}`, request.url));
+  const apiPath = pathname.startsWith("/api/");
+  const { data: { user } } = await supabase.auth.getUser();
+  const publicPath = pathname === "/login"
+    || pathname === "/auth/callback"
+    || pathname === "/auth/update-password";
+
+  if (!user && !publicPath && !apiPath) {
+    const next = `${pathname}${request.nextUrl.search}`;
+    return NextResponse.redirect(new URL(`/login?next=${encodeURIComponent(next)}`, request.url));
+  }
+
+  if (user && pathname === "/login") {
+    const requestedNext = request.nextUrl.searchParams.get("next");
+    const safeNext = requestedNext?.startsWith("/") && !requestedNext.startsWith("//") ? requestedNext : "/jobs";
+    return NextResponse.redirect(new URL(safeNext, request.url));
   }
   return response;
 }

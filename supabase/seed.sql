@@ -5,7 +5,7 @@ insert into public.sources (name, kind, base_url)
 values ('local-fixture', 'test', 'https://example.invalid')
 on conflict (name) do nothing;
 
-insert into public.jobs (id, canonical_url, company_name, title, location, description, is_active)
+insert into public.jobs (id, canonical_url, company_name, title, location, description, metadata, is_active)
 values (
   '00000000-0000-4000-8000-000000000001',
   'https://example.invalid/jobs/local-fixture',
@@ -13,6 +13,7 @@ values (
   'Data Engineer (local test fixture)',
   'Paris, France',
   'Fixture data used only by local integration tests.',
+  '{"import_kind":"local_fixture"}'::jsonb,
   true
 )
 on conflict (id) do update set
@@ -20,6 +21,7 @@ on conflict (id) do update set
   title = excluded.title,
   location = excluded.location,
   description = excluded.description,
+  metadata = excluded.metadata,
   is_active = excluded.is_active;
 
 insert into public.job_sources (job_id, source_id, external_job_id, source_url)

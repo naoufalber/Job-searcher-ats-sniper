@@ -2,6 +2,7 @@ import os
 import sqlite3
 import tempfile
 import unittest
+from pathlib import Path
 from contextlib import ExitStack
 from unittest.mock import patch
 
@@ -78,6 +79,82 @@ class FilterTests(unittest.TestCase):
                 "Data Engineer", "Paris, France", "", "mid_senior_level"
             )
         )
+
+
+class WebOnlyDetailTests(unittest.TestCase):
+    def test_extracts_hellowork_entity_encoded_jsonld(self):
+        fixture = Path(__file__).parent / "tests" / "fixtures" / "hellowork_job.html"
+        detail = sniper.extract_hellowork_job_detail(fixture.read_text(encoding="utf-8"))
+        self.assertEqual(detail["title"], "Data Engineer H/F")
+        self.assertEqual(detail["company"], "Example Company")
+        self.assertIn("pipelines de donnees", detail["description"])
+        self.assertTrue(sniper.is_description_complete(detail["description"]))
+
+    def test_web_only_fetches_missing_detail_before_ingestion(self):
+        with tempfile.TemporaryDirectory() as temp_dir, ExitStack() as patches:
+            db_path = os.path.join(temp_dir, "local.db")
+            patches.enter_context(patch.object(sniper, "DB_FILE", db_path))
+            patches.enter_context(patch.object(sniper, "INGESTION_API_URL", "http://127.0.0.1:3000"))
+            patches.enter_context(patch.object(sniper, "INGESTION_SHARED_SECRET", "local-secret"))
+            patches.enter_context(patch.object(sniper, "WEB_ONLY_MODE", True))
+            detail = patches.enter_context(patch.object(sniper, "fetch_web_only_description", return_value=(
+                "Responsibilities include building data pipelines and models. "
+                "Requirements include Python and SQL. Collaborate with stakeholders."
+            )))
+            conn, _ = sniper.init_db()
+            try:
+                with patch.object(sniper, "send_alert") as send:
+                    self.assertEqual(sniper.process_job(
+                        conn, "detail-1", "Example", "Data Engineer", "Paris, France",
+                        "https://example.test/jobs/detail-1", "Greenhouse", False, object(),
+                    ), 1)
+                detail.assert_called_once()
+                send.assert_not_called()
+                payload = conn.execute(
+                    "SELECT payload_json FROM supabase_ingestion_queue WHERE job_id = 'detail-1'"
+                ).fetchone()[0]
+                self.assertIn("Responsibilities", payload)
+            finally:
+                conn.close()
+
+    def test_production_mode_does_not_fetch_detail(self):
+        with tempfile.TemporaryDirectory() as temp_dir, ExitStack() as patches:
+            patches.enter_context(patch.object(sniper, "DB_FILE", os.path.join(temp_dir, "prod.db")))
+            patches.enter_context(patch.object(sniper, "INGESTION_API_URL", ""))
+            patches.enter_context(patch.object(sniper, "WEB_ONLY_MODE", False))
+            conn, _ = sniper.init_db()
+            try:
+                with patch.object(sniper, "fetch_web_only_description") as detail, patch.object(sniper, "send_alert", return_value=True):
+                    self.assertEqual(sniper.process_job(
+                        conn, "detail-2", "Example", "Data Engineer", "Paris, France",
+                        "https://example.test/jobs/detail-2", "Greenhouse", False, object(),
+                    ), 1)
+                detail.assert_not_called()
+            finally:
+                conn.close()
+
+    def test_web_only_retry_state_defers_repeated_failed_detail(self):
+        with tempfile.TemporaryDirectory() as temp_dir, ExitStack() as patches:
+            patches.enter_context(patch.object(sniper, "DB_FILE", os.path.join(temp_dir, "retry.db")))
+            patches.enter_context(patch.object(sniper, "INGESTION_API_URL", ""))
+            patches.enter_context(patch.object(sniper, "WEB_ONLY_MODE", True))
+            detail = patches.enter_context(patch.object(sniper, "fetch_web_only_description", return_value=""))
+            conn, _ = sniper.init_db()
+            try:
+                args = (
+                    conn, "retry-detail", "Example", "Data Engineer", "Paris, France",
+                    "https://example.test/jobs/retry-detail", "HelloWork", False, object(),
+                )
+                sniper.process_job(*args)
+                sniper.process_job(*args)
+                detail.assert_called_once()
+                row = conn.execute(
+                    "SELECT status, attempts FROM web_only_enrichment WHERE job_id = 'retry-detail'"
+                ).fetchone()
+                self.assertEqual(row[0], "retry")
+                self.assertEqual(row[1], 1)
+            finally:
+                conn.close()
 
 
 class DatabaseTests(unittest.TestCase):
@@ -283,6 +360,27 @@ class DatabaseTests(unittest.TestCase):
         finally:
             conn.close()
             patches.close()
+
+    def test_web_only_mode_never_calls_notifications(self):
+        with patch.object(sniper, "DB_FILE", self.db_path), \
+             patch.object(sniper, "WEB_ONLY_MODE", True), \
+             patch.object(sniper, "INGESTION_API_URL", ""), \
+             patch.object(sniper, "INGESTION_SHARED_SECRET", ""):
+            conn, _ = sniper.init_db()
+            try:
+                args = (
+                    conn, "job-web-only", "Test", "Data Engineer", "Paris, France",
+                    "https://example.test/job-web-only", "TestATS", False, object(),
+                )
+                with patch.object(sniper, "send_alert") as send:
+                    self.assertEqual(sniper.process_job(*args), 1)
+                    send.assert_not_called()
+                status = conn.execute(
+                    "SELECT notification_status FROM seen_jobs WHERE job_id = 'job-web-only'"
+                ).fetchone()[0]
+                self.assertEqual(status, "baseline")
+            finally:
+                conn.close()
 
 
 class NotificationTests(unittest.TestCase):

@@ -2,7 +2,7 @@
 
 ## Status
 
-The repository is **READY FOR APPROVAL**, not deployed. The staging workflows are manual-only until a separate Supabase Cloud project, Vercel project, and environment-scoped secrets are provided. The production bot workflow remains separate.
+The repository contains isolated staging workflows for scheduled or manual execution. They require a separate Supabase Cloud project, Vercel project, and environment-scoped secrets. The production bot workflow remains separate.
 
 ## Architecture
 
@@ -37,11 +37,11 @@ Set `ATS_AUTO_MATCH_ENABLED=false` initially. Enable it only after the bounded s
 ## Workflows
 
 - `ats-platform-ci.yml`: Python tests, Gemini policy/result tests, lint, typecheck, build, and diff hygiene.
-- `ats-staging-collector.yml`: manual, bounded web-only collection; maximum 10 jobs and 10 detail requests.
-- `ats-staging-gemini.yml`: manual, maximum 2 queued tasks per run, 14 RPM ceiling, daily budget of 2.
+- `ats-staging-collector.yml`: every 15 minutes or manual, bounded web-only collection; maximum 10 jobs and 10 detail requests.
+- `ats-staging-gemini.yml`: every 15 minutes or manual, maximum 2 queued tasks per run, 14 RPM ceiling, daily budget of 2.
 - `sniper.yml`: production workflow; protected and unchanged by this staging work.
 
-GitHub scheduled workflows only run from the repository default branch. The staging workflows therefore remain `workflow_dispatch`-only until the feature branch is reviewed, merged through the normal process, and unattended collection is explicitly approved.
+GitHub scheduled workflows only run from the repository default branch. The staging workflows therefore require the feature branch to be reviewed and merged through the normal process before unattended collection begins.
 
 ## Supabase Cloud setup
 

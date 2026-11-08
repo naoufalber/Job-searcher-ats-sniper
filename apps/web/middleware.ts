@@ -20,7 +20,8 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const apiPath = pathname.startsWith("/api/");
   const { data: { user } } = await supabase.auth.getUser();
-  const publicPath = pathname === "/login"
+  const publicPath = pathname === "/"
+    || pathname === "/login"
     || pathname === "/auth/callback"
     || pathname === "/auth/update-password";
 

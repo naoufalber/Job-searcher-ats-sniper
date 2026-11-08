@@ -1,14 +1,10 @@
 import "server-only";
-import { createHash, randomUUID } from "node:crypto";
-import { execFile } from "node:child_process";
-import { promisify } from "node:util";
-import { mkdir, rm, writeFile } from "node:fs/promises";
-import path from "node:path";
+import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
+import { extractText } from "unpdf";
 import { createClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
-const execFileAsync = promisify(execFile);
 const MAX_BYTES = 5 * 1024 * 1024;
 
 async function userClient() {
@@ -19,14 +15,9 @@ async function userClient() {
 }
 
 async function extractPdf(buffer: Buffer) {
-  const dir = path.join(process.cwd(), ".tmp-cv");
-  const file = path.join(dir, `${randomUUID()}.pdf`);
-  await mkdir(dir, { recursive: true });
-  try {
-    await writeFile(file, buffer, { flag: "wx" });
-    const { stdout } = await execFileAsync("pdftotext", ["-layout", file, "-"], { timeout: 15_000, maxBuffer: 2_000_000, windowsHide: true });
-    return stdout.trim();
-  } finally { await rm(file, { force: true }); }
+  if (buffer.subarray(0, 5).toString("ascii") !== "%PDF-") throw new Error("invalid_pdf_signature");
+  const parsed = await extractText(new Uint8Array(buffer), { mergePages: true });
+  return String(parsed.text ?? "").replace(/\u0000/g, "").replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
 }
 
 export async function GET() {
@@ -45,16 +36,27 @@ export async function POST(request: Request) {
   if (!(item instanceof File) || item.type !== "application/pdf" || item.size < 1 || item.size > MAX_BYTES) return NextResponse.json({ error: "Upload a PDF up to 5 MB." }, { status: 422 });
   const buffer = Buffer.from(await item.arrayBuffer());
   let extractedText = "";
-  try { extractedText = await extractPdf(buffer); } catch { return NextResponse.json({ error: "PDF text extraction is unavailable. Install pdftotext and retry." }, { status: 422 }); }
-  if (!extractedText) return NextResponse.json({ error: "The PDF contains no extractable text." }, { status: 422 });
+  try { extractedText = await extractPdf(buffer); } catch { return NextResponse.json({ error: "This PDF could not be parsed. It may be malformed or encrypted." }, { status: 422 }); }
+  if (!extractedText) return NextResponse.json({ error: "No selectable text was found. This may be an image-only or scanned PDF; OCR is needed before matching." }, { status: 422 });
   const hash = createHash("sha256").update(buffer).digest("hex");
   const storagePath = `${session.user.id}/${hash}.pdf`;
   const storage = session.client.storage.from("cv-documents");
   const uploaded = await storage.upload(storagePath, buffer, { contentType: "application/pdf", upsert: true });
   if (uploaded.error) return NextResponse.json({ error: "Unable to store CV." }, { status: 502 });
-  await session.client.from("cv_documents").update({ is_active: false }).eq("user_id", session.user.id);
-  const { data, error } = await session.client.from("cv_documents").upsert({ user_id: session.user.id, storage_path: storagePath, original_name: item.name || "cv.pdf", mime_type: "application/pdf", size_bytes: buffer.length, content_hash: hash, extracted_text: extractedText, is_active: true }, { onConflict: "storage_path" }).select("id,original_name,size_bytes,content_hash,is_active,created_at").single();
-  if (error) { await storage.remove([storagePath]); return NextResponse.json({ error: "Unable to save CV metadata." }, { status: 500 }); }
+  const { data: previous } = await session.client.from("cv_documents").select("id").eq("user_id", session.user.id).eq("is_active", true).maybeSingle();
+  const { data, error } = await session.client.from("cv_documents").upsert({ user_id: session.user.id, storage_path: storagePath, original_name: item.name || "cv.pdf", mime_type: "application/pdf", size_bytes: buffer.length, content_hash: hash, extracted_text: extractedText, is_active: false }, { onConflict: "storage_path" }).select("id,original_name,size_bytes,content_hash,is_active,created_at").single();
+  if (error || !data) { await storage.remove([storagePath]); return NextResponse.json({ error: "Unable to save CV metadata." }, { status: 500 }); }
+  if (previous?.id && previous.id !== data.id) {
+    const { error: deactivateError } = await session.client.from("cv_documents").update({ is_active: false }).eq("id", previous.id).eq("user_id", session.user.id);
+    if (deactivateError) { await storage.remove([storagePath]); await session.client.from("cv_documents").delete().eq("id", data.id).eq("user_id", session.user.id); return NextResponse.json({ error: "Unable to replace the current CV; it was preserved." }, { status: 500 }); }
+  }
+  const { error: activateError } = await session.client.from("cv_documents").update({ is_active: true }).eq("id", data.id).eq("user_id", session.user.id);
+  if (activateError) {
+    if (previous?.id && previous.id !== data.id) await session.client.from("cv_documents").update({ is_active: true }).eq("id", previous.id).eq("user_id", session.user.id);
+    await session.client.from("cv_documents").delete().eq("id", data.id).eq("user_id", session.user.id);
+    await storage.remove([storagePath]);
+    return NextResponse.json({ error: "Unable to activate the replacement CV; your previous CV was preserved." }, { status: 500 });
+  }
   return NextResponse.json({ document: data }, { status: 201 });
 }
 

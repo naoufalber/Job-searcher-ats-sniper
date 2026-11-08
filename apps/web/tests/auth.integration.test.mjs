@@ -125,6 +125,17 @@ describe("local Supabase Auth and RLS", () => {
     assert.equal(profileUpdate.error, null, profileUpdate.error?.message);
     const updatedProfile = await owner.from("profiles").select("first_name, last_name").eq("id", ownerUser.id).single();
     assert.deepEqual(updatedProfile.data, { first_name: "Grace", last_name: "Hopper" });
+    const preferences = await owner.from("user_preferences").upsert({
+      user_id: ownerUser.id,
+      target_roles: ["Data Scientist"],
+      target_locations: ["Paris"],
+      onboarding_completed_at: new Date().toISOString(),
+    });
+    assert.equal(preferences.error, null, preferences.error?.message);
+    const saved = await owner.from("user_job_status").upsert({ user_id: ownerUser.id, job_id: fixtureJobId, status: "saved", application_status: "to_review" });
+    assert.equal(saved.error, null, saved.error?.message);
+    const application = await owner.from("user_job_status").update({ application_status: "applied", notes: "Integration test" }).eq("user_id", ownerUser.id).eq("job_id", fixtureJobId);
+    assert.equal(application.error, null, application.error?.message);
     const badPassword = await owner.auth.signInWithPassword({ email, password: "Wrong-password-123!" });
     assert.ok(badPassword.error, "An incorrect current password must be rejected");
     const insert = await owner.from("user_job_status").upsert({ user_id: ownerUser.id, job_id: fixtureJobId, status: "saved" });
@@ -149,5 +160,8 @@ describe("local Supabase Auth and RLS", () => {
     const ownerProfileFromOther = await other.from("profiles").select("id").eq("id", ownerUser.id);
     assert.equal(ownerProfileFromOther.error, null, ownerProfileFromOther.error?.message);
     assert.equal(ownerProfileFromOther.data.length, 0, "A user must not read another user's profile");
+    const otherPreferences = await other.from("user_preferences").select("user_id").eq("user_id", ownerUser.id);
+    assert.equal(otherPreferences.error, null, otherPreferences.error?.message);
+    assert.equal(otherPreferences.data.length, 0, "A user must not read another user's preferences");
   });
 });

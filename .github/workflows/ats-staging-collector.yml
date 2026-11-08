@@ -1,7 +1,9 @@
 name: ATS staging collector
 
-# Manual-only until Supabase Cloud, Vercel, and staging secrets are approved.
+# Scheduled and manually dispatchable; activation still requires the workflow on the default branch.
 on:
+  schedule:
+    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 permissions:

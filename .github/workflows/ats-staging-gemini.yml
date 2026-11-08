@@ -1,6 +1,8 @@
 name: ATS staging Gemini worker
 
 on:
+  schedule:
+    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -32,4 +34,4 @@ jobs:
           GEMINI_RATE_LIMIT_RPM: '14'
           GEMINI_DAILY_REQUEST_BUDGET: '2'
           GEMINI_WORKER_MAX_TASKS: '2'
-        run: node scripts/gemini-worker.mjs --max-tasks 2
+        run: node scripts/gemini-worker.mjs --max-tasks 2 --once

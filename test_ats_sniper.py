@@ -204,6 +204,18 @@ class WebOnlyDetailTests(unittest.TestCase):
 
 
 class DatabaseTests(unittest.TestCase):
+    def test_smartrecruiters_dictionary_sections_are_preserved(self):
+        with patch.object(sniper, "INGESTION_ENRICH_DETAILS", True), \
+             patch.object(sniper, "WEB_ONLY_DETAIL_CACHE", {}), \
+             patch.object(sniper, "WEB_ONLY_DETAIL_REQUESTS_NEW", 0), \
+             patch.object(sniper, "request_json", return_value={"jobAd": {"sections": {
+                 "jobDescription": {"content": "<p>Responsibilities: develop Python services.</p>"},
+                 "qualifications": {"content": "<p>Requirements: Python and SQL.</p>"},
+             }}}):
+            result = sniper.fetch_web_only_description("SmartRecruiters", "https://jobs.smartrecruiters.com/Example/123", object())
+            self.assertIn("Responsibilities", result)
+            self.assertIn("Requirements", result)
+
     def setUp(self):
         self.temp_dir = tempfile.TemporaryDirectory()
         self.db_path = os.path.join(self.temp_dir.name, "jobs.db")
@@ -406,6 +418,34 @@ class DatabaseTests(unittest.TestCase):
         finally:
             conn.close()
             patches.close()
+
+    def test_enriched_sent_payload_is_redelivered_without_duplicate_notification(self):
+        with patch.object(sniper, "DB_FILE", self.db_path), \
+             patch.object(sniper, "INGESTION_API_URL", "http://ingest.test"), \
+             patch.object(sniper, "INGESTION_SHARED_SECRET", "local-secret"):
+            conn, _ = sniper.init_db()
+            try:
+                payload = sniper.build_ingestion_payload(
+                    "enriched", "Test", "Data Engineer", "Paris, France",
+                    "https://example.test/job", "TestATS",
+                )
+                sniper.queue_ingestion(conn, payload)
+                conn.execute("UPDATE supabase_ingestion_queue SET status = 'sent'")
+                conn.commit()
+                payload["description"] = "Real provider description with requirements."
+                sniper.queue_ingestion(conn, payload)
+                self.assertEqual(conn.execute("SELECT status FROM supabase_ingestion_queue").fetchone()[0], "pending")
+                conn.execute("UPDATE supabase_ingestion_queue SET status = 'sent', delivered_description = ?", (payload["description"],))
+                conn.commit()
+                sniper.queue_ingestion(conn, payload)
+                self.assertEqual(conn.execute("SELECT status FROM supabase_ingestion_queue").fetchone()[0], "sent")
+                payload["description"] = ""
+                sniper.queue_ingestion(conn, payload)
+                stored, status = conn.execute("SELECT payload_json, status FROM supabase_ingestion_queue").fetchone()
+                self.assertIn("Real provider description", stored)
+                self.assertEqual(status, "sent")
+            finally:
+                conn.close()
 
     def test_web_only_mode_never_calls_notifications(self):
         with patch.object(sniper, "DB_FILE", self.db_path), \

@@ -369,6 +369,8 @@ def fetch_web_only_description(provider, url, session, existing_job=False):
                 "SmartRecruiters/detail", _timeout=DETAIL_REQUEST_TIMEOUT,
             ) or {}
             sections = (data.get("jobAd") or {}).get("sections") or []
+            if isinstance(sections, dict):
+                sections = sections.values()
             value = "\n\n".join(str(section.get("content", "")) for section in sections if isinstance(section, dict))
         elif provider_key == "lever" and len(parts) >= 2:
             data = request_json(
@@ -523,6 +525,9 @@ def init_db():
         )
         """
     )
+    ingestion_columns = {row[1] for row in conn.execute("PRAGMA table_info(supabase_ingestion_queue)")}
+    if "delivered_description" not in ingestion_columns:
+        conn.execute("ALTER TABLE supabase_ingestion_queue ADD COLUMN delivered_description TEXT")
     columns = {row[1] for row in conn.execute("PRAGMA table_info(seen_jobs)")}
     if "notified_at" not in columns:
         conn.execute("ALTER TABLE seen_jobs ADD COLUMN notified_at TEXT")
@@ -610,6 +615,19 @@ def queue_ingestion(conn, payload):
     if not ingestion_enabled():
         return
     queued_at = datetime.now(timezone.utc).isoformat()
+    existing = conn.execute(
+        "SELECT payload_json, status, delivered_description FROM supabase_ingestion_queue WHERE job_id = ?",
+        (payload["external_job_id"],),
+    ).fetchone()
+    refresh_sent = False
+    if existing:
+        previous_payload = json.loads(existing[0])
+        if previous_payload.get("description") and not payload.get("description"):
+            payload = {**payload, "description": previous_payload["description"]}
+        refresh_sent = (
+            existing[1] == "sent" and bool(payload.get("description"))
+            and payload.get("description") != existing[2]
+        )
     payload_json = json.dumps(payload, ensure_ascii=False, sort_keys=True)
     conn.execute(
         """
@@ -621,12 +639,20 @@ def queue_ingestion(conn, payload):
         """,
         (payload["external_job_id"], payload_json, queued_at),
     )
+    if refresh_sent:
+        conn.execute(
+            """UPDATE supabase_ingestion_queue
+               SET status = 'pending', next_attempt_at = NULL, last_error = NULL
+               WHERE job_id = ? AND status = 'sent'""",
+            (payload["external_job_id"],),
+        )
     conn.commit()
 
 
 def try_queue_ingestion(conn, job_id, company, title, location, url,
                         ats_source, description="", experience_level=""):
     """Best-effort ingestion boundary; never interrupts notifications."""
+    global SCAN_HAD_FAILURES
     if not ingestion_enabled():
         return
     try:
@@ -636,10 +662,12 @@ def try_queue_ingestion(conn, job_id, company, title, location, url,
         )
         queue_ingestion(conn, payload)
     except Exception as exc:  # Keep failures isolated to the additive path.
+        SCAN_HAD_FAILURES = True
         print(f"[ERREUR SUPABASE] Mise en file ignoree: {type(exc).__name__}: {str(exc)[:300]}")
 
 
 def flush_ingestion_queue(conn, session, deadline=None):
+    global SCAN_HAD_FAILURES
     if not ingestion_enabled():
         return 0
     try:
@@ -656,6 +684,7 @@ def flush_ingestion_queue(conn, session, deadline=None):
             (now.isoformat(), INGESTION_BATCH_SIZE),
         ).fetchall()
     except Exception as exc:
+        SCAN_HAD_FAILURES = True
         print(f"[ERREUR SUPABASE] Lecture de file ignoree: {type(exc).__name__}: {str(exc)[:300]}")
         return 0
     sent = 0
@@ -675,6 +704,8 @@ def flush_ingestion_queue(conn, session, deadline=None):
             )
             response.raise_for_status()
         except (requests.RequestException, ValueError) as exc:
+            SCAN_HAD_FAILURES = True
+            log_event("ingestion_delivery_failed", job_id=job_id, error_type=type(exc).__name__)
             next_attempt = now + timedelta(
                 seconds=min(900, 30 * (2 ** min(attempts + 1, 5)))
             )
@@ -694,10 +725,11 @@ def flush_ingestion_queue(conn, session, deadline=None):
             conn.execute(
                 """
                 UPDATE supabase_ingestion_queue
-                SET status = 'sent', sent_at = ?, next_attempt_at = NULL, last_error = NULL
+                SET status = 'sent', sent_at = ?, next_attempt_at = NULL, last_error = NULL,
+                    delivered_description = ?
                 WHERE job_id = ?
                 """,
-                (datetime.now(timezone.utc).isoformat(), job_id),
+                (datetime.now(timezone.utc).isoformat(), payload.get("description") or "", job_id),
             )
         except Exception as exc:
             print(f"[ERREUR SUPABASE] Echec confirmation: {type(exc).__name__}: {str(exc)[:300]}")
@@ -828,6 +860,15 @@ def process_job(conn, job_id, company, title, location, url, ats_source,
             record_web_only_enrichment(conn, job_id, url, description)
         else:
             description = WEB_ONLY_DETAIL_CACHE.get(url, "")
+    if not description and ingestion_enabled():
+        try:
+            cached = conn.execute(
+                "SELECT payload_json FROM supabase_ingestion_queue WHERE job_id = ?", (job_id,)
+            ).fetchone()
+            if cached:
+                description = json.loads(cached[0]).get("description") or ""
+        except Exception as exc:
+            log_event("ingestion_description_cache_error", error_type=type(exc).__name__)
     if not matches_criteria(title, location, description, experience_level):
         return 0
     if WEB_ONLY_MODE and WEB_ONLY_ACCEPTED_JOBS >= WEB_ONLY_MAX_JOBS:
@@ -1244,7 +1285,7 @@ def run_provider_worker(provider_name, silent_init):
             + json.dumps({"provider": provider_name, "processed": processed}),
             flush=True,
         )
-        return 0
+        return 1 if SCAN_HAD_FAILURES else 0
     finally:
         session.close()
         conn.close()

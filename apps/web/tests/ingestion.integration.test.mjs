@@ -92,4 +92,21 @@ describe("local ingestion API", { concurrency: 1 }, () => {
     assert.equal(secondBody.job_id, firstBody.job_id);
     assert.equal(secondBody.source_id, firstBody.source_id);
   });
+
+  it("preserves complete stored descriptions when a later listing omits one", async () => {
+    const enriched = variant({
+      external_job_id: `enriched-${Date.now()}`,
+      canonical_url: `https://example.invalid/jobs/enriched-${Date.now()}`,
+      description: "Responsibilities: build and maintain the integration testing fixtures for Python services. Requirements: use SQL and automated regression tests to verify database behavior. Benefits: this text exists only in the local integration database and is never a real vacancy.",
+    });
+    const first = await post(enriched);
+    assert.equal(first.status, 200);
+    const initial = await first.json();
+    assert.equal(initial.description_status, "complete");
+    const second = await post({ ...enriched, description: null });
+    assert.equal(second.status, 200);
+    const repeated = await second.json();
+    assert.equal(repeated.job_id, initial.job_id);
+    assert.equal(repeated.description_status, "complete");
+  });
 });

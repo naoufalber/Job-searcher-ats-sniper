@@ -49,14 +49,23 @@ export async function POST(request: Request) {
   }).single();
   if (error || !data) return NextResponse.json({ error: "Unable to persist job." }, { status: 502 });
   const result = data as unknown as { result_job_id: string; result_source_id: number };
-  const complete = isDescriptionComplete(job.description ?? null);
-  await admin.from("jobs").update({ description_status: complete ? "complete" : "needs_description" }).eq("id", result.result_job_id);
+  // The atomic ingestion function preserves an existing description when an
+  // incoming listing has none. Queue matching against that persisted content.
+  const { data: stored, error: readError } = await admin.from("jobs").select("description").eq("id", result.result_job_id).single();
+  if (readError) return NextResponse.json({ error: "Unable to verify stored job." }, { status: 502 });
+  const complete = isDescriptionComplete(stored.description);
+  const { error: statusError } = await admin.from("jobs").update({ description_status: complete ? "complete" : "needs_description" }).eq("id", result.result_job_id);
+  if (statusError) return NextResponse.json({ error: "Unable to save description status." }, { status: 502 });
   await admin.rpc("record_staging_collector_state", { p_source: job.source, p_external_job_id: job.external_job_id, p_job_id: result.result_job_id, p_canonical_url: job.canonical_url, p_status: complete ? "complete" : "needs_description" });
   let autoMatch = "disabled";
   if (process.env.ATS_AUTO_MATCH_ENABLED === "true" && complete) {
     const model = process.env.GEMINI_MODEL || "gemini-2.0-flash";
     const rubric = process.env.GEMINI_RUBRIC_VERSION || "v1";
     const { data: queued, error } = await admin.rpc("enqueue_matching_for_job", { p_job_id: result.result_job_id, p_model_id: model, p_rubric_version: rubric });
+    if (error) {
+      console.error("Automatic matching enqueue failed", { jobId: result.result_job_id, code: error.code });
+      return NextResponse.json({ error: "Job saved; matching enqueue will be retried." }, { status: 502 });
+    }
     autoMatch = error ? "failed" : Number(queued ?? 0) > 0 ? `queued:${queued}` : "no_eligible_users";
   } else if (!complete) autoMatch = "needs_description";
   return NextResponse.json({ ok: true, job_id: result.result_job_id, source_id: result.result_source_id, description_status: complete ? "complete" : "needs_description", auto_match: autoMatch });

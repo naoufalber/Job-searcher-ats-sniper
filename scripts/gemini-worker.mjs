@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import { setTimeout as delay } from "node:timers/promises";
 import { normalizeAnalysis, parseAnalysisResponse } from "./gemini-result.mjs";
 import { requestGemini } from "./gemini-provider.mjs";
+import { providerQuotaGuidance } from "./gemini-rate-limit.mjs";
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(scriptDir, "..");
@@ -61,8 +62,8 @@ function retryAfterMs(response) {
   return Number.isFinite(date) ? Math.max(1_000, Math.min(900_000, date - Date.now())) : null;
 }
 
-async function scheduleFailure(task, message, delay, permanent = false) {
-  const terminal = permanent || task.attempts >= maxAttempts;
+async function scheduleFailure(task, message, delay, permanent = false, quotaLimited = false) {
+  const terminal = permanent || (!quotaLimited && task.attempts >= maxAttempts);
   console.warn(JSON.stringify({ event: "gemini_task_retry", task_id: task.id, status: terminal ? "failed" : "pending", reason: message, retry_delay_ms: delay }));
   await supabase.from("gemini_analysis_queue").update({ status: terminal ? "failed" : "pending", next_attempt_at: new Date(Date.now() + delay).toISOString(), last_error: message.slice(0, 1000), processing_started_at: null, worker_id: null, updated_at: new Date().toISOString() }).eq("id", task.id);
   await supabase.from("job_analyses").update({ status: terminal ? "failed" : "pending", error_message: message.slice(0, 1000), updated_at: new Date().toISOString() }).eq("user_id", task.user_id).eq("job_id", task.job_id).eq("cv_document_id", task.cv_document_id).eq("model_id", task.model_id).eq("rubric_version", task.rubric_version);
@@ -82,7 +83,12 @@ async function processTask(task) {
   const { data: slot, error: slotError } = await supabase.rpc("reserve_gemini_api_slot", { p_api_key_scope: scope, p_limit: rpm, p_window_seconds: 60, p_queue_id: task.id });
   const reservation = Array.isArray(slot) ? slot[0] : slot;
   if (slotError) { await scheduleFailure(task, "Rate limiter unavailable.", 5_000); return 0; }
-  if (!reservation?.allowed) { const wait = Math.max(1, Number(reservation?.wait_seconds || 1)); await supabase.from("gemini_analysis_queue").update({ status: "pending", next_attempt_at: new Date(Date.now() + wait * 1_000).toISOString(), processing_started_at: null, worker_id: null, updated_at: new Date().toISOString() }).eq("id", task.id); return wait * 1_000; }
+  if (!reservation?.allowed) {
+    const wait = Math.max(1, Number(reservation?.wait_seconds || 1));
+    const { data: cooldown } = await supabase.from("gemini_api_cooldowns").select("reason").eq("api_key_scope", scope).gt("blocked_until", new Date().toISOString()).maybeSingle();
+    await supabase.from("gemini_analysis_queue").update({ status: "pending", last_error: cooldown?.reason ?? task.last_error, next_attempt_at: new Date(Date.now() + wait * 1000).toISOString(), processing_started_at: null, worker_id: null, updated_at: new Date().toISOString() }).eq("id", task.id);
+    return wait * 1000;
+  }
   task.attempts += 1;
   const [{ data: job }, { data: cv }] = await Promise.all([
     supabase.from("jobs").select("title,company_name,location,description").eq("id", task.job_id).single(),
@@ -94,7 +100,15 @@ async function processTask(task) {
   let networkError = false;
   try { response = await requestGemini({ useMock, mockResponse, modelId: task.model_id, prompt, apiKey }); } catch { networkError = true; }
   if (networkError) { await scheduleFailure(task, "Gemini network failure.", retryDelay(task.attempts)); return 0; }
-  if (response.status === 429) { await scheduleFailure(task, "Gemini rate limit response.", retryAfterMs(response) ?? retryDelay(task.attempts)); return 0; }
+  if (response.status === 429) {
+    const guidance = providerQuotaGuidance(await response.json().catch(() => null), response.headers.get("retry-after"));
+    const blockedUntil = new Date(Date.now() + guidance.waitMs).toISOString();
+    const { error } = await supabase.rpc("defer_gemini_api_key", { p_api_key_scope: scope, p_blocked_until: blockedUntil, p_reason: guidance.reason });
+    if (error) throw new Error("Unable to persist shared Gemini quota cooldown.");
+    await scheduleFailure(task, guidance.reason, guidance.waitMs, false, true);
+    console.warn(JSON.stringify({ event: "gemini_provider_quota", ...guidance, blocked_until: blockedUntil }));
+    return guidance.waitMs;
+  }
   if (response.status >= 500) { await scheduleFailure(task, `Gemini provider error ${response.status}.`, retryDelay(task.attempts)); return 0; }
   if (!response.ok) { await scheduleFailure(task, `Gemini permanent error ${response.status}.`, 0, true); return 0; }
   const payload = await response.json().catch(() => null);
@@ -127,6 +141,9 @@ const maxTasksArgIndex = process.argv.indexOf("--max-tasks");
 const maxTasksArg = maxTasksArgIndex >= 0 ? process.argv[maxTasksArgIndex + 1] : null;
 const maxTasks = Math.max(1, Number.parseInt(maxTasksArg || process.env.GEMINI_WORKER_MAX_TASKS || (once ? "1" : "1000000"), 10) || 1);
 console.log(`Gemini worker started (limit ${rpm} requests per rolling 60 seconds; mode=${useMock ? "mock" : "provider"}).`);
+const { data: reconciled, error: reconcileError } = await supabase.rpc("enqueue_missing_matching_tasks", { p_model_id: model, p_rubric_version: rubric, p_limit: 25 });
+if (reconcileError) throw new Error("Unable to reconcile missing matching tasks.");
+console.log(JSON.stringify({ event: "matching_tasks_reconciled", candidates: reconciled }));
 let processedTasks = 0;
 while (!stopping && performance.now() < deadline - 35_000) {
   const { count, waitMs } = await runOnce();
@@ -134,7 +151,8 @@ while (!stopping && performance.now() < deadline - 35_000) {
   if ((once && !count) || stopping || processedTasks >= maxTasks) break;
   if (waitMs > 0) {
     console.log(JSON.stringify({ event: "gemini_capacity_wait", wait_ms: waitMs }));
-    await sleep(Math.min(waitMs, Math.max(0, deadline - performance.now() - 35_000)));
+    if (waitMs >= deadline - performance.now() - 35_000) break;
+    await sleep(waitMs);
   } else if (!count && drain) {
     const { data: next, error } = await supabase.from("gemini_analysis_queue").select("next_attempt_at").eq("status", "pending").order("next_attempt_at").limit(1).maybeSingle();
     if (error) throw new Error("Unable to inspect pending queue deadline.");

@@ -1,8 +1,18 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { nextPermittedTime, retryDelayMs } from "../../../scripts/gemini-rate-limit.mjs";
+import { nextPermittedTime, retryDelayMs, providerQuotaGuidance } from "../../../scripts/gemini-rate-limit.mjs";
 
 describe("Gemini rolling-window policy", () => {
+  it("honors body retry guidance and reports only safe quota identifiers", () => {
+    const result = providerQuotaGuidance({error:{message:"private key must not be logged",details:[
+      {violations:[{quotaId:"GenerateRequestsPerDay-FreeTier"}]}, {retryDelay:"120s"},
+    ]}}, null);
+    assert.equal(result.waitMs, 120000);
+    assert.match(result.reason, /daily quota/);
+    assert.equal(JSON.stringify(result).includes("private key"), false);
+    assert.equal(providerQuotaGuidance({error:{details:[{violations:[{quotaId:"RequestsPerDay"}]}]}},null).waitMs,3600000);
+    assert.equal(providerQuotaGuidance({error:{details:[{retryDelay:"75s"}]}}, "90").waitMs, 90000);
+  });
   it("allows ten attempts and waits only for the earliest slot on the eleventh", () => {
     const now = 1_000_000;
     const timestamps = Array.from({ length: 10 }, (_, index) => now - 59_000 + index * 100);

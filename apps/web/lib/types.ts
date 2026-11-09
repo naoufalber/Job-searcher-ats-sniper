@@ -24,6 +24,9 @@ export type Job = {
   source_name?: string | null;
   match_score?: number | null;
   analysis_status?: "pending" | "completed" | "failed" | null;
+  matching_status?: "pending" | "processing" | "completed" | "failed" | null;
+  matching_error?: string | null;
+  matching_next_attempt_at?: string | null;
   analysis_result?: Record<string, unknown> | null;
   application_status?: string | null;
   is_new_since_baseline?: boolean;

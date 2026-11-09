@@ -114,7 +114,7 @@ async function processTask(task) {
   const payload = await response.json().catch(() => null);
   const text = payload?.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("") || "";
   const result = parseAnalysisResponse(text);
-  if (!result) { await scheduleFailure(task, "Gemini returned an invalid analysis shape.", 0, true); return 0; }
+  if (!result) { await scheduleFailure(task, "Gemini returned an invalid analysis shape.", retryDelay(task.attempts)); return 0; }
   const { error } = await supabase.from("job_analyses").update({ status: "completed", score: result.score, result, error_message: null, updated_at: new Date().toISOString() }).eq("user_id", task.user_id).eq("job_id", task.job_id).eq("cv_document_id", task.cv_document_id).eq("model_id", task.model_id).eq("rubric_version", task.rubric_version).eq("input_hash", task.input_hash);
   if (error) { await scheduleFailure(task, "Unable to save Gemini result.", retryDelay(task.attempts)); return 0; }
   await supabase.from("gemini_analysis_queue").update({ status: "completed", last_error: null, processing_started_at: null, worker_id: null, updated_at: new Date().toISOString() }).eq("id", task.id);

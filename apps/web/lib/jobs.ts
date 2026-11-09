@@ -18,7 +18,9 @@ export async function listJobs(options: JobListOptions = {}): Promise<Job[]> {
   if (!supabase) return [];
   const { data: auth } = await supabase.auth.getUser();
   if (!auth.user) return [];
-  const pageSize = Math.min(Math.max(options.pageSize ?? 24, 1), 50);
+  // Allow the discovery page to request one look-ahead row so the final page
+  // never renders a misleading Next button.
+  const pageSize = Math.min(Math.max(options.pageSize ?? 24, 1), 51);
   const page = Math.max(options.page ?? 1, 1);
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;

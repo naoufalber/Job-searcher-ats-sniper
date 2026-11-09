@@ -1,0 +1,59 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e2]:
+    - banner [ref=f4e3]:
+      - generic [ref=f4e4]:
+        - link "A ATS SNIPER" [ref=f4e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f4e6]: A
+          - generic [ref=f4e7]: ATS SNIPER
+        - navigation "Primary navigation" [ref=f4e8]:
+          - link "Discover" [ref=f4e9] [cursor=pointer]:
+            - /url: /jobs
+          - link "CV" [ref=f4e10] [cursor=pointer]:
+            - /url: /cv
+          - link "Saved" [ref=f4e11] [cursor=pointer]:
+            - /url: /saved
+          - link "Tracker" [ref=f4e12] [cursor=pointer]:
+            - /url: /tracker
+          - link "Settings" [ref=f4e13] [cursor=pointer]:
+            - /url: /settings
+        - button "Sign out" [ref=f4e15] [cursor=pointer]
+    - main [ref=f4e16]:
+      - main [ref=f4e17]:
+        - paragraph [ref=f4e18]: Personal discovery
+        - heading "Tune your job search" [level=1] [ref=f4e19]
+        - paragraph [ref=f4e20]: These preferences stay private to your account and help organize the roles you review. Separate multiple values with commas.
+        - generic [ref=f4e22]:
+          - generic [ref=f4e23]:
+            - text: Target roles
+            - textbox "Target roles" [ref=f4e24]:
+              - /placeholder: Data Scientist, ML Engineer
+          - generic [ref=f4e25]:
+            - text: Target locations
+            - textbox "Target locations" [ref=f4e26]:
+              - /placeholder: Paris, Remote
+          - generic [ref=f4e27]:
+            - text: Employment types
+            - textbox "Employment types" [ref=f4e28]:
+              - /placeholder: CDI, Full-time
+          - generic [ref=f4e29]:
+            - text: Remote preferences
+            - textbox "Remote preferences" [ref=f4e30]:
+              - /placeholder: Remote, Hybrid
+          - generic [ref=f4e31]:
+            - text: Working languages
+            - textbox "Working languages" [ref=f4e32]:
+              - /placeholder: English, French
+          - generic [ref=f4e33]:
+            - text: Keywords
+            - textbox "Keywords" [ref=f4e34]:
+              - /placeholder: Python, SQL, machine learning
+          - generic [ref=f4e35]:
+            - text: Exclude
+            - textbox "Exclude" [ref=f4e36]:
+              - /placeholder: Internship, sales
+          - generic [ref=f4e37]:
+            - text: Minimum annual salary
+            - spinbutton "Minimum annual salary" [ref=f4e38]
+          - button "Save preferences" [ref=f4e40] [cursor=pointer]
+  - alert [ref=f4e41]

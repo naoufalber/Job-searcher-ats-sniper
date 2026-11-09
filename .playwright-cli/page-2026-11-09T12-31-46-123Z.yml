@@ -1,0 +1,137 @@
+- generic [active] [ref=f10e1]:
+  - generic [ref=f10e2]:
+    - banner [ref=f10e3]:
+      - generic [ref=f10e4]:
+        - link "A ATS SNIPER" [ref=f10e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f10e6]: A
+          - generic [ref=f10e7]: ATS SNIPER
+        - button "Sign out" [ref=f10e9] [cursor=pointer]
+    - main [ref=f10e10]:
+      - generic [ref=f10e11]:
+        - generic [ref=f10e12]:
+          - paragraph [ref=f10e13]: Discovery
+          - heading "Open roles" [level=1] [ref=f10e14]
+          - paragraph [ref=f10e15]: All collected roles, including historical roles for onboarding and backfill.
+          - generic [ref=f10e16]:
+            - textbox "Title, company, or location" [ref=f10e17]: Astek
+            - combobox [ref=f10e18]:
+              - option "All sources" [selected]
+              - option "ashby"
+              - option "gh"
+              - option "hellowork"
+              - option "lever"
+              - option "local-fixture"
+              - option "local-integration"
+              - option "smartrecruiters"
+              - option "sr"
+              - option "wd"
+              - option "welcome_to_the_jungle"
+            - textbox "Country" [ref=f10e19]
+            - textbox "Contract type" [ref=f10e20]
+            - combobox [ref=f10e21]:
+              - option "New jobs"
+              - option "All jobs" [selected]
+            - combobox [ref=f10e22]:
+              - option "All statuses" [selected]
+              - option "High match (80+)"
+              - option "Good match (65-79)"
+              - option "Low match (<65)"
+              - option "Pending analysis"
+              - option "Needs description"
+              - option "Saved"
+              - option "Applied"
+            - generic [ref=f10e23]:
+              - combobox [ref=f10e24]:
+                - option "Recommended order" [selected]
+                - option "Match score"
+                - option "Date discovered"
+                - option "Company"
+              - button "Apply filters" [ref=f10e25] [cursor=pointer]
+        - table [ref=f10e27]:
+          - rowgroup [ref=f10e28]:
+            - row [ref=f10e29]:
+              - columnheader "Job title" [ref=f10e30]
+              - columnheader "Company" [ref=f10e31]
+              - columnheader "Location" [ref=f10e32]
+              - columnheader "Source" [ref=f10e33]
+              - columnheader "First seen" [ref=f10e34]
+              - columnheader "Contract" [ref=f10e35]
+              - columnheader "CV match" [ref=f10e36]
+              - columnheader "Contacts" [ref=f10e37]
+              - columnheader "Status" [ref=f10e38]
+              - columnheader "Action" [ref=f10e39]
+          - rowgroup [ref=f10e40]:
+            - row [ref=f10e41]:
+              - cell "Data Analyst H/F New" [ref=f10e42]:
+                - generic [ref=f10e43]:
+                  - link "Data Analyst H/F" [ref=f10e44] [cursor=pointer]:
+                    - /url: /jobs/1545c701-059b-4d24-9181-8b32c5b156b4
+                  - generic [ref=f10e45]: New
+              - cell "Astek" [ref=f10e46]
+              - cell "Lille - 59, France" [ref=f10e47]
+              - cell "hellowork" [ref=f10e48]
+              - cell [ref=f10e49]:
+                - time [ref=f10e50]: 11/9/2026, 9:42:12 AM
+              - cell "Not listed" [ref=f10e51]
+              - cell "-" [ref=f10e52]
+              - cell [ref=f10e53]:
+                - generic [ref=f10e54]:
+                  - link "Manager search" [ref=f10e55] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Astek%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f10e56] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Astek%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "To review" [ref=f10e57]
+              - cell [ref=f10e58]:
+                - link "View role" [ref=f10e59] [cursor=pointer]:
+                  - /url: /jobs/1545c701-059b-4d24-9181-8b32c5b156b4
+                - button "Mark seen" [ref=f10e60] [cursor=pointer]
+            - row [ref=f10e61]:
+              - cell "Data Engineer Gcp H/F New" [ref=f10e62]:
+                - generic [ref=f10e63]:
+                  - link "Data Engineer Gcp H/F" [ref=f10e64] [cursor=pointer]:
+                    - /url: /jobs/0b92a2d0-f613-4990-8b1a-4eb1d490b1b1
+                  - generic [ref=f10e65]: New
+              - cell "Astek" [ref=f10e66]
+              - cell "Nice - 06, France" [ref=f10e67]
+              - cell "hellowork" [ref=f10e68]
+              - cell [ref=f10e69]:
+                - time [ref=f10e70]: 11/9/2026, 12:07:31 PM
+              - cell "Not listed" [ref=f10e71]
+              - cell "-" [ref=f10e72]
+              - cell [ref=f10e73]:
+                - generic [ref=f10e74]:
+                  - link "Manager search" [ref=f10e75] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Astek%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f10e76] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Astek%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "Needs description" [ref=f10e77]
+              - cell [ref=f10e78]:
+                - link "View role" [ref=f10e79] [cursor=pointer]:
+                  - /url: /jobs/0b92a2d0-f613-4990-8b1a-4eb1d490b1b1
+                - button "Mark seen" [ref=f10e80] [cursor=pointer]
+            - row [ref=f10e81]:
+              - 'cell "Data Engineer - Machine Learning - # H/F New" [ref=f10e82]':
+                - generic [ref=f10e83]:
+                  - 'link "Data Engineer - Machine Learning - # H/F" [ref=f10e84] [cursor=pointer]':
+                    - /url: /jobs/7e2a4d2e-dcbd-4b99-8f9b-dc7b2616022e
+                  - generic [ref=f10e85]: New
+              - cell "Astek" [ref=f10e86]
+              - cell "Lille - 59, France" [ref=f10e87]
+              - cell "hellowork" [ref=f10e88]
+              - cell [ref=f10e89]:
+                - time [ref=f10e90]: 11/9/2026, 9:41:54 AM
+              - cell "Not listed" [ref=f10e91]
+              - cell "-" [ref=f10e92]
+              - cell [ref=f10e93]:
+                - generic [ref=f10e94]:
+                  - link "Manager search" [ref=f10e95] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Astek%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f10e96] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Astek%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "To review" [ref=f10e97]
+              - cell [ref=f10e98]:
+                - link "View role" [ref=f10e99] [cursor=pointer]:
+                  - /url: /jobs/7e2a4d2e-dcbd-4b99-8f9b-dc7b2616022e
+                - button "Mark seen" [ref=f10e100] [cursor=pointer]
+  - alert [ref=f10e101]

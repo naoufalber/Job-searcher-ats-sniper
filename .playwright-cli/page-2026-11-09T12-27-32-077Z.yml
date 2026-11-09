@@ -1,0 +1,74 @@
+- generic [active] [ref=f9e1]:
+  - generic [ref=f9e2]:
+    - banner [ref=f9e3]:
+      - generic [ref=f9e4]:
+        - link "A ATS SNIPER" [ref=f9e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f9e6]: A
+          - generic [ref=f9e7]: ATS SNIPER
+        - button "Sign out" [ref=f9e9] [cursor=pointer]
+    - main [ref=f9e10]:
+      - generic [ref=f9e209]:
+        - link "← Back to discovery" [ref=f9e210] [cursor=pointer]:
+          - /url: /jobs
+        - article [ref=f9e211]:
+          - paragraph [ref=f9e212]: MP Data
+          - heading "Data Scientist - IA Générative H/F" [level=1] [ref=f9e213]
+          - generic [ref=f9e214]:
+            - generic [ref=f9e215]:
+              - text: First seen
+              - time [ref=f9e216]: 11/9/2026, 9:29:44 AM
+            - generic [ref=f9e217]: New
+            - button "Mark seen" [ref=f9e218] [cursor=pointer]
+          - generic [ref=f9e219]: Paris - 75, France
+          - generic [ref=f9e221]:
+            - button "Save role" [ref=f9e222] [cursor=pointer]
+            - button "Mark applied" [ref=f9e223] [cursor=pointer]
+          - generic [ref=f9e224]:
+            - button "View CV match" [ref=f9e225] [cursor=pointer]
+            - generic [ref=f9e226]:
+              - generic [ref=f9e227]:
+                - 'heading "CV match: 85/100" [level=2] [ref=f9e228]'
+                - generic [ref=f9e229]: Apply
+              - paragraph [ref=f9e230]: "Confidence: high"
+              - paragraph [ref=f9e231]: Le profil correspond très fortement aux exigences techniques du poste en IA générative (RAG, fine-tuning, Python, PyTorch, LangChain, FAISS, AWS, grande école d'ingénieur). La principale réserve réside dans le niveau d'expérience requis (poste expérimenté / 2 ans d'expérience post-diplôme) alors que le candidat est jeune diplômé 2025, bien qu'il possède des projets très pertinents. La localisation à Toulouse mérite également une confirmation.
+              - generic [ref=f9e232]:
+                - generic [ref=f9e233]:
+                  - heading "Matching skills" [level=3] [ref=f9e234]
+                  - list [ref=f9e235]:
+                    - listitem [ref=f9e236]:
+                      - strong [ref=f9e237]: Diplôme Grande École d'Ingénieur
+                      - text: — Diplôme d'ingénieur de l'IMT Atlantique (2022-2025).
+                    - listitem [ref=f9e238]:
+                      - strong [ref=f9e239]: IA Générative, RAG & LLM
+                      - text: — Expérience en RAG, fine-tuning, prompt engineering et projet AI Technical Knowledge Assistant avec RAG, LangChain, FAISS et RAGAS.
+                    - listitem [ref=f9e240]:
+                      - strong [ref=f9e241]: Python & PyTorch
+                      - text: — Compétences clés validées en Python et PyTorch dans plusieurs expériences (EDF R&D, Crédit Mutuel Arkéa).
+                    - listitem [ref=f9e242]:
+                      - strong [ref=f9e243]: LangChain & FAISS
+                      - text: — Utilisés explicitement dans le projet AI Technical Knowledge Assistant.
+                    - listitem [ref=f9e244]:
+                      - strong [ref=f9e245]: Environnement Cloud (AWS / GCP)
+                      - text: — Expérience avec AWS (ECS Fargate, ECR, S3, CloudWatch) et certification Google Cloud (2026).
+                    - listitem [ref=f9e246]:
+                      - strong [ref=f9e247]: Interaction métiers & Cadrage
+                      - text: — Cadrage des besoins métiers chez EDF R&D et Crédit Mutuel Arkéa.
+                - generic [ref=f9e248]:
+                  - heading "Missing required skills" [level=3] [ref=f9e249]
+                  - list [ref=f9e250]:
+                    - listitem [ref=f9e251]: TensorFlow
+                    - listitem [ref=f9e252]: Hugging Face Transformers (non mentionné explicitement sous ce nom)
+                    - listitem [ref=f9e253]: LlamaIndex
+              - generic [ref=f9e254]:
+                - heading "CV improvement suggestions" [level=3] [ref=f9e255]
+                - list [ref=f9e256]:
+                  - listitem [ref=f9e257]: Mettre en avant de manière plus explicite l'utilisation des bibliothèques Hugging Face Transformers dans la partie NLP/LLM.
+                  - listitem [ref=f9e258]: Si applicable, mentionner toute expérience ou familiarité avec LlamaIndex ou TensorFlow.
+                  - listitem [ref=f9e259]: Mettre en valeur le cumul des mois d'expérience pratique (EDF R&D, Arkéa, ERMES) pour atténuer l'impression de profil débutant.
+          - generic [ref=f9e260]:
+            - heading "Description" [level=2] [ref=f9e261]
+            - generic [ref=f9e262]: "Les missions du poste MP DATA est une société spécialisée dans l'acquisition, le traitement, et la valorisation des données. Depuis sa création en 2015, MP DATA accompagne ses clients, majoritairement industriels, dans le management de leur performance et l'exploitation de leur données. Les collaborateurs, tous issus de grandes écoles, incarnent au quotidien les valeurs d'Excellence, de Partage et d'Engagement. Ils associent savoir-faire technique, méthodologie et passion et mettent leurs compétences au service de missions et projets au sein de grands groupes français. MP DATA accompagne ses clients sur toute la chaine au travers de 3 pôles d'expertise : Conseil et Stratégie, Infrastructure & CloudOPS, Data Science. Chez MP DATA, les équipes commerciales cherchent des missions en fonction des envies des collaborateurs et non pas l'inverse. Les consultants sont accompagnés dans tous leurs projets, de la mobilité géographique, au changement de secteur d'activité en passant par le développement de nouvelles compétences. Rejoindre MP DATA, c'est la garantie de travailler sur des sujets passionnants avec un cadre technique fort. Pourquoi nous rejoindre ? - Des projets techniques exigeants au coeur des environnements industriels. - Une culture orientée expertise, excellence technique, bienveillance et autonomie. - Des perspectives d'évolution rapides selon vos envies (expertise, lead technique, pilotage...). - Un environnement flexible, dynamique, avec une équipe soudée et passionnée. - Une implantation locale forte à Toulouse, combinée à une vision innovante dans la Data. Qui sommes-nous ? MP DATA est une entreprise spécialisée dans l'acquisition, le traitement et la valorisation des données. Depuis 2015, elle accompagne principalement des industriels dans l'optimisation de leur performance et l'exploitation de leurs données. Ses collaborateurs, issus de grandes écoles, incarnent les valeurs d'Excellence, de Partage et d'Engagement. Leur expertise technique et méthodologique leur permet d'intervenir sur des projets d'envergure. MP DATA structure son offre autour de trois pôles : Conseil et Stratégie Infrastructure & CloudOPS Data Science Ici, les missions s'adaptent aux aspirations des collaborateurs. Mobilité, changement de secteur ou acquisition de nouvelles compétences : chacun est accompagné dans son évolution. Rejoindre MP DATA, c'est s'engager sur des projets passionnants dans un cadre technique exigeant. Votre mission : L'IA générative, les LLM et les approches comme le Retrieval-Augmented Generation (RAG) vous passionnent ? Vous souhaitez les appliquer à des problématiques métier concrètes chez des clients industriels ? C'est exactement ce que nous proposons. Nous recherchons un(e) Data Scientist expérimenté(e) pour intervenir, dans le cadre d'une mission longue, chez l'un de nos clients grands comptes, sur un projet structurant autour de l'IA générative : - Adapter des modèles de langage à des besoins spécifiques (fine-tuning, prompt engineering, distillation). - Concevoir et expérimenter des systèmes RAG intégrant des bases de connaissances métiers. - Optimiser les performances des modèles de génération et de recommandation dans un environnement réel. - Collaborer avec les Data Engineers pour assurer l'industrialisation des solutions. - Interagir avec les équipes métier pour garantir un impact opérationnel concret. - Mener une veille active sur les évolutions des transformers, diffusion models et approches hybrides. Le profil recherché Profil recherché :Diplômé(e) d'une grande école d'ingénieur (2ans), avec une solide expérience en IA générative et Machine Learning.Maîtrise de Python, TensorFlow, PyTorch, Hugging Face Transformers, LangChain, LlamaIndex.Bonne connaissance des architectures RAG, fine-tuning de modèles de langage et bases de données vectorielles (FAISS, Pinecone...).Une expérience sur le déploiement de modèles en production et l'environnement Cloud (AWS, GCP ou Azure) serait un plus.Une expérience avec GCP serait également un atout.Esprit critique, curiosité et goût pour le travail en équipe interdisciplinaire. Bienvenue chez MP Data MP DATA est une société spécialisée dans l'acquisition, le traitement, et la valorisation des données.Depuis sa création en 2015, MP DATA accompagne ses clients, majoritairement industriels, dans le management de leur performance et l'exploitation de leur données. Les collaborateurs, tous issus de grandes écoles, incarnent au quotidien les valeurs d'Excellence, de Partage et d'Engagement.Ils associent savoir-faire technique, méthodologie et passion et mettent leurs compétences au service de missions et projets au sein de grands groupes français. MP DATA accompagne ses clients sur toute la chaine au travers de 3 pôles d'expertise : Conseil et Stratégie, Infrastructure & CloudOPS, Data Science. Chez MP DATA, les équipes commerciales cherchent des missions en fonction des envies des collaborateurs et non pas l'inverse. Les consultants sont accompagnés dans tous leurs projets, de la mobilité géographique, au changement de secteur d'activité en passant par le développement de nouvelles compétences. Rejoindre MP DATA, c'est la garantie de travailler sur des sujets passionnants avec un cadre technique fort. Pourquoi nous rejoindre ?Des projets techniques exigeants au coeur des environnements industriels.Une culture orientée expertise, excellence technique, bienveillance et autonomie.Des perspectives d'évolution rapides selon vos envies (expertise, lead technique, pilotage...).Un environnement flexible, dynamique, avec une équipe soudée et passionnée.Une implantation locale forte à Toulouse, combinée à une vision innovante dans la Data."
+          - link "Open original listing ↗" [ref=f9e263] [cursor=pointer]:
+            - /url: https://www.hellowork.com/fr-fr/emplois/77282260.html
+  - alert [ref=f9e208]

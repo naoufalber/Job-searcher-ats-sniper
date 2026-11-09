@@ -1,0 +1,196 @@
+- generic [active] [ref=f22e1]:
+  - generic [ref=f22e2]:
+    - banner [ref=f22e3]:
+      - generic [ref=f22e4]:
+        - link "A ATS SNIPER" [ref=f22e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f22e6]: A
+          - generic [ref=f22e7]: ATS SNIPER
+        - navigation "Primary navigation" [ref=f22e8]:
+          - link "Discover" [ref=f22e9] [cursor=pointer]:
+            - /url: /jobs
+          - link "CV" [ref=f22e10] [cursor=pointer]:
+            - /url: /cv
+          - link "Saved" [ref=f22e11] [cursor=pointer]:
+            - /url: /saved
+          - link "Tracker" [ref=f22e12] [cursor=pointer]:
+            - /url: /tracker
+          - link "Settings" [ref=f22e13] [cursor=pointer]:
+            - /url: /settings
+        - button "Sign out" [ref=f22e15] [cursor=pointer]
+    - main [ref=f22e16]:
+      - generic [ref=f22e17]:
+        - status [ref=f22e18]: Live updates on. Scores appear automatically as matching completes.
+        - generic [ref=f22e19]:
+          - paragraph [ref=f22e20]: Discovery
+          - heading "Open roles" [level=1] [ref=f22e21]
+          - paragraph [ref=f22e22]: All collected roles, including historical roles for onboarding and backfill.
+          - generic [ref=f22e23]:
+            - textbox "Title, company, or location" [ref=f22e24]: Safran
+            - combobox [ref=f22e25]:
+              - option "All sources" [selected]
+              - option "ashby"
+              - option "gh"
+              - option "hellowork"
+              - option "lever"
+              - option "local-fixture"
+              - option "local-integration"
+              - option "smartrecruiters"
+              - option "sr"
+              - option "wd"
+              - option "welcome_to_the_jungle"
+            - textbox "Country" [ref=f22e26]
+            - textbox "Contract type" [ref=f22e27]
+            - combobox [ref=f22e28]:
+              - option "New jobs"
+              - option "All jobs" [selected]
+            - combobox [ref=f22e29]:
+              - option "All statuses" [selected]
+              - option "High match (80+)"
+              - option "Good match (65-79)"
+              - option "Low match (<65)"
+              - option "Pending analysis"
+              - option "Needs description"
+              - option "Saved"
+              - option "Applied"
+            - generic [ref=f22e30]:
+              - combobox [ref=f22e31]:
+                - option "Recommended order" [selected]
+                - option "Match score"
+                - option "Date discovered"
+                - option "Company"
+              - button "Apply filters" [ref=f22e32] [cursor=pointer]
+        - table [ref=f22e34]:
+          - rowgroup [ref=f22e35]:
+            - row [ref=f22e36]:
+              - columnheader "Job title" [ref=f22e37]
+              - columnheader "Company" [ref=f22e38]
+              - columnheader "Location" [ref=f22e39]
+              - columnheader "Source" [ref=f22e40]
+              - columnheader "First seen" [ref=f22e41]
+              - columnheader "Contract" [ref=f22e42]
+              - columnheader "CV match" [ref=f22e43]
+              - columnheader "Contacts" [ref=f22e44]
+              - columnheader "Status" [ref=f22e45]
+              - columnheader "Action" [ref=f22e46]
+          - rowgroup [ref=f22e47]:
+            - row [ref=f22e48]:
+              - cell "Statisticien - Data Scientist H/F New" [ref=f22e49]:
+                - generic [ref=f22e50]:
+                  - link "Statisticien - Data Scientist H/F" [ref=f22e51] [cursor=pointer]:
+                    - /url: /jobs/e9943ab2-9749-4a47-9c67-ebd89421f654
+                  - generic [ref=f22e52]: New
+              - cell "Safran" [ref=f22e53]
+              - cell "Moissy-Cramayel - 77, France" [ref=f22e54]
+              - cell "hellowork" [ref=f22e55]
+              - cell [ref=f22e56]:
+                - time [ref=f22e57]: 11/9/2026, 12:53:46 PM
+              - cell "Not listed" [ref=f22e58]
+              - cell "85/100" [ref=f22e59]
+              - cell [ref=f22e60]:
+                - generic [ref=f22e61]:
+                  - link "Manager search" [ref=f22e62] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Safran%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f22e63] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Safran%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "To review" [ref=f22e64]
+              - cell [ref=f22e65]:
+                - link "View role" [ref=f22e66] [cursor=pointer]:
+                  - /url: /jobs/e9943ab2-9749-4a47-9c67-ebd89421f654
+                - button "Mark seen" [ref=f22e67] [cursor=pointer]
+            - row [ref=f22e68]:
+              - cell "AI Engineer (H/F) New" [ref=f22e69]:
+                - generic [ref=f22e70]:
+                  - link "AI Engineer (H/F)" [ref=f22e71] [cursor=pointer]:
+                    - /url: /jobs/410d38f6-2b8f-4cba-ab99-69b4e7384e2d
+                  - generic [ref=f22e72]: New
+              - cell "Safran.AI (ex-Preligens)" [ref=f22e73]
+              - cell "Paris, France" [ref=f22e74]
+              - cell "welcome_to_the_jungle" [ref=f22e75]
+              - cell [ref=f22e76]:
+                - time [ref=f22e77]: 11/9/2026, 9:43:08 AM
+              - cell "Not listed" [ref=f22e78]
+              - cell "Needs description" [ref=f22e79]
+              - cell [ref=f22e80]:
+                - generic [ref=f22e81]:
+                  - link "Manager search" [ref=f22e82] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Safran.AI%20%28ex%20Preligens%29%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f22e83] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Safran.AI%20%28ex%20Preligens%29%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f22e84]:
+                - text: Needs description
+                - paragraph [ref=f22e85]: No description returned
+              - cell [ref=f22e86]:
+                - link "View role" [ref=f22e87] [cursor=pointer]:
+                  - /url: /jobs/410d38f6-2b8f-4cba-ab99-69b4e7384e2d
+                - button "Mark seen" [ref=f22e88] [cursor=pointer]
+            - row [ref=f22e89]:
+              - cell "Data Engineer (H/F) New" [ref=f22e90]:
+                - generic [ref=f22e91]:
+                  - link "Data Engineer (H/F)" [ref=f22e92] [cursor=pointer]:
+                    - /url: /jobs/172ced1e-88d6-4abf-90af-c5847a9a95d0
+                  - generic [ref=f22e93]: New
+              - cell "Safran.AI (ex-Preligens)" [ref=f22e94]
+              - cell "Paris, France" [ref=f22e95]
+              - cell "welcome_to_the_jungle" [ref=f22e96]
+              - cell [ref=f22e97]:
+                - time [ref=f22e98]: 11/9/2026, 9:43:06 AM
+              - cell "Not listed" [ref=f22e99]
+              - cell "Needs description" [ref=f22e100]
+              - cell [ref=f22e101]:
+                - generic [ref=f22e102]:
+                  - link "Manager search" [ref=f22e103] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Safran.AI%20%28ex%20Preligens%29%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f22e104] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Safran.AI%20%28ex%20Preligens%29%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f22e105]:
+                - text: Needs description
+                - paragraph [ref=f22e106]: No description returned
+              - cell [ref=f22e107]:
+                - link "View role" [ref=f22e108] [cursor=pointer]:
+                  - /url: /jobs/172ced1e-88d6-4abf-90af-c5847a9a95d0
+                - button "Mark seen" [ref=f22e109] [cursor=pointer]
+            - row [ref=f22e110]:
+              - cell "Ingénieur Data & IA F/H New" [ref=f22e111]:
+                - generic [ref=f22e112]:
+                  - link "Ingénieur Data & IA F/H" [ref=f22e113] [cursor=pointer]:
+                    - /url: /jobs/c7698b65-8552-4681-9d14-e88f9823a4ba
+                  - generic [ref=f22e114]: New
+              - cell "Safran" [ref=f22e115]
+              - cell "Plaisir, France" [ref=f22e116]
+              - cell "welcome_to_the_jungle" [ref=f22e117]
+              - cell [ref=f22e118]:
+                - time [ref=f22e119]: 11/9/2026, 9:43:05 AM
+              - cell "Not listed" [ref=f22e120]
+              - cell "Needs description" [ref=f22e121]
+              - cell [ref=f22e122]:
+                - generic [ref=f22e123]:
+                  - link "Manager search" [ref=f22e124] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Safran%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f22e125] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Safran%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f22e126]:
+                - text: Needs description
+                - paragraph [ref=f22e127]: No description returned
+              - cell [ref=f22e128]:
+                - link "View role" [ref=f22e129] [cursor=pointer]:
+                  - /url: /jobs/c7698b65-8552-4681-9d14-e88f9823a4ba
+                - button "Mark seen" [ref=f22e130] [cursor=pointer]
+            - row [ref=f22e131]:
+              - cell [ref=f22e132]:
+                - link "Stagiaire Data Management - Data Governance H/F" [ref=f22e134] [cursor=pointer]:
+                  - /url: /jobs/1ba6bbfb-85f1-4707-b349-55e1d7dc1317
+              - cell "Safran" [ref=f22e135]
+              - cell "Vélizy-Villacoublay, Île-de-France, FR" [ref=f22e136]
+              - cell "hellowork" [ref=f22e137]
+              - cell [ref=f22e138]:
+                - time [ref=f22e139]: 11/8/2026, 11:43:02 AM
+              - cell "Not listed" [ref=f22e140]
+              - cell "Queued for matching" [ref=f22e141]
+              - cell "Not listed" [ref=f22e142]
+              - cell "Queued for matching" [ref=f22e144]
+              - cell [ref=f22e145]:
+                - link "View role" [ref=f22e146] [cursor=pointer]:
+                  - /url: /jobs/1ba6bbfb-85f1-4707-b349-55e1d7dc1317
+                - button "Mark seen" [ref=f22e147] [cursor=pointer]
+  - alert [ref=f22e148]

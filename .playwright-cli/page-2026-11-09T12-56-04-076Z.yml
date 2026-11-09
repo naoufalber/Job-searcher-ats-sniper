@@ -1,0 +1,165 @@
+- generic [active] [ref=f13e1]:
+  - generic [ref=f13e2]:
+    - banner [ref=f13e3]:
+      - generic [ref=f13e4]:
+        - link "A ATS SNIPER" [ref=f13e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f13e6]: A
+          - generic [ref=f13e7]: ATS SNIPER
+        - navigation "Primary navigation" [ref=f13e8]:
+          - link "Discover" [ref=f13e9] [cursor=pointer]:
+            - /url: /jobs
+          - link "CV" [ref=f13e10] [cursor=pointer]:
+            - /url: /cv
+          - link "Saved" [ref=f13e11] [cursor=pointer]:
+            - /url: /saved
+          - link "Tracker" [ref=f13e12] [cursor=pointer]:
+            - /url: /tracker
+          - link "Settings" [ref=f13e13] [cursor=pointer]:
+            - /url: /settings
+        - button "Sign out" [ref=f13e15] [cursor=pointer]
+    - main [ref=f13e16]:
+      - generic [ref=f13e17]:
+        - generic [ref=f13e18]:
+          - paragraph [ref=f13e19]: Discovery
+          - heading "Open roles" [level=1] [ref=f13e20]
+          - paragraph [ref=f13e21]: All collected roles, including historical roles for onboarding and backfill.
+          - generic [ref=f13e22]:
+            - textbox "Title, company, or location" [ref=f13e23]: Datatorii
+            - combobox [ref=f13e24]:
+              - option "All sources" [selected]
+              - option "ashby"
+              - option "gh"
+              - option "hellowork"
+              - option "lever"
+              - option "local-fixture"
+              - option "local-integration"
+              - option "smartrecruiters"
+              - option "sr"
+              - option "wd"
+              - option "welcome_to_the_jungle"
+            - textbox "Country" [ref=f13e25]
+            - textbox "Contract type" [ref=f13e26]
+            - combobox [ref=f13e27]:
+              - option "New jobs"
+              - option "All jobs" [selected]
+            - combobox [ref=f13e28]:
+              - option "All statuses" [selected]
+              - option "High match (80+)"
+              - option "Good match (65-79)"
+              - option "Low match (<65)"
+              - option "Pending analysis"
+              - option "Needs description"
+              - option "Saved"
+              - option "Applied"
+            - generic [ref=f13e29]:
+              - combobox [ref=f13e30]:
+                - option "Recommended order" [selected]
+                - option "Match score"
+                - option "Date discovered"
+                - option "Company"
+              - button "Apply filters" [ref=f13e31] [cursor=pointer]
+        - table [ref=f13e33]:
+          - rowgroup [ref=f13e34]:
+            - row [ref=f13e35]:
+              - columnheader "Job title" [ref=f13e36]
+              - columnheader "Company" [ref=f13e37]
+              - columnheader "Location" [ref=f13e38]
+              - columnheader "Source" [ref=f13e39]
+              - columnheader "First seen" [ref=f13e40]
+              - columnheader "Contract" [ref=f13e41]
+              - columnheader "CV match" [ref=f13e42]
+              - columnheader "Contacts" [ref=f13e43]
+              - columnheader "Status" [ref=f13e44]
+              - columnheader "Action" [ref=f13e45]
+          - rowgroup [ref=f13e46]:
+            - row [ref=f13e47]:
+              - cell "Data Analyst (H/F) New" [ref=f13e48]:
+                - generic [ref=f13e49]:
+                  - link "Data Analyst (H/F)" [ref=f13e50] [cursor=pointer]:
+                    - /url: /jobs/a16871be-cda0-40d5-a961-243ba5c20902
+                  - generic [ref=f13e51]: New
+              - cell "Datatorii" [ref=f13e52]
+              - cell "Paris, France" [ref=f13e53]
+              - cell "welcome_to_the_jungle" [ref=f13e54]
+              - cell [ref=f13e55]:
+                - time [ref=f13e56]: 11/9/2026, 11:04:54 AM
+              - cell "Not listed" [ref=f13e57]
+              - cell "-" [ref=f13e58]
+              - cell [ref=f13e59]:
+                - generic [ref=f13e60]:
+                  - link "Manager search" [ref=f13e61] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Datatorii%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f13e62] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Datatorii%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f13e63]:
+                - text: Needs description
+                - paragraph [ref=f13e64]: Extraction details not yet recorded.
+              - cell [ref=f13e65]:
+                - link "View role" [ref=f13e66] [cursor=pointer]:
+                  - /url: /jobs/a16871be-cda0-40d5-a961-243ba5c20902
+                - button "Mark seen" [ref=f13e67] [cursor=pointer]
+            - row [ref=f13e68]:
+              - cell "Consultant Data/Consultant BI (H/F) New" [ref=f13e69]:
+                - generic [ref=f13e70]:
+                  - link "Consultant Data/Consultant BI (H/F)" [ref=f13e71] [cursor=pointer]:
+                    - /url: /jobs/9abe17b3-d779-4af3-b1f2-fad0cf08684b
+                  - generic [ref=f13e72]: New
+              - cell "Datatorii" [ref=f13e73]
+              - cell "Paris, France" [ref=f13e74]
+              - cell "welcome_to_the_jungle" [ref=f13e75]
+              - cell [ref=f13e76]:
+                - time [ref=f13e77]: 11/9/2026, 9:43:22 AM
+              - cell "Not listed" [ref=f13e78]
+              - cell "-" [ref=f13e79]
+              - cell "Not listed" [ref=f13e80]
+              - cell [ref=f13e82]:
+                - text: Needs description
+                - paragraph [ref=f13e83]: Extraction details not yet recorded.
+              - cell [ref=f13e84]:
+                - link "View role" [ref=f13e85] [cursor=pointer]:
+                  - /url: /jobs/9abe17b3-d779-4af3-b1f2-fad0cf08684b
+                - button "Mark seen" [ref=f13e86] [cursor=pointer]
+            - row [ref=f13e87]:
+              - cell "Machine Learning Engineer Databricks / Microsoft New" [ref=f13e88]:
+                - generic [ref=f13e89]:
+                  - link "Machine Learning Engineer Databricks / Microsoft" [ref=f13e90] [cursor=pointer]:
+                    - /url: /jobs/dc7203aa-44ff-47ee-91a7-5759e7df9e93
+                  - generic [ref=f13e91]: New
+              - cell "Datatorii" [ref=f13e92]
+              - cell "Paris, France" [ref=f13e93]
+              - cell "welcome_to_the_jungle" [ref=f13e94]
+              - cell [ref=f13e95]:
+                - time [ref=f13e96]: 11/9/2026, 9:43:13 AM
+              - cell "Not listed" [ref=f13e97]
+              - cell "-" [ref=f13e98]
+              - cell "Not listed" [ref=f13e99]
+              - cell [ref=f13e101]:
+                - text: Needs description
+                - paragraph [ref=f13e102]: Extraction details not yet recorded.
+              - cell [ref=f13e103]:
+                - link "View role" [ref=f13e104] [cursor=pointer]:
+                  - /url: /jobs/dc7203aa-44ff-47ee-91a7-5759e7df9e93
+                - button "Mark seen" [ref=f13e105] [cursor=pointer]
+            - row [ref=f13e106]:
+              - cell "Data Engineer Databricks New" [ref=f13e107]:
+                - generic [ref=f13e108]:
+                  - link "Data Engineer Databricks" [ref=f13e109] [cursor=pointer]:
+                    - /url: /jobs/9a274889-6fa8-48e4-8ad8-876839be09ac
+                  - generic [ref=f13e110]: New
+              - cell "Datatorii" [ref=f13e111]
+              - cell "Paris, France" [ref=f13e112]
+              - cell "welcome_to_the_jungle" [ref=f13e113]
+              - cell [ref=f13e114]:
+                - time [ref=f13e115]: 11/9/2026, 9:43:00 AM
+              - cell "Not listed" [ref=f13e116]
+              - cell "-" [ref=f13e117]
+              - cell "Not listed" [ref=f13e118]
+              - cell [ref=f13e120]:
+                - text: Needs description
+                - paragraph [ref=f13e121]: Extraction details not yet recorded.
+              - cell [ref=f13e122]:
+                - link "View role" [ref=f13e123] [cursor=pointer]:
+                  - /url: /jobs/9a274889-6fa8-48e4-8ad8-876839be09ac
+                - button "Mark seen" [ref=f13e124] [cursor=pointer]
+  - alert [ref=f13e125]

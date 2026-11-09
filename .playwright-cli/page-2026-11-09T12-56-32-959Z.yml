@@ -1,0 +1,175 @@
+- generic [active] [ref=f14e1]:
+  - generic [ref=f14e2]:
+    - banner [ref=f14e3]:
+      - generic [ref=f14e4]:
+        - link "A ATS SNIPER" [ref=f14e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f14e6]: A
+          - generic [ref=f14e7]: ATS SNIPER
+        - navigation "Primary navigation" [ref=f14e8]:
+          - link "Discover" [ref=f14e9] [cursor=pointer]:
+            - /url: /jobs
+          - link "CV" [ref=f14e10] [cursor=pointer]:
+            - /url: /cv
+          - link "Saved" [ref=f14e11] [cursor=pointer]:
+            - /url: /saved
+          - link "Tracker" [ref=f14e12] [cursor=pointer]:
+            - /url: /tracker
+          - link "Settings" [ref=f14e13] [cursor=pointer]:
+            - /url: /settings
+        - button "Sign out" [ref=f14e15] [cursor=pointer]
+    - main [ref=f14e16]:
+      - generic [ref=f14e17]:
+        - generic [ref=f14e18]:
+          - paragraph [ref=f14e19]: Discovery
+          - heading "Open roles" [level=1] [ref=f14e20]
+          - paragraph [ref=f14e21]: All collected roles, including historical roles for onboarding and backfill.
+          - generic [ref=f14e22]:
+            - textbox "Title, company, or location" [ref=f14e23]: Mydral
+            - combobox [ref=f14e24]:
+              - option "All sources" [selected]
+              - option "ashby"
+              - option "gh"
+              - option "hellowork"
+              - option "lever"
+              - option "local-fixture"
+              - option "local-integration"
+              - option "smartrecruiters"
+              - option "sr"
+              - option "wd"
+              - option "welcome_to_the_jungle"
+            - textbox "Country" [ref=f14e25]
+            - textbox "Contract type" [ref=f14e26]
+            - combobox [ref=f14e27]:
+              - option "New jobs"
+              - option "All jobs" [selected]
+            - combobox [ref=f14e28]:
+              - option "All statuses" [selected]
+              - option "High match (80+)"
+              - option "Good match (65-79)"
+              - option "Low match (<65)"
+              - option "Pending analysis"
+              - option "Needs description"
+              - option "Saved"
+              - option "Applied"
+            - generic [ref=f14e29]:
+              - combobox [ref=f14e30]:
+                - option "Recommended order" [selected]
+                - option "Match score"
+                - option "Date discovered"
+                - option "Company"
+              - button "Apply filters" [ref=f14e31] [cursor=pointer]
+        - table [ref=f14e33]:
+          - rowgroup [ref=f14e34]:
+            - row [ref=f14e35]:
+              - columnheader "Job title" [ref=f14e36]
+              - columnheader "Company" [ref=f14e37]
+              - columnheader "Location" [ref=f14e38]
+              - columnheader "Source" [ref=f14e39]
+              - columnheader "First seen" [ref=f14e40]
+              - columnheader "Contract" [ref=f14e41]
+              - columnheader "CV match" [ref=f14e42]
+              - columnheader "Contacts" [ref=f14e43]
+              - columnheader "Status" [ref=f14e44]
+              - columnheader "Action" [ref=f14e45]
+          - rowgroup [ref=f14e46]:
+            - row [ref=f14e47]:
+              - cell "Consultant Data – Data & Stratégie / Métier (H/F) New" [ref=f14e48]:
+                - generic [ref=f14e49]:
+                  - link "Consultant Data – Data & Stratégie / Métier (H/F)" [ref=f14e50] [cursor=pointer]:
+                    - /url: /jobs/90ee448e-f9da-495f-bc2c-962c4013cad1
+                  - generic [ref=f14e51]: New
+              - cell "Mydral" [ref=f14e52]
+              - cell "Paris, France" [ref=f14e53]
+              - cell "welcome_to_the_jungle" [ref=f14e54]
+              - cell [ref=f14e55]:
+                - time [ref=f14e56]: 11/9/2026, 12:49:58 PM
+              - cell "Not listed" [ref=f14e57]
+              - cell "-" [ref=f14e58]
+              - cell [ref=f14e59]:
+                - generic [ref=f14e60]:
+                  - link "Manager search" [ref=f14e61] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Mydral%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f14e62] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Mydral%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f14e63]:
+                - text: Needs description
+                - paragraph [ref=f14e64]: Provider detail request returned HTTP 403.
+              - cell [ref=f14e65]:
+                - link "View role" [ref=f14e66] [cursor=pointer]:
+                  - /url: /jobs/90ee448e-f9da-495f-bc2c-962c4013cad1
+                - button "Mark seen" [ref=f14e67] [cursor=pointer]
+            - row [ref=f14e68]:
+              - cell "Consultant Data Engineer (H/F New" [ref=f14e69]:
+                - generic [ref=f14e70]:
+                  - link "Consultant Data Engineer (H/F" [ref=f14e71] [cursor=pointer]:
+                    - /url: /jobs/0854b653-c2d7-4e19-95e0-f0e50de6053e
+                  - generic [ref=f14e72]: New
+              - cell "Mydral" [ref=f14e73]
+              - cell "Paris, France" [ref=f14e74]
+              - cell "welcome_to_the_jungle" [ref=f14e75]
+              - cell [ref=f14e76]:
+                - time [ref=f14e77]: 11/9/2026, 12:49:57 PM
+              - cell "Not listed" [ref=f14e78]
+              - cell "-" [ref=f14e79]
+              - cell [ref=f14e80]:
+                - generic [ref=f14e81]:
+                  - link "Manager search" [ref=f14e82] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Mydral%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f14e83] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Mydral%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f14e84]:
+                - text: Needs description
+                - paragraph [ref=f14e85]: Provider detail request returned HTTP 403.
+              - cell [ref=f14e86]:
+                - link "View role" [ref=f14e87] [cursor=pointer]:
+                  - /url: /jobs/0854b653-c2d7-4e19-95e0-f0e50de6053e
+                - button "Mark seen" [ref=f14e88] [cursor=pointer]
+            - row [ref=f14e89]:
+              - cell "Consultant Data – Analyste / BI (H/F) New" [ref=f14e90]:
+                - generic [ref=f14e91]:
+                  - link "Consultant Data – Analyste / BI (H/F)" [ref=f14e92] [cursor=pointer]:
+                    - /url: /jobs/29a71e53-64d3-4fae-9f1b-4f6a2a3d4baf
+                  - generic [ref=f14e93]: New
+              - cell "Mydral" [ref=f14e94]
+              - cell "Paris, France" [ref=f14e95]
+              - cell "welcome_to_the_jungle" [ref=f14e96]
+              - cell [ref=f14e97]:
+                - time [ref=f14e98]: 11/9/2026, 10:53:58 AM
+              - cell "Not listed" [ref=f14e99]
+              - cell "-" [ref=f14e100]
+              - cell [ref=f14e101]:
+                - generic [ref=f14e102]:
+                  - link "Manager search" [ref=f14e103] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Mydral%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f14e104] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Mydral%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f14e105]:
+                - text: Needs description
+                - paragraph [ref=f14e106]: Extraction details not yet recorded.
+              - cell [ref=f14e107]:
+                - link "View role" [ref=f14e108] [cursor=pointer]:
+                  - /url: /jobs/29a71e53-64d3-4fae-9f1b-4f6a2a3d4baf
+                - button "Mark seen" [ref=f14e109] [cursor=pointer]
+            - row [ref=f14e110]:
+              - cell "Consultant Data – Analyste / BI (H/F) New" [ref=f14e111]:
+                - generic [ref=f14e112]:
+                  - link "Consultant Data – Analyste / BI (H/F)" [ref=f14e113] [cursor=pointer]:
+                    - /url: /jobs/78d234d2-0afe-43de-ac33-dd376a3c1e91
+                  - generic [ref=f14e114]: New
+              - cell "Mydral" [ref=f14e115]
+              - cell "Paris, France" [ref=f14e116]
+              - cell "welcome_to_the_jungle" [ref=f14e117]
+              - cell [ref=f14e118]:
+                - time [ref=f14e119]: 11/9/2026, 9:43:29 AM
+              - cell "Not listed" [ref=f14e120]
+              - cell "-" [ref=f14e121]
+              - cell "Not listed" [ref=f14e122]
+              - cell [ref=f14e124]:
+                - text: Needs description
+                - paragraph [ref=f14e125]: Extraction details not yet recorded.
+              - cell [ref=f14e126]:
+                - link "View role" [ref=f14e127] [cursor=pointer]:
+                  - /url: /jobs/78d234d2-0afe-43de-ac33-dd376a3c1e91
+                - button "Mark seen" [ref=f14e128] [cursor=pointer]
+  - alert [ref=f14e129]

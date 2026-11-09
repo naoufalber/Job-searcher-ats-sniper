@@ -1,0 +1,181 @@
+- generic [active] [ref=f21e1]:
+  - generic [ref=f21e2]:
+    - banner [ref=f21e3]:
+      - generic [ref=f21e4]:
+        - link "A ATS SNIPER" [ref=f21e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f21e6]: A
+          - generic [ref=f21e7]: ATS SNIPER
+        - navigation "Primary navigation" [ref=f21e8]:
+          - link "Discover" [ref=f21e9] [cursor=pointer]:
+            - /url: /jobs
+          - link "CV" [ref=f21e10] [cursor=pointer]:
+            - /url: /cv
+          - link "Saved" [ref=f21e11] [cursor=pointer]:
+            - /url: /saved
+          - link "Tracker" [ref=f21e12] [cursor=pointer]:
+            - /url: /tracker
+          - link "Settings" [ref=f21e13] [cursor=pointer]:
+            - /url: /settings
+        - button "Sign out" [ref=f21e15] [cursor=pointer]
+    - main [ref=f21e16]:
+      - generic [ref=f21e17]:
+        - status [ref=f21e18]: Live updates on. Scores appear automatically as matching completes.
+        - generic [ref=f21e19]:
+          - paragraph [ref=f21e20]: Discovery
+          - heading "Open roles" [level=1] [ref=f21e21]
+          - paragraph [ref=f21e22]: All collected roles, including historical roles for onboarding and backfill.
+          - generic [ref=f21e23]:
+            - textbox "Title, company, or location" [ref=f21e24]: ActinVision
+            - combobox [ref=f21e25]:
+              - option "All sources" [selected]
+              - option "ashby"
+              - option "gh"
+              - option "hellowork"
+              - option "lever"
+              - option "local-fixture"
+              - option "local-integration"
+              - option "smartrecruiters"
+              - option "sr"
+              - option "wd"
+              - option "welcome_to_the_jungle"
+            - textbox "Country" [ref=f21e26]
+            - textbox "Contract type" [ref=f21e27]
+            - combobox [ref=f21e28]:
+              - option "New jobs"
+              - option "All jobs" [selected]
+            - combobox [ref=f21e29]:
+              - option "All statuses" [selected]
+              - option "High match (80+)"
+              - option "Good match (65-79)"
+              - option "Low match (<65)"
+              - option "Pending analysis"
+              - option "Needs description"
+              - option "Saved"
+              - option "Applied"
+            - generic [ref=f21e30]:
+              - combobox [ref=f21e31]:
+                - option "Recommended order" [selected]
+                - option "Match score"
+                - option "Date discovered"
+                - option "Company"
+              - button "Apply filters" [ref=f21e32] [cursor=pointer]
+        - table [ref=f21e34]:
+          - rowgroup [ref=f21e35]:
+            - row [ref=f21e36]:
+              - columnheader "Job title" [ref=f21e37]
+              - columnheader "Company" [ref=f21e38]
+              - columnheader "Location" [ref=f21e39]
+              - columnheader "Source" [ref=f21e40]
+              - columnheader "First seen" [ref=f21e41]
+              - columnheader "Contract" [ref=f21e42]
+              - columnheader "CV match" [ref=f21e43]
+              - columnheader "Contacts" [ref=f21e44]
+              - columnheader "Status" [ref=f21e45]
+              - columnheader "Action" [ref=f21e46]
+          - rowgroup [ref=f21e47]:
+            - row [ref=f21e48]:
+              - cell "CONSULTANT MICROSOFT FABRIC - Data Engineer (F/H) New" [ref=f21e49]:
+                - generic [ref=f21e50]:
+                  - link "CONSULTANT MICROSOFT FABRIC - Data Engineer (F/H)" [ref=f21e51] [cursor=pointer]:
+                    - /url: /jobs/98929335-ec3d-46a2-8a80-2b60344e8cb2
+                  - generic [ref=f21e52]: New
+              - cell "ActinVision" [ref=f21e53]
+              - cell "Paris, France" [ref=f21e54]
+              - cell "welcome_to_the_jungle" [ref=f21e55]
+              - cell [ref=f21e56]:
+                - time [ref=f21e57]: 11/9/2026, 5:04:20 PM
+              - cell "Not listed" [ref=f21e58]
+              - cell "Needs description" [ref=f21e59]
+              - cell [ref=f21e60]:
+                - generic [ref=f21e61]:
+                  - link "Manager search" [ref=f21e62] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22ActinVision%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f21e63] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22ActinVision%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f21e64]:
+                - text: Needs description
+                - paragraph [ref=f21e65]: Provider detail request returned HTTP 403.
+              - cell [ref=f21e66]:
+                - link "View role" [ref=f21e67] [cursor=pointer]:
+                  - /url: /jobs/98929335-ec3d-46a2-8a80-2b60344e8cb2
+                - button "Mark seen" [ref=f21e68] [cursor=pointer]
+            - row [ref=f21e69]:
+              - cell "CONSULTANT.E MICROSOFT FABRIC / DATABRICKS - Data Engineer(F/H) New" [ref=f21e70]:
+                - generic [ref=f21e71]:
+                  - link "CONSULTANT.E MICROSOFT FABRIC / DATABRICKS - Data Engineer(F/H)" [ref=f21e72] [cursor=pointer]:
+                    - /url: /jobs/61a47c4f-fb45-4f94-b365-8aa8a3175009
+                  - generic [ref=f21e73]: New
+              - cell "ActinVision" [ref=f21e74]
+              - cell "Paris, France" [ref=f21e75]
+              - cell "welcome_to_the_jungle" [ref=f21e76]
+              - cell [ref=f21e77]:
+                - time [ref=f21e78]: 11/9/2026, 9:43:35 AM
+              - cell "Not listed" [ref=f21e79]
+              - cell "Needs description" [ref=f21e80]
+              - cell [ref=f21e81]:
+                - generic [ref=f21e82]:
+                  - link "Manager search" [ref=f21e83] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22ActinVision%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f21e84] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22ActinVision%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f21e85]:
+                - text: Needs description
+                - paragraph [ref=f21e86]: No description returned
+              - cell [ref=f21e87]:
+                - link "View role" [ref=f21e88] [cursor=pointer]:
+                  - /url: /jobs/61a47c4f-fb45-4f94-b365-8aa8a3175009
+                - button "Mark seen" [ref=f21e89] [cursor=pointer]
+            - row [ref=f21e90]:
+              - cell "CONSULTANT.E TABLEAU - DATA ANALYST (F/H) New" [ref=f21e91]:
+                - generic [ref=f21e92]:
+                  - link "CONSULTANT.E TABLEAU - DATA ANALYST (F/H)" [ref=f21e93] [cursor=pointer]:
+                    - /url: /jobs/1906b7c3-8e9e-4dea-a9c0-a8b329d84404
+                  - generic [ref=f21e94]: New
+              - cell "ActinVision" [ref=f21e95]
+              - cell "Paris, France" [ref=f21e96]
+              - cell "welcome_to_the_jungle" [ref=f21e97]
+              - cell [ref=f21e98]:
+                - time [ref=f21e99]: 11/9/2026, 9:43:28 AM
+              - cell "Not listed" [ref=f21e100]
+              - cell "Needs description" [ref=f21e101]
+              - cell [ref=f21e102]:
+                - generic [ref=f21e103]:
+                  - link "Manager search" [ref=f21e104] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22ActinVision%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f21e105] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22ActinVision%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f21e106]:
+                - text: Needs description
+                - paragraph [ref=f21e107]: No description returned
+              - cell [ref=f21e108]:
+                - link "View role" [ref=f21e109] [cursor=pointer]:
+                  - /url: /jobs/1906b7c3-8e9e-4dea-a9c0-a8b329d84404
+                - button "Mark seen" [ref=f21e110] [cursor=pointer]
+            - row [ref=f21e111]:
+              - cell "CONSULTANT.E POWER BI - DATA ANALYST (F/H) New" [ref=f21e112]:
+                - generic [ref=f21e113]:
+                  - link "CONSULTANT.E POWER BI - DATA ANALYST (F/H)" [ref=f21e114] [cursor=pointer]:
+                    - /url: /jobs/8558755c-0634-4da8-ab76-9423faa37584
+                  - generic [ref=f21e115]: New
+              - cell "ActinVision" [ref=f21e116]
+              - cell "Paris, France" [ref=f21e117]
+              - cell "welcome_to_the_jungle" [ref=f21e118]
+              - cell [ref=f21e119]:
+                - time [ref=f21e120]: 11/9/2026, 9:43:28 AM
+              - cell "Not listed" [ref=f21e121]
+              - cell "Needs description" [ref=f21e122]
+              - cell [ref=f21e123]:
+                - generic [ref=f21e124]:
+                  - link "Manager search" [ref=f21e125] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22ActinVision%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f21e126] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22ActinVision%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f21e127]:
+                - text: Needs description
+                - paragraph [ref=f21e128]: No description returned
+              - cell [ref=f21e129]:
+                - link "View role" [ref=f21e130] [cursor=pointer]:
+                  - /url: /jobs/8558755c-0634-4da8-ab76-9423faa37584
+                - button "Mark seen" [ref=f21e131] [cursor=pointer]
+  - alert [ref=f21e132]

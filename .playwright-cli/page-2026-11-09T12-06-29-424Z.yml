@@ -1,0 +1,245 @@
+- generic [active] [ref=f5e1]:
+  - generic [ref=f5e2]:
+    - banner [ref=f5e3]:
+      - generic [ref=f5e4]:
+        - link "A ATS SNIPER" [ref=f5e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f5e6]: A
+          - generic [ref=f5e7]: ATS SNIPER
+        - navigation "Primary navigation" [ref=f5e8]:
+          - link "Discover" [ref=f5e9] [cursor=pointer]:
+            - /url: /jobs
+          - link "CV" [ref=f5e10] [cursor=pointer]:
+            - /url: /cv
+          - link "Saved" [ref=f5e11] [cursor=pointer]:
+            - /url: /saved
+          - link "Tracker" [ref=f5e12] [cursor=pointer]:
+            - /url: /tracker
+          - link "Settings" [ref=f5e13] [cursor=pointer]:
+            - /url: /settings
+        - button "Sign out" [ref=f5e15] [cursor=pointer]
+    - main [ref=f5e16]:
+      - generic [ref=f5e17]:
+        - generic [ref=f5e18]:
+          - paragraph [ref=f5e19]: Discovery
+          - heading "Open roles" [level=1] [ref=f5e20]
+          - paragraph [ref=f5e21]: All collected roles, including historical roles for onboarding and backfill.
+          - generic [ref=f5e22]:
+            - textbox "Title, company, or location" [ref=f5e23]: MP Data
+            - combobox [ref=f5e24]:
+              - option "All sources" [selected]
+              - option "ashby"
+              - option "gh"
+              - option "hellowork"
+              - option "lever"
+              - option "local-fixture"
+              - option "local-integration"
+              - option "smartrecruiters"
+              - option "sr"
+              - option "wd"
+              - option "welcome_to_the_jungle"
+            - textbox "Country" [ref=f5e25]
+            - textbox "Contract type" [ref=f5e26]
+            - combobox [ref=f5e27]:
+              - option "New jobs"
+              - option "All jobs" [selected]
+            - combobox [ref=f5e28]:
+              - option "All statuses" [selected]
+              - option "High match (80+)"
+              - option "Good match (65-79)"
+              - option "Low match (<65)"
+              - option "Pending analysis"
+              - option "Needs description"
+              - option "Saved"
+              - option "Applied"
+            - generic [ref=f5e29]:
+              - combobox [ref=f5e30]:
+                - option "Recommended order" [selected]
+                - option "Match score"
+                - option "Date discovered"
+                - option "Company"
+              - button "Apply filters" [ref=f5e31] [cursor=pointer]
+        - table [ref=f5e33]:
+          - rowgroup [ref=f5e34]:
+            - row [ref=f5e35]:
+              - columnheader "Job title" [ref=f5e36]
+              - columnheader "Company" [ref=f5e37]
+              - columnheader "Location" [ref=f5e38]
+              - columnheader "Source" [ref=f5e39]
+              - columnheader "First seen" [ref=f5e40]
+              - columnheader "Contract" [ref=f5e41]
+              - columnheader "CV match" [ref=f5e42]
+              - columnheader "Contacts" [ref=f5e43]
+              - columnheader "Status" [ref=f5e44]
+              - columnheader "Action" [ref=f5e45]
+          - rowgroup [ref=f5e46]:
+            - row [ref=f5e47]:
+              - cell "Cloud Data Engineer - Paris New" [ref=f5e48]:
+                - generic [ref=f5e49]:
+                  - link "Cloud Data Engineer - Paris" [ref=f5e50] [cursor=pointer]:
+                    - /url: /jobs/9dba80dd-9ff7-4f6f-a156-00fde74f465a
+                  - generic [ref=f5e51]: New
+              - cell "MP DATA" [ref=f5e52]
+              - cell "Boulogne-Billancourt, France" [ref=f5e53]
+              - cell "welcome_to_the_jungle" [ref=f5e54]
+              - cell [ref=f5e55]:
+                - time [ref=f5e56]: 11/9/2026, 9:43:34 AM
+              - cell "Not listed" [ref=f5e57]
+              - cell "-" [ref=f5e58]
+              - cell "Not listed" [ref=f5e59]
+              - cell "Needs description" [ref=f5e61]
+              - cell [ref=f5e62]:
+                - link "View role" [ref=f5e63] [cursor=pointer]:
+                  - /url: /jobs/9dba80dd-9ff7-4f6f-a156-00fde74f465a
+                - button "Mark seen" [ref=f5e64] [cursor=pointer]
+            - row [ref=f5e65]:
+              - cell "Data Engineer New" [ref=f5e66]:
+                - generic [ref=f5e67]:
+                  - link "Data Engineer" [ref=f5e68] [cursor=pointer]:
+                    - /url: /jobs/f477972d-3ab6-43e8-ac2f-7024ae22f4fc
+                  - generic [ref=f5e69]: New
+              - cell "MP DATA" [ref=f5e70]
+              - cell "Boulogne-Billancourt, France" [ref=f5e71]
+              - cell "welcome_to_the_jungle" [ref=f5e72]
+              - cell [ref=f5e73]:
+                - time [ref=f5e74]: 11/9/2026, 9:43:09 AM
+              - cell "Not listed" [ref=f5e75]
+              - cell "-" [ref=f5e76]
+              - cell "Not listed" [ref=f5e77]
+              - cell "Needs description" [ref=f5e79]
+              - cell [ref=f5e80]:
+                - link "View role" [ref=f5e81] [cursor=pointer]:
+                  - /url: /jobs/f477972d-3ab6-43e8-ac2f-7024ae22f4fc
+                - button "Mark seen" [ref=f5e82] [cursor=pointer]
+            - row [ref=f5e83]:
+              - cell "AI Engineer — MLOps & Industrialisation | Paris New" [ref=f5e84]:
+                - generic [ref=f5e85]:
+                  - link "AI Engineer — MLOps & Industrialisation | Paris" [ref=f5e86] [cursor=pointer]:
+                    - /url: /jobs/8f312bf5-ad00-4144-8c82-ff85ac24eaf1
+                  - generic [ref=f5e87]: New
+              - cell "MP DATA" [ref=f5e88]
+              - cell "Boulogne-Billancourt, France" [ref=f5e89]
+              - cell "welcome_to_the_jungle" [ref=f5e90]
+              - cell [ref=f5e91]:
+                - time [ref=f5e92]: 11/9/2026, 9:42:59 AM
+              - cell "Not listed" [ref=f5e93]
+              - cell "-" [ref=f5e94]
+              - cell "Not listed" [ref=f5e95]
+              - cell "Needs description" [ref=f5e97]
+              - cell [ref=f5e98]:
+                - link "View role" [ref=f5e99] [cursor=pointer]:
+                  - /url: /jobs/8f312bf5-ad00-4144-8c82-ff85ac24eaf1
+                - button "Mark seen" [ref=f5e100] [cursor=pointer]
+            - row [ref=f5e101]:
+              - cell "Data Scientist - F/H - Lille New" [ref=f5e102]:
+                - generic [ref=f5e103]:
+                  - link "Data Scientist - F/H - Lille" [ref=f5e104] [cursor=pointer]:
+                    - /url: /jobs/da1c42d7-2baa-4396-9633-feeabba843fc
+                  - generic [ref=f5e105]: New
+              - cell "MP DATA" [ref=f5e106]
+              - cell "Lille, France" [ref=f5e107]
+              - cell "welcome_to_the_jungle" [ref=f5e108]
+              - cell [ref=f5e109]:
+                - time [ref=f5e110]: 11/9/2026, 9:42:58 AM
+              - cell "Not listed" [ref=f5e111]
+              - cell "-" [ref=f5e112]
+              - cell "Not listed" [ref=f5e113]
+              - cell "Needs description" [ref=f5e115]
+              - cell [ref=f5e116]:
+                - link "View role" [ref=f5e117] [cursor=pointer]:
+                  - /url: /jobs/da1c42d7-2baa-4396-9633-feeabba843fc
+                - button "Mark seen" [ref=f5e118] [cursor=pointer]
+            - row [ref=f5e119]:
+              - cell "Data Scientist - H/F New" [ref=f5e120]:
+                - generic [ref=f5e121]:
+                  - link "Data Scientist - H/F" [ref=f5e122] [cursor=pointer]:
+                    - /url: /jobs/27b27f96-cf5c-43b1-a0f3-b7af675bdf98
+                  - generic [ref=f5e123]: New
+              - cell "MP DATA" [ref=f5e124]
+              - cell "Balma, France" [ref=f5e125]
+              - cell "welcome_to_the_jungle" [ref=f5e126]
+              - cell [ref=f5e127]:
+                - time [ref=f5e128]: 11/9/2026, 9:42:55 AM
+              - cell "Not listed" [ref=f5e129]
+              - cell "-" [ref=f5e130]
+              - cell "Not listed" [ref=f5e131]
+              - cell "Needs description" [ref=f5e133]
+              - cell [ref=f5e134]:
+                - link "View role" [ref=f5e135] [cursor=pointer]:
+                  - /url: /jobs/27b27f96-cf5c-43b1-a0f3-b7af675bdf98
+                - button "Mark seen" [ref=f5e136] [cursor=pointer]
+            - row [ref=f5e137]:
+              - cell "Data Scientist - H/F New" [ref=f5e138]:
+                - generic [ref=f5e139]:
+                  - link "Data Scientist - H/F" [ref=f5e140] [cursor=pointer]:
+                    - /url: /jobs/b7a0f6f1-e213-4080-aa12-49e5761774f6
+                  - generic [ref=f5e141]: New
+              - cell "MP DATA" [ref=f5e142]
+              - cell "Boulogne-Billancourt, France" [ref=f5e143]
+              - cell "welcome_to_the_jungle" [ref=f5e144]
+              - cell [ref=f5e145]:
+                - time [ref=f5e146]: 11/9/2026, 9:38:48 AM
+              - cell "Not listed" [ref=f5e147]
+              - cell "-" [ref=f5e148]
+              - cell "Not listed" [ref=f5e149]
+              - cell "Needs description" [ref=f5e151]
+              - cell [ref=f5e152]:
+                - link "View role" [ref=f5e153] [cursor=pointer]:
+                  - /url: /jobs/b7a0f6f1-e213-4080-aa12-49e5761774f6
+                - button "Mark seen" [ref=f5e154] [cursor=pointer]
+            - row [ref=f5e155]:
+              - cell [ref=f5e156]:
+                - link "Data Engineer H/F" [ref=f5e158] [cursor=pointer]:
+                  - /url: /jobs/1cca5142-0a74-46c8-96fc-a84c262a79fb
+              - cell "MP Data" [ref=f5e159]
+              - cell "Paris - 75, France" [ref=f5e160]
+              - cell "hellowork" [ref=f5e161]
+              - cell [ref=f5e162]:
+                - time [ref=f5e163]: 11/7/2026, 10:42:55 PM
+              - cell "Not listed" [ref=f5e164]
+              - cell "-" [ref=f5e165]
+              - cell "Not listed" [ref=f5e166]
+              - cell "Needs description" [ref=f5e168]
+              - cell [ref=f5e169]:
+                - link "View role" [ref=f5e170] [cursor=pointer]:
+                  - /url: /jobs/1cca5142-0a74-46c8-96fc-a84c262a79fb
+                - button "Mark seen" [ref=f5e171] [cursor=pointer]
+            - row [ref=f5e172]:
+              - cell "Data Scientist - IA Générative H/F New" [ref=f5e173]:
+                - generic [ref=f5e174]:
+                  - link "Data Scientist - IA Générative H/F" [ref=f5e175] [cursor=pointer]:
+                    - /url: /jobs/7be3674a-5d84-4d41-ba19-aa4d29d976e0
+                  - generic [ref=f5e176]: New
+              - cell "MP Data" [ref=f5e177]
+              - cell "Paris - 75, France" [ref=f5e178]
+              - cell "hellowork" [ref=f5e179]
+              - cell [ref=f5e180]:
+                - time [ref=f5e181]: 11/9/2026, 9:29:44 AM
+              - cell "Not listed" [ref=f5e182]
+              - cell "-" [ref=f5e183]
+              - cell "Not listed" [ref=f5e184]
+              - cell "To review" [ref=f5e186]
+              - cell [ref=f5e187]:
+                - link "View role" [ref=f5e188] [cursor=pointer]:
+                  - /url: /jobs/7be3674a-5d84-4d41-ba19-aa4d29d976e0
+                - button "Mark seen" [ref=f5e189] [cursor=pointer]
+            - row [ref=f5e190]:
+              - cell "Data Scientist H/F New" [ref=f5e191]:
+                - generic [ref=f5e192]:
+                  - link "Data Scientist H/F" [ref=f5e193] [cursor=pointer]:
+                    - /url: /jobs/efce9f75-40c1-4500-8d2c-b1e8b8115f6c
+                  - generic [ref=f5e194]: New
+              - cell "MP Data" [ref=f5e195]
+              - cell "Toulouse - 31, France" [ref=f5e196]
+              - cell "hellowork" [ref=f5e197]
+              - cell [ref=f5e198]:
+                - time [ref=f5e199]: 11/9/2026, 9:26:40 AM
+              - cell "Not listed" [ref=f5e200]
+              - cell "-" [ref=f5e201]
+              - cell "Not listed" [ref=f5e202]
+              - cell "Needs description" [ref=f5e204]
+              - cell [ref=f5e205]:
+                - link "View role" [ref=f5e206] [cursor=pointer]:
+                  - /url: /jobs/efce9f75-40c1-4500-8d2c-b1e8b8115f6c
+                - button "Mark seen" [ref=f5e207] [cursor=pointer]
+  - alert [ref=f5e208]

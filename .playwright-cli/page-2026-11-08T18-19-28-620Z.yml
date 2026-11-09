@@ -1,0 +1,39 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - link "A ATS SNIPER" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e6]: A
+          - generic [ref=e7]: ATS SNIPER
+        - navigation "Primary navigation" [ref=e8]:
+          - link "How it works" [ref=e9] [cursor=pointer]:
+            - /url: "#how-it-works"
+          - link "Features" [ref=e10] [cursor=pointer]:
+            - /url: "#features"
+          - link "Sign in" [ref=e11] [cursor=pointer]:
+            - /url: /login
+          - link "Get started" [ref=e12] [cursor=pointer]:
+            - /url: /login?mode=signup
+        - link "Sign in" [ref=e13] [cursor=pointer]:
+          - /url: /login
+    - main [ref=e14]:
+      - generic [ref=e15]:
+        - paragraph [ref=e16]: Your workspace
+        - heading "Sign in to ATS Sniper" [level=1] [ref=e17]
+        - paragraph [ref=e18]: Use your account to save roles and track applications. Local emails are captured in Mailpit.
+        - generic [ref=e19]:
+          - generic [ref=e20]:
+            - text: Email address
+            - textbox "Email address" [ref=e21]
+          - generic [ref=e22]:
+            - text: Password
+            - textbox "Password" [ref=e23]
+          - button "Sign in" [ref=e24] [cursor=pointer]
+        - generic [ref=e25]:
+          - button "Create an account" [ref=e26] [cursor=pointer]
+          - button "Forgot password?" [ref=e27] [cursor=pointer]
+        - paragraph [ref=e28]:
+          - link "Return home" [ref=e29] [cursor=pointer]:
+            - /url: /
+  - alert [ref=e30]

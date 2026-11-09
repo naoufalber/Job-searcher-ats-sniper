@@ -1,0 +1,1140 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e2]:
+    - banner [ref=f4e3]:
+      - generic [ref=f4e4]:
+        - link "A ATS SNIPER" [ref=f4e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f4e6]: A
+          - generic [ref=f4e7]: ATS SNIPER
+        - navigation "Primary navigation" [ref=f4e8]:
+          - link "Discover" [ref=f4e9] [cursor=pointer]:
+            - /url: /jobs
+          - link "CV" [ref=f4e10] [cursor=pointer]:
+            - /url: /cv
+          - link "Saved" [ref=f4e11] [cursor=pointer]:
+            - /url: /saved
+          - link "Tracker" [ref=f4e12] [cursor=pointer]:
+            - /url: /tracker
+          - link "Settings" [ref=f4e13] [cursor=pointer]:
+            - /url: /settings
+        - button "Sign out" [ref=f4e15] [cursor=pointer]
+    - main [ref=f4e16]:
+      - generic [ref=f4e42]:
+        - generic [ref=f4e43]:
+          - paragraph [ref=f4e44]: Discovery
+          - heading "Open roles" [level=1] [ref=f4e45]
+          - paragraph [ref=f4e46]: New roles discovered since staging activation.
+          - generic [ref=f4e47]:
+            - textbox "Title, company, or location" [ref=f4e48]
+            - combobox [ref=f4e49]:
+              - option "All sources" [selected]
+              - option "ashby"
+              - option "gh"
+              - option "hellowork"
+              - option "lever"
+              - option "local-fixture"
+              - option "local-integration"
+              - option "smartrecruiters"
+              - option "sr"
+              - option "wd"
+              - option "welcome_to_the_jungle"
+            - textbox "Country" [ref=f4e50]
+            - textbox "Contract type" [ref=f4e51]
+            - combobox [ref=f4e52]:
+              - option "New jobs" [selected]
+              - option "All jobs"
+            - combobox [ref=f4e53]:
+              - option "All statuses" [selected]
+              - option "High match (80+)"
+              - option "Good match (65-79)"
+              - option "Low match (<65)"
+              - option "Pending analysis"
+              - option "Needs description"
+              - option "Saved"
+              - option "Applied"
+            - generic [ref=f4e54]:
+              - combobox [ref=f4e55]:
+                - option "Recommended order" [selected]
+                - option "Match score"
+                - option "Date discovered"
+                - option "Company"
+              - button "Apply filters" [ref=f4e56] [cursor=pointer]
+        - table [ref=f4e58]:
+          - rowgroup [ref=f4e59]:
+            - row [ref=f4e60]:
+              - columnheader "Job title" [ref=f4e61]
+              - columnheader "Company" [ref=f4e62]
+              - columnheader "Location" [ref=f4e63]
+              - columnheader "Source" [ref=f4e64]
+              - columnheader "First seen" [ref=f4e65]
+              - columnheader "Contract" [ref=f4e66]
+              - columnheader "CV match" [ref=f4e67]
+              - columnheader "Contacts" [ref=f4e68]
+              - columnheader "Status" [ref=f4e69]
+              - columnheader "Action" [ref=f4e70]
+          - rowgroup [ref=f4e71]:
+            - row [ref=f4e72]:
+              - cell "Data Engineer Bi H/F New" [ref=f4e73]:
+                - generic [ref=f4e74]:
+                  - link "Data Engineer Bi H/F" [ref=f4e75] [cursor=pointer]:
+                    - /url: /jobs/93a530b9-176c-4ee3-a8c2-37e40872480c
+                  - generic [ref=f4e76]: New
+              - cell "Culligan" [ref=f4e77]
+              - cell "Versailles - 78, France" [ref=f4e78]
+              - cell "hellowork" [ref=f4e79]
+              - cell [ref=f4e80]:
+                - time [ref=f4e81]: 11/9/2026, 11:14:56 AM
+              - cell "Not listed" [ref=f4e82]
+              - cell "-" [ref=f4e83]
+              - cell [ref=f4e84]:
+                - generic [ref=f4e85]:
+                  - link "Manager search" [ref=f4e86] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Culligan%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e87] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Culligan%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "To review" [ref=f4e88]
+              - cell [ref=f4e89]:
+                - link "View role" [ref=f4e90] [cursor=pointer]:
+                  - /url: /jobs/93a530b9-176c-4ee3-a8c2-37e40872480c
+                - button "Mark seen" [ref=f4e91] [cursor=pointer]
+            - row [ref=f4e92]:
+              - cell "Data Engineer Flux H/F New" [ref=f4e93]:
+                - generic [ref=f4e94]:
+                  - link "Data Engineer Flux H/F" [ref=f4e95] [cursor=pointer]:
+                    - /url: /jobs/da09e17a-6198-46f5-82c6-54a7a975e808
+                  - generic [ref=f4e96]: New
+              - cell "Viveris." [ref=f4e97]
+              - cell "Lille - 59, France" [ref=f4e98]
+              - cell "hellowork" [ref=f4e99]
+              - cell [ref=f4e100]:
+                - time [ref=f4e101]: 11/9/2026, 11:14:55 AM
+              - cell "Not listed" [ref=f4e102]
+              - cell "-" [ref=f4e103]
+              - cell [ref=f4e104]:
+                - generic [ref=f4e105]:
+                  - link "Manager search" [ref=f4e106] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Viveris.%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e107] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Viveris.%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "To review" [ref=f4e108]
+              - cell [ref=f4e109]:
+                - link "View role" [ref=f4e110] [cursor=pointer]:
+                  - /url: /jobs/da09e17a-6198-46f5-82c6-54a7a975e808
+                - button "Mark seen" [ref=f4e111] [cursor=pointer]
+            - row [ref=f4e112]:
+              - cell "Data Analyst (H/F) New" [ref=f4e113]:
+                - generic [ref=f4e114]:
+                  - link "Data Analyst (H/F)" [ref=f4e115] [cursor=pointer]:
+                    - /url: /jobs/a16871be-cda0-40d5-a961-243ba5c20902
+                  - generic [ref=f4e116]: New
+              - cell "Datatorii" [ref=f4e117]
+              - cell "Paris, France" [ref=f4e118]
+              - cell "welcome_to_the_jungle" [ref=f4e119]
+              - cell [ref=f4e120]:
+                - time [ref=f4e121]: 11/9/2026, 11:04:54 AM
+              - cell "Not listed" [ref=f4e122]
+              - cell "-" [ref=f4e123]
+              - cell [ref=f4e124]:
+                - generic [ref=f4e125]:
+                  - link "Manager search" [ref=f4e126] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Datatorii%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e127] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Datatorii%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "Needs description" [ref=f4e128]
+              - cell [ref=f4e129]:
+                - link "View role" [ref=f4e130] [cursor=pointer]:
+                  - /url: /jobs/a16871be-cda0-40d5-a961-243ba5c20902
+                - button "Mark seen" [ref=f4e131] [cursor=pointer]
+            - row [ref=f4e132]:
+              - cell "Data Engineer Flux H/F New" [ref=f4e133]:
+                - generic [ref=f4e134]:
+                  - link "Data Engineer Flux H/F" [ref=f4e135] [cursor=pointer]:
+                    - /url: /jobs/306416fd-e1b2-42e8-9a14-96fd73dd336b
+                  - generic [ref=f4e136]: New
+              - cell "Viveris." [ref=f4e137]
+              - cell "Lille - 59, France" [ref=f4e138]
+              - cell "hellowork" [ref=f4e139]
+              - cell [ref=f4e140]:
+                - time [ref=f4e141]: 11/9/2026, 11:04:18 AM
+              - cell "Not listed" [ref=f4e142]
+              - cell "-" [ref=f4e143]
+              - cell [ref=f4e144]:
+                - generic [ref=f4e145]:
+                  - link "Manager search" [ref=f4e146] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Viveris.%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e147] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Viveris.%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "To review" [ref=f4e148]
+              - cell [ref=f4e149]:
+                - link "View role" [ref=f4e150] [cursor=pointer]:
+                  - /url: /jobs/306416fd-e1b2-42e8-9a14-96fd73dd336b
+                - button "Mark seen" [ref=f4e151] [cursor=pointer]
+            - row [ref=f4e152]:
+              - cell "Data Engineer Teradata H/F New" [ref=f4e153]:
+                - generic [ref=f4e154]:
+                  - link "Data Engineer Teradata H/F" [ref=f4e155] [cursor=pointer]:
+                    - /url: /jobs/790ae3d8-dc3f-4685-ac40-3b08ac29b3aa
+                  - generic [ref=f4e156]: New
+              - cell "HN Services" [ref=f4e157]
+              - cell "Val-de-Marne - 94, France" [ref=f4e158]
+              - cell "hellowork" [ref=f4e159]
+              - cell [ref=f4e160]:
+                - time [ref=f4e161]: 11/9/2026, 11:04:16 AM
+              - cell "Not listed" [ref=f4e162]
+              - cell "-" [ref=f4e163]
+              - cell [ref=f4e164]:
+                - generic [ref=f4e165]:
+                  - link "Manager search" [ref=f4e166] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22HN%20Services%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e167] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22HN%20Services%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "Needs description" [ref=f4e168]
+              - cell [ref=f4e169]:
+                - link "View role" [ref=f4e170] [cursor=pointer]:
+                  - /url: /jobs/790ae3d8-dc3f-4685-ac40-3b08ac29b3aa
+                - button "Mark seen" [ref=f4e171] [cursor=pointer]
+            - row [ref=f4e172]:
+              - cell "Consultant Data – Analyste / BI (H/F) New" [ref=f4e173]:
+                - generic [ref=f4e174]:
+                  - link "Consultant Data – Analyste / BI (H/F)" [ref=f4e175] [cursor=pointer]:
+                    - /url: /jobs/29a71e53-64d3-4fae-9f1b-4f6a2a3d4baf
+                  - generic [ref=f4e176]: New
+              - cell "Mydral" [ref=f4e177]
+              - cell "Paris, France" [ref=f4e178]
+              - cell "welcome_to_the_jungle" [ref=f4e179]
+              - cell [ref=f4e180]:
+                - time [ref=f4e181]: 11/9/2026, 10:53:58 AM
+              - cell "Not listed" [ref=f4e182]
+              - cell "-" [ref=f4e183]
+              - cell [ref=f4e184]:
+                - generic [ref=f4e185]:
+                  - link "Manager search" [ref=f4e186] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Mydral%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e187] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Mydral%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "Needs description" [ref=f4e188]
+              - cell [ref=f4e189]:
+                - link "View role" [ref=f4e190] [cursor=pointer]:
+                  - /url: /jobs/29a71e53-64d3-4fae-9f1b-4f6a2a3d4baf
+                - button "Mark seen" [ref=f4e191] [cursor=pointer]
+            - row [ref=f4e192]:
+              - cell "Data Analyst Mode H/F New" [ref=f4e193]:
+                - generic [ref=f4e194]:
+                  - link "Data Analyst Mode H/F" [ref=f4e195] [cursor=pointer]:
+                    - /url: /jobs/7424608a-07f5-4e14-b984-4f4ad3c5162a
+                  - generic [ref=f4e196]: New
+              - cell "Sintel" [ref=f4e197]
+              - cell "Paris 16e - 75, France" [ref=f4e198]
+              - cell "hellowork" [ref=f4e199]
+              - cell [ref=f4e200]:
+                - time [ref=f4e201]: 11/9/2026, 10:53:25 AM
+              - cell "Not listed" [ref=f4e202]
+              - cell "-" [ref=f4e203]
+              - cell [ref=f4e204]:
+                - generic [ref=f4e205]:
+                  - link "Manager search" [ref=f4e206] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Sintel%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e207] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Sintel%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "Needs description" [ref=f4e208]
+              - cell [ref=f4e209]:
+                - link "View role" [ref=f4e210] [cursor=pointer]:
+                  - /url: /jobs/7424608a-07f5-4e14-b984-4f4ad3c5162a
+                - button "Mark seen" [ref=f4e211] [cursor=pointer]
+            - row [ref=f4e212]:
+              - cell "Data Analyst H/F New" [ref=f4e213]:
+                - generic [ref=f4e214]:
+                  - link "Data Analyst H/F" [ref=f4e215] [cursor=pointer]:
+                    - /url: /jobs/97b9cd2c-ab23-4600-9ce4-222284416899
+                  - generic [ref=f4e216]: New
+              - cell "LHH Recruitment Solutions" [ref=f4e217]
+              - cell "Boulogne-Billancourt - 92, France" [ref=f4e218]
+              - cell "hellowork" [ref=f4e219]
+              - cell [ref=f4e220]:
+                - time [ref=f4e221]: 11/9/2026, 10:53:23 AM
+              - cell "Not listed" [ref=f4e222]
+              - cell "-" [ref=f4e223]
+              - cell [ref=f4e224]:
+                - generic [ref=f4e225]:
+                  - link "Manager search" [ref=f4e226] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22LHH%20Recruitment%20Solutions%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e227] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22LHH%20Recruitment%20Solutions%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "Needs description" [ref=f4e228]
+              - cell [ref=f4e229]:
+                - link "View role" [ref=f4e230] [cursor=pointer]:
+                  - /url: /jobs/97b9cd2c-ab23-4600-9ce4-222284416899
+                - button "Mark seen" [ref=f4e231] [cursor=pointer]
+            - row [ref=f4e232]:
+              - cell "Data Analyst H/F New" [ref=f4e233]:
+                - generic [ref=f4e234]:
+                  - link "Data Analyst H/F" [ref=f4e235] [cursor=pointer]:
+                    - /url: /jobs/34e4c923-2f1a-4ea6-9da3-3afee4028c8a
+                  - generic [ref=f4e236]: New
+              - cell "Akkodis" [ref=f4e237]
+              - cell "Pau - 64, France" [ref=f4e238]
+              - cell "hellowork" [ref=f4e239]
+              - cell [ref=f4e240]:
+                - time [ref=f4e241]: 11/9/2026, 10:53:22 AM
+              - cell "Not listed" [ref=f4e242]
+              - cell "-" [ref=f4e243]
+              - cell [ref=f4e244]:
+                - generic [ref=f4e245]:
+                  - link "Manager search" [ref=f4e246] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Akkodis%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e247] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Akkodis%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "Needs description" [ref=f4e248]
+              - cell [ref=f4e249]:
+                - link "View role" [ref=f4e250] [cursor=pointer]:
+                  - /url: /jobs/34e4c923-2f1a-4ea6-9da3-3afee4028c8a
+                - button "Mark seen" [ref=f4e251] [cursor=pointer]
+            - row [ref=f4e252]:
+              - cell "Data Engineer Gcp H/F New" [ref=f4e253]:
+                - generic [ref=f4e254]:
+                  - link "Data Engineer Gcp H/F" [ref=f4e255] [cursor=pointer]:
+                    - /url: /jobs/fb3c7c57-bb59-4069-8462-d2aceccb5621
+                  - generic [ref=f4e256]: New
+              - cell "AS International Group" [ref=f4e257]
+              - cell "Paris 13e - 75, France" [ref=f4e258]
+              - cell "hellowork" [ref=f4e259]
+              - cell [ref=f4e260]:
+                - time [ref=f4e261]: 11/9/2026, 10:53:21 AM
+              - cell "Not listed" [ref=f4e262]
+              - cell "-" [ref=f4e263]
+              - cell [ref=f4e264]:
+                - generic [ref=f4e265]:
+                  - link "Manager search" [ref=f4e266] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22AS%20International%20Group%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e267] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22AS%20International%20Group%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "Needs description" [ref=f4e268]
+              - cell [ref=f4e269]:
+                - link "View role" [ref=f4e270] [cursor=pointer]:
+                  - /url: /jobs/fb3c7c57-bb59-4069-8462-d2aceccb5621
+                - button "Mark seen" [ref=f4e271] [cursor=pointer]
+            - row [ref=f4e272]:
+              - cell "Data Engineer RH H/F New" [ref=f4e273]:
+                - generic [ref=f4e274]:
+                  - link "Data Engineer RH H/F" [ref=f4e275] [cursor=pointer]:
+                    - /url: /jobs/8bcf1b31-80c8-4717-9e3b-d3fd7a96dc45
+                  - generic [ref=f4e276]: New
+              - cell "Framatome" [ref=f4e277]
+              - cell "La Défense - 92, France" [ref=f4e278]
+              - cell "hellowork" [ref=f4e279]
+              - cell [ref=f4e280]:
+                - time [ref=f4e281]: 11/9/2026, 10:53:20 AM
+              - cell "Not listed" [ref=f4e282]
+              - cell "-" [ref=f4e283]
+              - cell [ref=f4e284]:
+                - generic [ref=f4e285]:
+                  - link "Manager search" [ref=f4e286] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Framatome%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e287] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Framatome%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "To review" [ref=f4e288]
+              - cell [ref=f4e289]:
+                - link "View role" [ref=f4e290] [cursor=pointer]:
+                  - /url: /jobs/8bcf1b31-80c8-4717-9e3b-d3fd7a96dc45
+                - button "Mark seen" [ref=f4e291] [cursor=pointer]
+            - row [ref=f4e292]:
+              - cell "Data Engineer Databricks H/F New" [ref=f4e293]:
+                - generic [ref=f4e294]:
+                  - link "Data Engineer Databricks H/F" [ref=f4e295] [cursor=pointer]:
+                    - /url: /jobs/ee4176a8-8544-46b7-b96e-d6866d19b296
+                  - generic [ref=f4e296]: New
+              - cell "Orange Business" [ref=f4e297]
+              - cell "Lyon 2e - 69, France" [ref=f4e298]
+              - cell "hellowork" [ref=f4e299]
+              - cell [ref=f4e300]:
+                - time [ref=f4e301]: 11/9/2026, 10:53:19 AM
+              - cell "Not listed" [ref=f4e302]
+              - cell "-" [ref=f4e303]
+              - cell [ref=f4e304]:
+                - generic [ref=f4e305]:
+                  - link "Manager search" [ref=f4e306] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Orange%20Business%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e307] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Orange%20Business%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "To review" [ref=f4e308]
+              - cell [ref=f4e309]:
+                - link "View role" [ref=f4e310] [cursor=pointer]:
+                  - /url: /jobs/ee4176a8-8544-46b7-b96e-d6866d19b296
+                - button "Mark seen" [ref=f4e311] [cursor=pointer]
+            - row [ref=f4e312]:
+              - cell "Data Engineer (Growth Team) New" [ref=f4e313]:
+                - generic [ref=f4e314]:
+                  - link "Data Engineer (Growth Team)" [ref=f4e315] [cursor=pointer]:
+                    - /url: /jobs/f5087a60-95dc-48d6-a235-8e8501987d1f
+                  - generic [ref=f4e316]: New
+              - cell "PIGMENT" [ref=f4e317]
+              - cell "Paris, France" [ref=f4e318]
+              - cell "welcome_to_the_jungle" [ref=f4e319]
+              - cell [ref=f4e320]:
+                - time [ref=f4e321]: 11/9/2026, 10:42:57 AM
+              - cell "Not listed" [ref=f4e322]
+              - cell "-" [ref=f4e323]
+              - cell [ref=f4e324]:
+                - generic [ref=f4e325]:
+                  - link "Manager search" [ref=f4e326] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22PIGMENT%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e327] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22PIGMENT%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "Needs description" [ref=f4e328]
+              - cell [ref=f4e329]:
+                - link "View role" [ref=f4e330] [cursor=pointer]:
+                  - /url: /jobs/f5087a60-95dc-48d6-a235-8e8501987d1f
+                - button "Mark seen" [ref=f4e331] [cursor=pointer]
+            - row [ref=f4e332]:
+              - cell "Ingénieur IA - ai Software Engineer H/F New" [ref=f4e333]:
+                - generic [ref=f4e334]:
+                  - link "Ingénieur IA - ai Software Engineer H/F" [ref=f4e335] [cursor=pointer]:
+                    - /url: /jobs/e8b5c936-b9f2-4d90-bc26-b306f26c2a67
+                  - generic [ref=f4e336]: New
+              - cell "Groupe Adenes" [ref=f4e337]
+              - cell "Lyon 3e - 69, France" [ref=f4e338]
+              - cell "hellowork" [ref=f4e339]
+              - cell [ref=f4e340]:
+                - time [ref=f4e341]: 11/9/2026, 10:42:28 AM
+              - cell "Not listed" [ref=f4e342]
+              - cell "-" [ref=f4e343]
+              - cell [ref=f4e344]:
+                - generic [ref=f4e345]:
+                  - link "Manager search" [ref=f4e346] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Groupe%20Adenes%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e347] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Groupe%20Adenes%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "To review" [ref=f4e348]
+              - cell [ref=f4e349]:
+                - link "View role" [ref=f4e350] [cursor=pointer]:
+                  - /url: /jobs/e8b5c936-b9f2-4d90-bc26-b306f26c2a67
+                - button "Mark seen" [ref=f4e351] [cursor=pointer]
+            - row [ref=f4e352]:
+              - cell "Machine Learning Engineer - Île-De-France H/F New" [ref=f4e353]:
+                - generic [ref=f4e354]:
+                  - link "Machine Learning Engineer - Île-De-France H/F" [ref=f4e355] [cursor=pointer]:
+                    - /url: /jobs/810b2681-5d47-42f6-81a2-bb864a0a1135
+                  - generic [ref=f4e356]: New
+              - cell "Socadek Solutions" [ref=f4e357]
+              - cell "Paris - 75, France" [ref=f4e358]
+              - cell "hellowork" [ref=f4e359]
+              - cell [ref=f4e360]:
+                - time [ref=f4e361]: 11/9/2026, 10:42:26 AM
+              - cell "Not listed" [ref=f4e362]
+              - cell "-" [ref=f4e363]
+              - cell [ref=f4e364]:
+                - generic [ref=f4e365]:
+                  - link "Manager search" [ref=f4e366] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Socadek%20Solutions%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e367] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Socadek%20Solutions%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "Needs description" [ref=f4e368]
+              - cell [ref=f4e369]:
+                - link "View role" [ref=f4e370] [cursor=pointer]:
+                  - /url: /jobs/810b2681-5d47-42f6-81a2-bb864a0a1135
+                - button "Mark seen" [ref=f4e371] [cursor=pointer]
+            - row [ref=f4e372]:
+              - cell "Machine Learning Engineer H/F New" [ref=f4e373]:
+                - generic [ref=f4e374]:
+                  - link "Machine Learning Engineer H/F" [ref=f4e375] [cursor=pointer]:
+                    - /url: /jobs/8c6cfe86-46e2-4963-bd77-71cec548236b
+                  - generic [ref=f4e376]: New
+              - cell "Storm Group" [ref=f4e377]
+              - cell "Paris 2e - 75, France" [ref=f4e378]
+              - cell "hellowork" [ref=f4e379]
+              - cell [ref=f4e380]:
+                - time [ref=f4e381]: 11/9/2026, 10:42:26 AM
+              - cell "Not listed" [ref=f4e382]
+              - cell "-" [ref=f4e383]
+              - cell [ref=f4e384]:
+                - generic [ref=f4e385]:
+                  - link "Manager search" [ref=f4e386] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Storm%20Group%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e387] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Storm%20Group%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "Needs description" [ref=f4e388]
+              - cell [ref=f4e389]:
+                - link "View role" [ref=f4e390] [cursor=pointer]:
+                  - /url: /jobs/8c6cfe86-46e2-4963-bd77-71cec548236b
+                - button "Mark seen" [ref=f4e391] [cursor=pointer]
+            - row [ref=f4e392]:
+              - cell "Machine Learning Engineer H/F New" [ref=f4e393]:
+                - generic [ref=f4e394]:
+                  - link "Machine Learning Engineer H/F" [ref=f4e395] [cursor=pointer]:
+                    - /url: /jobs/fc3f2454-338e-43bf-9137-b63d81c1fedd
+                  - generic [ref=f4e396]: New
+              - cell "Klanik" [ref=f4e397]
+              - cell "Lille - 59, France" [ref=f4e398]
+              - cell "hellowork" [ref=f4e399]
+              - cell [ref=f4e400]:
+                - time [ref=f4e401]: 11/9/2026, 10:42:26 AM
+              - cell "Not listed" [ref=f4e402]
+              - cell "-" [ref=f4e403]
+              - cell [ref=f4e404]:
+                - generic [ref=f4e405]:
+                  - link "Manager search" [ref=f4e406] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Klanik%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e407] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Klanik%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "Needs description" [ref=f4e408]
+              - cell [ref=f4e409]:
+                - link "View role" [ref=f4e410] [cursor=pointer]:
+                  - /url: /jobs/fc3f2454-338e-43bf-9137-b63d81c1fedd
+                - button "Mark seen" [ref=f4e411] [cursor=pointer]
+            - row [ref=f4e412]:
+              - cell "Data Engineer Dbt H/F New" [ref=f4e413]:
+                - generic [ref=f4e414]:
+                  - link "Data Engineer Dbt H/F" [ref=f4e415] [cursor=pointer]:
+                    - /url: /jobs/685457e9-8c87-4110-8ec4-eec5e9473eed
+                  - generic [ref=f4e416]: New
+              - cell "CGI" [ref=f4e417]
+              - cell "Avignon - 84, France" [ref=f4e418]
+              - cell "hellowork" [ref=f4e419]
+              - cell [ref=f4e420]:
+                - time [ref=f4e421]: 11/9/2026, 10:42:25 AM
+              - cell "Not listed" [ref=f4e422]
+              - cell "-" [ref=f4e423]
+              - cell [ref=f4e424]:
+                - generic [ref=f4e425]:
+                  - link "Manager search" [ref=f4e426] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22CGI%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e427] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22CGI%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "Needs description" [ref=f4e428]
+              - cell [ref=f4e429]:
+                - link "View role" [ref=f4e430] [cursor=pointer]:
+                  - /url: /jobs/685457e9-8c87-4110-8ec4-eec5e9473eed
+                - button "Mark seen" [ref=f4e431] [cursor=pointer]
+            - row [ref=f4e432]:
+              - cell "Data Scientist H/F - Ministère des armées New" [ref=f4e433]:
+                - generic [ref=f4e434]:
+                  - link "Data Scientist H/F - Ministère des armées" [ref=f4e435] [cursor=pointer]:
+                    - /url: /jobs/f0416816-853e-40c6-ac11-9754bdb93d7a
+                  - generic [ref=f4e436]: New
+              - cell "Civils de la Défense" [ref=f4e437]
+              - cell "Bruz - 35, France" [ref=f4e438]
+              - cell "hellowork" [ref=f4e439]
+              - cell [ref=f4e440]:
+                - time [ref=f4e441]: 11/9/2026, 10:42:24 AM
+              - cell "Not listed" [ref=f4e442]
+              - cell "-" [ref=f4e443]
+              - cell [ref=f4e444]:
+                - generic [ref=f4e445]:
+                  - link "Manager search" [ref=f4e446] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Civils%20de%20la%20D%C3%A9fense%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e447] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Civils%20de%20la%20D%C3%A9fense%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "To review" [ref=f4e448]
+              - cell [ref=f4e449]:
+                - link "View role" [ref=f4e450] [cursor=pointer]:
+                  - /url: /jobs/f0416816-853e-40c6-ac11-9754bdb93d7a
+                - button "Mark seen" [ref=f4e451] [cursor=pointer]
+            - row [ref=f4e452]:
+              - cell "Data Engineer Streaming (Java / Kafka Stream / Spark) H/F New" [ref=f4e453]:
+                - generic [ref=f4e454]:
+                  - link "Data Engineer Streaming (Java / Kafka Stream / Spark) H/F" [ref=f4e455] [cursor=pointer]:
+                    - /url: /jobs/ea88f87a-8dcb-44c4-961e-9acceaa7cee6
+                  - generic [ref=f4e456]: New
+              - cell "skiils" [ref=f4e457]
+              - cell "Casablanca, Morocco, France" [ref=f4e458]
+              - cell "welcome_to_the_jungle" [ref=f4e459]
+              - cell [ref=f4e460]:
+                - time [ref=f4e461]: 11/9/2026, 9:43:36 AM
+              - cell "Not listed" [ref=f4e462]
+              - cell "-" [ref=f4e463]
+              - cell "Not listed" [ref=f4e464]
+              - cell "Needs description" [ref=f4e466]
+              - cell [ref=f4e467]:
+                - link "View role" [ref=f4e468] [cursor=pointer]:
+                  - /url: /jobs/ea88f87a-8dcb-44c4-961e-9acceaa7cee6
+                - button "Mark seen" [ref=f4e469] [cursor=pointer]
+            - row [ref=f4e470]:
+              - cell "Architecte IA / Data - Services Financiers F/H New" [ref=f4e471]:
+                - generic [ref=f4e472]:
+                  - link "Architecte IA / Data - Services Financiers F/H" [ref=f4e473] [cursor=pointer]:
+                    - /url: /jobs/d4fbdae0-12be-4daa-b74f-97e5bb8d4d6a
+                  - generic [ref=f4e474]: New
+              - cell "CGI" [ref=f4e475]
+              - cell "Paris, France" [ref=f4e476]
+              - cell "welcome_to_the_jungle" [ref=f4e477]
+              - cell [ref=f4e478]:
+                - time [ref=f4e479]: 11/9/2026, 9:43:36 AM
+              - cell "Not listed" [ref=f4e480]
+              - cell "-" [ref=f4e481]
+              - cell "Not listed" [ref=f4e482]
+              - cell "Needs description" [ref=f4e484]
+              - cell [ref=f4e485]:
+                - link "View role" [ref=f4e486] [cursor=pointer]:
+                  - /url: /jobs/d4fbdae0-12be-4daa-b74f-97e5bb8d4d6a
+                - button "Mark seen" [ref=f4e487] [cursor=pointer]
+            - row [ref=f4e488]:
+              - cell "Data Engineer H/F New" [ref=f4e489]:
+                - generic [ref=f4e490]:
+                  - link "Data Engineer H/F" [ref=f4e491] [cursor=pointer]:
+                    - /url: /jobs/5249b6c3-bcc9-42f5-ad11-bbbab6c145b8
+                  - generic [ref=f4e492]: New
+              - cell "The Adecco Group" [ref=f4e493]
+              - cell "Villeurbanne, France" [ref=f4e494]
+              - cell "welcome_to_the_jungle" [ref=f4e495]
+              - cell [ref=f4e496]:
+                - time [ref=f4e497]: 11/9/2026, 9:43:36 AM
+              - cell "Not listed" [ref=f4e498]
+              - cell "-" [ref=f4e499]
+              - cell "Not listed" [ref=f4e500]
+              - cell "Needs description" [ref=f4e502]
+              - cell [ref=f4e503]:
+                - link "View role" [ref=f4e504] [cursor=pointer]:
+                  - /url: /jobs/5249b6c3-bcc9-42f5-ad11-bbbab6c145b8
+                - button "Mark seen" [ref=f4e505] [cursor=pointer]
+            - row [ref=f4e506]:
+              - cell "Data Engineer GCP (H/F) New" [ref=f4e507]:
+                - generic [ref=f4e508]:
+                  - link "Data Engineer GCP (H/F)" [ref=f4e509] [cursor=pointer]:
+                    - /url: /jobs/f8ea2d05-fc51-4595-a692-3c09008d4f1b
+                  - generic [ref=f4e510]: New
+              - cell "Meritis" [ref=f4e511]
+              - cell "Aix-en-Provence, France" [ref=f4e512]
+              - cell "welcome_to_the_jungle" [ref=f4e513]
+              - cell [ref=f4e514]:
+                - time [ref=f4e515]: 11/9/2026, 9:43:36 AM
+              - cell "Not listed" [ref=f4e516]
+              - cell "-" [ref=f4e517]
+              - cell "Not listed" [ref=f4e518]
+              - cell "Needs description" [ref=f4e520]
+              - cell [ref=f4e521]:
+                - link "View role" [ref=f4e522] [cursor=pointer]:
+                  - /url: /jobs/f8ea2d05-fc51-4595-a692-3c09008d4f1b
+                - button "Mark seen" [ref=f4e523] [cursor=pointer]
+            - row [ref=f4e524]:
+              - cell "Consultant Data Engineer Nantes F/H/X New" [ref=f4e525]:
+                - generic [ref=f4e526]:
+                  - link "Consultant Data Engineer Nantes F/H/X" [ref=f4e527] [cursor=pointer]:
+                    - /url: /jobs/f9523669-379a-49df-8e52-84f60a934c33
+                  - generic [ref=f4e528]: New
+              - cell "Zenika" [ref=f4e529]
+              - cell "Nantes, France" [ref=f4e530]
+              - cell "welcome_to_the_jungle" [ref=f4e531]
+              - cell [ref=f4e532]:
+                - time [ref=f4e533]: 11/9/2026, 9:43:36 AM
+              - cell "Not listed" [ref=f4e534]
+              - cell "-" [ref=f4e535]
+              - cell "Not listed" [ref=f4e536]
+              - cell "Needs description" [ref=f4e538]
+              - cell [ref=f4e539]:
+                - link "View role" [ref=f4e540] [cursor=pointer]:
+                  - /url: /jobs/f9523669-379a-49df-8e52-84f60a934c33
+                - button "Mark seen" [ref=f4e541] [cursor=pointer]
+            - row [ref=f4e542]:
+              - cell "Architecte Data H/F New" [ref=f4e543]:
+                - generic [ref=f4e544]:
+                  - link "Architecte Data H/F" [ref=f4e545] [cursor=pointer]:
+                    - /url: /jobs/7edcd03d-17ee-43b1-8c54-d500e1884775
+                  - generic [ref=f4e546]: New
+              - cell "In Extenso" [ref=f4e547]
+              - cell "Lyon, France" [ref=f4e548]
+              - cell "welcome_to_the_jungle" [ref=f4e549]
+              - cell [ref=f4e550]:
+                - time [ref=f4e551]: 11/9/2026, 9:43:36 AM
+              - cell "Not listed" [ref=f4e552]
+              - cell "-" [ref=f4e553]
+              - cell "Not listed" [ref=f4e554]
+              - cell "Needs description" [ref=f4e556]
+              - cell [ref=f4e557]:
+                - link "View role" [ref=f4e558] [cursor=pointer]:
+                  - /url: /jobs/7edcd03d-17ee-43b1-8c54-d500e1884775
+                - button "Mark seen" [ref=f4e559] [cursor=pointer]
+            - row [ref=f4e560]:
+              - cell "Data engineer H/F Lyon New" [ref=f4e561]:
+                - generic [ref=f4e562]:
+                  - link "Data engineer H/F Lyon" [ref=f4e563] [cursor=pointer]:
+                    - /url: /jobs/d3f955c9-d198-4d93-a92d-c759444db494
+                  - generic [ref=f4e564]: New
+              - cell "Diametral" [ref=f4e565]
+              - cell "Lyon, France" [ref=f4e566]
+              - cell "welcome_to_the_jungle" [ref=f4e567]
+              - cell [ref=f4e568]:
+                - time [ref=f4e569]: 11/9/2026, 9:43:36 AM
+              - cell "Not listed" [ref=f4e570]
+              - cell "-" [ref=f4e571]
+              - cell "Not listed" [ref=f4e572]
+              - cell "Needs description" [ref=f4e574]
+              - cell [ref=f4e575]:
+                - link "View role" [ref=f4e576] [cursor=pointer]:
+                  - /url: /jobs/d3f955c9-d198-4d93-a92d-c759444db494
+                - button "Mark seen" [ref=f4e577] [cursor=pointer]
+            - row [ref=f4e578]:
+              - cell "CNMSS - DSI - INGENIEUR ARCHITECTE DATA H/F New" [ref=f4e579]:
+                - generic [ref=f4e580]:
+                  - link "CNMSS - DSI - INGENIEUR ARCHITECTE DATA H/F" [ref=f4e581] [cursor=pointer]:
+                    - /url: /jobs/3ce8b973-2392-4cd6-9f5b-28ad61440ee3
+                  - generic [ref=f4e582]: New
+              - cell "Civils de la Défense - Ministère des Armées et des Anciens combattants" [ref=f4e583]
+              - cell "Toulon, France" [ref=f4e584]
+              - cell "welcome_to_the_jungle" [ref=f4e585]
+              - cell [ref=f4e586]:
+                - time [ref=f4e587]: 11/9/2026, 9:43:36 AM
+              - cell "Not listed" [ref=f4e588]
+              - cell "-" [ref=f4e589]
+              - cell "Not listed" [ref=f4e590]
+              - cell "Needs description" [ref=f4e592]
+              - cell [ref=f4e593]:
+                - link "View role" [ref=f4e594] [cursor=pointer]:
+                  - /url: /jobs/3ce8b973-2392-4cd6-9f5b-28ad61440ee3
+                - button "Mark seen" [ref=f4e595] [cursor=pointer]
+            - row [ref=f4e596]:
+              - cell "Consultant·e Data et AI Engineer – Jeune diplômé·e (H/F) New" [ref=f4e597]:
+                - generic [ref=f4e598]:
+                  - link "Consultant·e Data et AI Engineer – Jeune diplômé·e (H/F)" [ref=f4e599] [cursor=pointer]:
+                    - /url: /jobs/637921da-bb68-4c8a-9707-74e259fdf3b0
+                  - generic [ref=f4e600]: New
+              - cell "Wavestone" [ref=f4e601]
+              - cell "Puteaux, France" [ref=f4e602]
+              - cell "welcome_to_the_jungle" [ref=f4e603]
+              - cell [ref=f4e604]:
+                - time [ref=f4e605]: 11/9/2026, 9:43:35 AM
+              - cell "Not listed" [ref=f4e606]
+              - cell "-" [ref=f4e607]
+              - cell "Not listed" [ref=f4e608]
+              - cell "Needs description" [ref=f4e610]
+              - cell [ref=f4e611]:
+                - link "View role" [ref=f4e612] [cursor=pointer]:
+                  - /url: /jobs/637921da-bb68-4c8a-9707-74e259fdf3b0
+                - button "Mark seen" [ref=f4e613] [cursor=pointer]
+            - row [ref=f4e614]:
+              - cell "Data Engineer / Architecte Data Junior F/H New" [ref=f4e615]:
+                - generic [ref=f4e616]:
+                  - link "Data Engineer / Architecte Data Junior F/H" [ref=f4e617] [cursor=pointer]:
+                    - /url: /jobs/2660edd3-aba1-4b7a-9cb0-9fe1403a7704
+                  - generic [ref=f4e618]: New
+              - cell "Docaposte" [ref=f4e619]
+              - cell "Neuilly-sur-Seine, France" [ref=f4e620]
+              - cell "welcome_to_the_jungle" [ref=f4e621]
+              - cell [ref=f4e622]:
+                - time [ref=f4e623]: 11/9/2026, 9:43:35 AM
+              - cell "Not listed" [ref=f4e624]
+              - cell "-" [ref=f4e625]
+              - cell "Not listed" [ref=f4e626]
+              - cell "Needs description" [ref=f4e628]
+              - cell [ref=f4e629]:
+                - link "View role" [ref=f4e630] [cursor=pointer]:
+                  - /url: /jobs/2660edd3-aba1-4b7a-9cb0-9fe1403a7704
+                - button "Mark seen" [ref=f4e631] [cursor=pointer]
+            - row [ref=f4e632]:
+              - cell "Data Architecte Snowflake H/F New" [ref=f4e633]:
+                - generic [ref=f4e634]:
+                  - link "Data Architecte Snowflake H/F" [ref=f4e635] [cursor=pointer]:
+                    - /url: /jobs/c0c2958d-c6ca-445b-ae1c-28e4c7b88f11
+                  - generic [ref=f4e636]: New
+              - cell "Keyrus" [ref=f4e637]
+              - cell "Levallois-Perret, France" [ref=f4e638]
+              - cell "welcome_to_the_jungle" [ref=f4e639]
+              - cell [ref=f4e640]:
+                - time [ref=f4e641]: 11/9/2026, 9:43:35 AM
+              - cell "Not listed" [ref=f4e642]
+              - cell "-" [ref=f4e643]
+              - cell "Not listed" [ref=f4e644]
+              - cell "Needs description" [ref=f4e646]
+              - cell [ref=f4e647]:
+                - link "View role" [ref=f4e648] [cursor=pointer]:
+                  - /url: /jobs/c0c2958d-c6ca-445b-ae1c-28e4c7b88f11
+                - button "Mark seen" [ref=f4e649] [cursor=pointer]
+            - row [ref=f4e650]:
+              - cell "Architecte Data (F/H) New" [ref=f4e651]:
+                - generic [ref=f4e652]:
+                  - link "Architecte Data (F/H)" [ref=f4e653] [cursor=pointer]:
+                    - /url: /jobs/1d55f3bd-3932-4384-9baa-9dc97bac69ca
+                  - generic [ref=f4e654]: New
+              - cell "Groupe SII" [ref=f4e655]
+              - cell "Nantes, France" [ref=f4e656]
+              - cell "welcome_to_the_jungle" [ref=f4e657]
+              - cell [ref=f4e658]:
+                - time [ref=f4e659]: 11/9/2026, 9:43:35 AM
+              - cell "Not listed" [ref=f4e660]
+              - cell "-" [ref=f4e661]
+              - cell "Not listed" [ref=f4e662]
+              - cell "Needs description" [ref=f4e664]
+              - cell [ref=f4e665]:
+                - link "View role" [ref=f4e666] [cursor=pointer]:
+                  - /url: /jobs/1d55f3bd-3932-4384-9baa-9dc97bac69ca
+                - button "Mark seen" [ref=f4e667] [cursor=pointer]
+            - row [ref=f4e668]:
+              - cell "CONSULTANT.E MICROSOFT FABRIC / DATABRICKS - Data Engineer(F/H) New" [ref=f4e669]:
+                - generic [ref=f4e670]:
+                  - link "CONSULTANT.E MICROSOFT FABRIC / DATABRICKS - Data Engineer(F/H)" [ref=f4e671] [cursor=pointer]:
+                    - /url: /jobs/61a47c4f-fb45-4f94-b365-8aa8a3175009
+                  - generic [ref=f4e672]: New
+              - cell "ActinVision" [ref=f4e673]
+              - cell "Paris, France" [ref=f4e674]
+              - cell "welcome_to_the_jungle" [ref=f4e675]
+              - cell [ref=f4e676]:
+                - time [ref=f4e677]: 11/9/2026, 9:43:35 AM
+              - cell "Not listed" [ref=f4e678]
+              - cell "-" [ref=f4e679]
+              - cell "Not listed" [ref=f4e680]
+              - cell "Needs description" [ref=f4e682]
+              - cell [ref=f4e683]:
+                - link "View role" [ref=f4e684] [cursor=pointer]:
+                  - /url: /jobs/61a47c4f-fb45-4f94-b365-8aa8a3175009
+                - button "Mark seen" [ref=f4e685] [cursor=pointer]
+            - row [ref=f4e686]:
+              - cell "Architecte Data CLOUD (H/F) New" [ref=f4e687]:
+                - generic [ref=f4e688]:
+                  - link "Architecte Data CLOUD (H/F)" [ref=f4e689] [cursor=pointer]:
+                    - /url: /jobs/c66e06ef-c503-4069-9742-837ebd9508ce
+                  - generic [ref=f4e690]: New
+              - cell "Thales" [ref=f4e691]
+              - cell "Vélizy-Villacoublay, France" [ref=f4e692]
+              - cell "welcome_to_the_jungle" [ref=f4e693]
+              - cell [ref=f4e694]:
+                - time [ref=f4e695]: 11/9/2026, 9:43:35 AM
+              - cell "Not listed" [ref=f4e696]
+              - cell "-" [ref=f4e697]
+              - cell "Not listed" [ref=f4e698]
+              - cell "Needs description" [ref=f4e700]
+              - cell [ref=f4e701]:
+                - link "View role" [ref=f4e702] [cursor=pointer]:
+                  - /url: /jobs/c66e06ef-c503-4069-9742-837ebd9508ce
+                - button "Mark seen" [ref=f4e703] [cursor=pointer]
+            - row [ref=f4e704]:
+              - cell "Data Engineer ( GCP ) New" [ref=f4e705]:
+                - generic [ref=f4e706]:
+                  - link "Data Engineer ( GCP )" [ref=f4e707] [cursor=pointer]:
+                    - /url: /jobs/78df526d-6526-4dd5-ac1e-d381c165ad3f
+                  - generic [ref=f4e708]: New
+              - cell "The Adecco Group" [ref=f4e709]
+              - cell "Niort, France" [ref=f4e710]
+              - cell "welcome_to_the_jungle" [ref=f4e711]
+              - cell [ref=f4e712]:
+                - time [ref=f4e713]: 11/9/2026, 9:43:35 AM
+              - cell "Not listed" [ref=f4e714]
+              - cell "-" [ref=f4e715]
+              - cell "Not listed" [ref=f4e716]
+              - cell "Needs description" [ref=f4e718]
+              - cell [ref=f4e719]:
+                - link "View role" [ref=f4e720] [cursor=pointer]:
+                  - /url: /jobs/78df526d-6526-4dd5-ac1e-d381c165ad3f
+                - button "Mark seen" [ref=f4e721] [cursor=pointer]
+            - row [ref=f4e722]:
+              - cell "Architecte Data - Servivces Financiers - NANTES New" [ref=f4e723]:
+                - generic [ref=f4e724]:
+                  - link "Architecte Data - Servivces Financiers - NANTES" [ref=f4e725] [cursor=pointer]:
+                    - /url: /jobs/4f3bd5f3-4c59-4095-a4cc-cfb35846fcab
+                  - generic [ref=f4e726]: New
+              - cell "Sopra Steria" [ref=f4e727]
+              - cell "Nantes, France" [ref=f4e728]
+              - cell "welcome_to_the_jungle" [ref=f4e729]
+              - cell [ref=f4e730]:
+                - time [ref=f4e731]: 11/9/2026, 9:43:34 AM
+              - cell "Not listed" [ref=f4e732]
+              - cell "-" [ref=f4e733]
+              - cell "Not listed" [ref=f4e734]
+              - cell "Needs description" [ref=f4e736]
+              - cell [ref=f4e737]:
+                - link "View role" [ref=f4e738] [cursor=pointer]:
+                  - /url: /jobs/4f3bd5f3-4c59-4095-a4cc-cfb35846fcab
+                - button "Mark seen" [ref=f4e739] [cursor=pointer]
+            - row [ref=f4e740]:
+              - cell "Architecte Data – Services Publics – Bordeaux New" [ref=f4e741]:
+                - generic [ref=f4e742]:
+                  - link "Architecte Data – Services Publics – Bordeaux" [ref=f4e743] [cursor=pointer]:
+                    - /url: /jobs/df1be3ff-a2b0-42d7-8f58-1d7fdd47a7b7
+                  - generic [ref=f4e744]: New
+              - cell "Sopra Steria" [ref=f4e745]
+              - cell "Mérignac, France" [ref=f4e746]
+              - cell "welcome_to_the_jungle" [ref=f4e747]
+              - cell [ref=f4e748]:
+                - time [ref=f4e749]: 11/9/2026, 9:43:34 AM
+              - cell "Not listed" [ref=f4e750]
+              - cell "-" [ref=f4e751]
+              - cell "Not listed" [ref=f4e752]
+              - cell "Needs description" [ref=f4e754]
+              - cell [ref=f4e755]:
+                - link "View role" [ref=f4e756] [cursor=pointer]:
+                  - /url: /jobs/df1be3ff-a2b0-42d7-8f58-1d7fdd47a7b7
+                - button "Mark seen" [ref=f4e757] [cursor=pointer]
+            - row [ref=f4e758]:
+              - cell "Architecte DATA – Services Financiers - Ile de France New" [ref=f4e759]:
+                - generic [ref=f4e760]:
+                  - link "Architecte DATA – Services Financiers - Ile de France" [ref=f4e761] [cursor=pointer]:
+                    - /url: /jobs/9ab02f5d-8aae-4daa-ba70-ddf981af2378
+                  - generic [ref=f4e762]: New
+              - cell "Sopra Steria" [ref=f4e763]
+              - cell "Paris, France" [ref=f4e764]
+              - cell "welcome_to_the_jungle" [ref=f4e765]
+              - cell [ref=f4e766]:
+                - time [ref=f4e767]: 11/9/2026, 9:43:34 AM
+              - cell "Not listed" [ref=f4e768]
+              - cell "-" [ref=f4e769]
+              - cell "Not listed" [ref=f4e770]
+              - cell "Needs description" [ref=f4e772]
+              - cell [ref=f4e773]:
+                - link "View role" [ref=f4e774] [cursor=pointer]:
+                  - /url: /jobs/9ab02f5d-8aae-4daa-ba70-ddf981af2378
+                - button "Mark seen" [ref=f4e775] [cursor=pointer]
+            - row [ref=f4e776]:
+              - cell "Cloud Data Engineer - Paris New" [ref=f4e777]:
+                - generic [ref=f4e778]:
+                  - link "Cloud Data Engineer - Paris" [ref=f4e779] [cursor=pointer]:
+                    - /url: /jobs/9dba80dd-9ff7-4f6f-a156-00fde74f465a
+                  - generic [ref=f4e780]: New
+              - cell "MP DATA" [ref=f4e781]
+              - cell "Boulogne-Billancourt, France" [ref=f4e782]
+              - cell "welcome_to_the_jungle" [ref=f4e783]
+              - cell [ref=f4e784]:
+                - time [ref=f4e785]: 11/9/2026, 9:43:34 AM
+              - cell "Not listed" [ref=f4e786]
+              - cell "-" [ref=f4e787]
+              - cell "Not listed" [ref=f4e788]
+              - cell "Needs description" [ref=f4e790]
+              - cell [ref=f4e791]:
+                - link "View role" [ref=f4e792] [cursor=pointer]:
+                  - /url: /jobs/9dba80dd-9ff7-4f6f-a156-00fde74f465a
+                - button "Mark seen" [ref=f4e793] [cursor=pointer]
+            - row [ref=f4e794]:
+              - cell "Architecte Data Cloud (AWS) H/F New" [ref=f4e795]:
+                - generic [ref=f4e796]:
+                  - link "Architecte Data Cloud (AWS) H/F" [ref=f4e797] [cursor=pointer]:
+                    - /url: /jobs/3ac8f43c-b6dc-4c8e-a2da-fdd254ce8794
+                  - generic [ref=f4e798]: New
+              - cell "Atos" [ref=f4e799]
+              - cell "Pessac, France" [ref=f4e800]
+              - cell "welcome_to_the_jungle" [ref=f4e801]
+              - cell [ref=f4e802]:
+                - time [ref=f4e803]: 11/9/2026, 9:43:34 AM
+              - cell "Not listed" [ref=f4e804]
+              - cell "-" [ref=f4e805]
+              - cell "Not listed" [ref=f4e806]
+              - cell "Needs description" [ref=f4e808]
+              - cell [ref=f4e809]:
+                - link "View role" [ref=f4e810] [cursor=pointer]:
+                  - /url: /jobs/3ac8f43c-b6dc-4c8e-a2da-fdd254ce8794
+                - button "Mark seen" [ref=f4e811] [cursor=pointer]
+            - row [ref=f4e812]:
+              - cell "Architecte Data & AI (F/H) New" [ref=f4e813]:
+                - generic [ref=f4e814]:
+                  - link "Architecte Data & AI (F/H)" [ref=f4e815] [cursor=pointer]:
+                    - /url: /jobs/a725a844-ec01-41ec-a89b-bc3ddabac716
+                  - generic [ref=f4e816]: New
+              - cell "Atos" [ref=f4e817]
+              - cell "Bezons, France" [ref=f4e818]
+              - cell "welcome_to_the_jungle" [ref=f4e819]
+              - cell [ref=f4e820]:
+                - time [ref=f4e821]: 11/9/2026, 9:43:34 AM
+              - cell "Not listed" [ref=f4e822]
+              - cell "-" [ref=f4e823]
+              - cell "Not listed" [ref=f4e824]
+              - cell "Needs description" [ref=f4e826]
+              - cell [ref=f4e827]:
+                - link "View role" [ref=f4e828] [cursor=pointer]:
+                  - /url: /jobs/a725a844-ec01-41ec-a89b-bc3ddabac716
+                - button "Mark seen" [ref=f4e829] [cursor=pointer]
+            - row [ref=f4e830]:
+              - cell "Architecte Data GCP New" [ref=f4e831]:
+                - generic [ref=f4e832]:
+                  - link "Architecte Data GCP" [ref=f4e833] [cursor=pointer]:
+                    - /url: /jobs/4e8a0a62-c2d7-4472-9987-f46301729b80
+                  - generic [ref=f4e834]: New
+              - cell "Thales" [ref=f4e835]
+              - cell "Tarascon, France" [ref=f4e836]
+              - cell "welcome_to_the_jungle" [ref=f4e837]
+              - cell [ref=f4e838]:
+                - time [ref=f4e839]: 11/9/2026, 9:43:33 AM
+              - cell "Not listed" [ref=f4e840]
+              - cell "-" [ref=f4e841]
+              - cell "Not listed" [ref=f4e842]
+              - cell "Needs description" [ref=f4e844]
+              - cell [ref=f4e845]:
+                - link "View role" [ref=f4e846] [cursor=pointer]:
+                  - /url: /jobs/4e8a0a62-c2d7-4472-9987-f46301729b80
+                - button "Mark seen" [ref=f4e847] [cursor=pointer]
+            - row [ref=f4e848]:
+              - cell "Architecte data solutions de test F.H New" [ref=f4e849]:
+                - generic [ref=f4e850]:
+                  - link "Architecte data solutions de test F.H" [ref=f4e851] [cursor=pointer]:
+                    - /url: /jobs/9b8b7c43-f2c6-49da-b49c-af450740468c
+                  - generic [ref=f4e852]: New
+              - cell "Thales" [ref=f4e853]
+              - cell "Élancourt, France" [ref=f4e854]
+              - cell "welcome_to_the_jungle" [ref=f4e855]
+              - cell [ref=f4e856]:
+                - time [ref=f4e857]: 11/9/2026, 9:43:33 AM
+              - cell "Not listed" [ref=f4e858]
+              - cell "-" [ref=f4e859]
+              - cell "Not listed" [ref=f4e860]
+              - cell "Needs description" [ref=f4e862]
+              - cell [ref=f4e863]:
+                - link "View role" [ref=f4e864] [cursor=pointer]:
+                  - /url: /jobs/9b8b7c43-f2c6-49da-b49c-af450740468c
+                - button "Mark seen" [ref=f4e865] [cursor=pointer]
+            - row [ref=f4e866]:
+              - cell "Architecte Data New" [ref=f4e867]:
+                - generic [ref=f4e868]:
+                  - link "Architecte Data" [ref=f4e869] [cursor=pointer]:
+                    - /url: /jobs/9824acdf-eaa7-4113-83ee-815d68c31bac
+                  - generic [ref=f4e870]: New
+              - cell "Capgemini" [ref=f4e871]
+              - cell "Lyon, France" [ref=f4e872]
+              - cell "welcome_to_the_jungle" [ref=f4e873]
+              - cell [ref=f4e874]:
+                - time [ref=f4e875]: 11/9/2026, 9:43:33 AM
+              - cell "Not listed" [ref=f4e876]
+              - cell "-" [ref=f4e877]
+              - cell "Not listed" [ref=f4e878]
+              - cell "Needs description" [ref=f4e880]
+              - cell [ref=f4e881]:
+                - link "View role" [ref=f4e882] [cursor=pointer]:
+                  - /url: /jobs/9824acdf-eaa7-4113-83ee-815d68c31bac
+                - button "Mark seen" [ref=f4e883] [cursor=pointer]
+            - row [ref=f4e884]:
+              - cell "Architecte Data/IA New" [ref=f4e885]:
+                - generic [ref=f4e886]:
+                  - link "Architecte Data/IA" [ref=f4e887] [cursor=pointer]:
+                    - /url: /jobs/d1806854-325f-4d76-9d02-3c5e1cfc3a40
+                  - generic [ref=f4e888]: New
+              - cell "Capgemini" [ref=f4e889]
+              - cell "Pau, France" [ref=f4e890]
+              - cell "welcome_to_the_jungle" [ref=f4e891]
+              - cell [ref=f4e892]:
+                - time [ref=f4e893]: 11/9/2026, 9:43:33 AM
+              - cell "Not listed" [ref=f4e894]
+              - cell "-" [ref=f4e895]
+              - cell "Not listed" [ref=f4e896]
+              - cell "Needs description" [ref=f4e898]
+              - cell [ref=f4e899]:
+                - link "View role" [ref=f4e900] [cursor=pointer]:
+                  - /url: /jobs/d1806854-325f-4d76-9d02-3c5e1cfc3a40
+                - button "Mark seen" [ref=f4e901] [cursor=pointer]
+            - row [ref=f4e902]:
+              - cell "Architecte Data – Plateformes de données distribuées (H/F) New" [ref=f4e903]:
+                - generic [ref=f4e904]:
+                  - link "Architecte Data – Plateformes de données distribuées (H/F)" [ref=f4e905] [cursor=pointer]:
+                    - /url: /jobs/07c6a695-7c8a-4f67-926d-ad8cbea9feee
+                  - generic [ref=f4e906]: New
+              - cell "Bureaudestalents" [ref=f4e907]
+              - cell "Montrouge, France" [ref=f4e908]
+              - cell "welcome_to_the_jungle" [ref=f4e909]
+              - cell [ref=f4e910]:
+                - time [ref=f4e911]: 11/9/2026, 9:43:33 AM
+              - cell "Not listed" [ref=f4e912]
+              - cell "-" [ref=f4e913]
+              - cell "Not listed" [ref=f4e914]
+              - cell "Needs description" [ref=f4e916]
+              - cell [ref=f4e917]:
+                - link "View role" [ref=f4e918] [cursor=pointer]:
+                  - /url: /jobs/07c6a695-7c8a-4f67-926d-ad8cbea9feee
+                - button "Mark seen" [ref=f4e919] [cursor=pointer]
+            - row [ref=f4e920]:
+              - cell "Architecte IA Générative / Generative AI Architect H/F New" [ref=f4e921]:
+                - generic [ref=f4e922]:
+                  - link "Architecte IA Générative / Generative AI Architect H/F" [ref=f4e923] [cursor=pointer]:
+                    - /url: /jobs/e9016eb7-98b4-4f00-a86c-7656a005e6d9
+                  - generic [ref=f4e924]: New
+              - cell "The Adecco Group" [ref=f4e925]
+              - cell "Lyon, France" [ref=f4e926]
+              - cell "welcome_to_the_jungle" [ref=f4e927]
+              - cell [ref=f4e928]:
+                - time [ref=f4e929]: 11/9/2026, 9:43:33 AM
+              - cell "Not listed" [ref=f4e930]
+              - cell "-" [ref=f4e931]
+              - cell "Not listed" [ref=f4e932]
+              - cell "Needs description" [ref=f4e934]
+              - cell [ref=f4e935]:
+                - link "View role" [ref=f4e936] [cursor=pointer]:
+                  - /url: /jobs/e9016eb7-98b4-4f00-a86c-7656a005e6d9
+                - button "Mark seen" [ref=f4e937] [cursor=pointer]
+            - row [ref=f4e938]:
+              - cell "Data Modeler / Data Architect H/F New" [ref=f4e939]:
+                - generic [ref=f4e940]:
+                  - link "Data Modeler / Data Architect H/F" [ref=f4e941] [cursor=pointer]:
+                    - /url: /jobs/d2aeb99e-5d64-4d99-93b8-4fa440bd8682
+                  - generic [ref=f4e942]: New
+              - cell "The Adecco Group" [ref=f4e943]
+              - cell "Lyon, France" [ref=f4e944]
+              - cell "welcome_to_the_jungle" [ref=f4e945]
+              - cell [ref=f4e946]:
+                - time [ref=f4e947]: 11/9/2026, 9:43:32 AM
+              - cell "Not listed" [ref=f4e948]
+              - cell "-" [ref=f4e949]
+              - cell "Not listed" [ref=f4e950]
+              - cell "Needs description" [ref=f4e952]
+              - cell [ref=f4e953]:
+                - link "View role" [ref=f4e954] [cursor=pointer]:
+                  - /url: /jobs/d2aeb99e-5d64-4d99-93b8-4fa440bd8682
+                - button "Mark seen" [ref=f4e955] [cursor=pointer]
+            - row [ref=f4e956]:
+              - cell "Modern data architect cloud / On premise (H/F/NB) New" [ref=f4e957]:
+                - generic [ref=f4e958]:
+                  - link "Modern data architect cloud / On premise (H/F/NB)" [ref=f4e959] [cursor=pointer]:
+                    - /url: /jobs/16a09556-966d-49a6-89ba-08f35b81f6c5
+                  - generic [ref=f4e960]: New
+              - cell "Keyrus" [ref=f4e961]
+              - cell "Aix-en-Provence, France" [ref=f4e962]
+              - cell "welcome_to_the_jungle" [ref=f4e963]
+              - cell [ref=f4e964]:
+                - time [ref=f4e965]: 11/9/2026, 9:43:32 AM
+              - cell "Not listed" [ref=f4e966]
+              - cell "-" [ref=f4e967]
+              - cell "Not listed" [ref=f4e968]
+              - cell "Needs description" [ref=f4e970]
+              - cell [ref=f4e971]:
+                - link "View role" [ref=f4e972] [cursor=pointer]:
+                  - /url: /jobs/16a09556-966d-49a6-89ba-08f35b81f6c5
+                - button "Mark seen" [ref=f4e973] [cursor=pointer]
+            - row [ref=f4e974]:
+              - cell "Data Architecte (F/H) New" [ref=f4e975]:
+                - generic [ref=f4e976]:
+                  - link "Data Architecte (F/H)" [ref=f4e977] [cursor=pointer]:
+                    - /url: /jobs/98e8a590-0ee4-475d-bbd1-69167d9a66b5
+                  - generic [ref=f4e978]: New
+              - cell "ALTEN" [ref=f4e979]
+              - cell "Boulogne-Billancourt, France" [ref=f4e980]
+              - cell "welcome_to_the_jungle" [ref=f4e981]
+              - cell [ref=f4e982]:
+                - time [ref=f4e983]: 11/9/2026, 9:43:32 AM
+              - cell "Not listed" [ref=f4e984]
+              - cell "-" [ref=f4e985]
+              - cell "Not listed" [ref=f4e986]
+              - cell "Needs description" [ref=f4e988]
+              - cell [ref=f4e989]:
+                - link "View role" [ref=f4e990] [cursor=pointer]:
+                  - /url: /jobs/98e8a590-0ee4-475d-bbd1-69167d9a66b5
+                - button "Mark seen" [ref=f4e991] [cursor=pointer]
+            - row [ref=f4e992]:
+              - cell "Data Architect / IA New" [ref=f4e993]:
+                - generic [ref=f4e994]:
+                  - link "Data Architect / IA" [ref=f4e995] [cursor=pointer]:
+                    - /url: /jobs/3a0d0365-19b8-45d8-b67d-26474027f281
+                  - generic [ref=f4e996]: New
+              - cell "Kiiro" [ref=f4e997]
+              - cell "Paris, France" [ref=f4e998]
+              - cell "welcome_to_the_jungle" [ref=f4e999]
+              - cell [ref=f4e1000]:
+                - time [ref=f4e1001]: 11/9/2026, 9:43:32 AM
+              - cell "Not listed" [ref=f4e1002]
+              - cell "-" [ref=f4e1003]
+              - cell "Not listed" [ref=f4e1004]
+              - cell "Needs description" [ref=f4e1006]
+              - cell [ref=f4e1007]:
+                - link "View role" [ref=f4e1008] [cursor=pointer]:
+                  - /url: /jobs/3a0d0365-19b8-45d8-b67d-26474027f281
+                - button "Mark seen" [ref=f4e1009] [cursor=pointer]
+        - navigation "Job pages" [ref=f4e1010]:
+          - generic [ref=f4e1011]: Previous
+          - generic "Page 1 of 10" [ref=f4e1012]:
+            - generic [ref=f4e1013]:
+              - link "1" [ref=f4e1014] [cursor=pointer]:
+                - /url: /jobs?q=&source=&country=&contract=&remote=&sort=recent&filter=all&view=new&page=1
+              - link "2" [ref=f4e1015] [cursor=pointer]:
+                - /url: /jobs?q=&source=&country=&contract=&remote=&sort=recent&filter=all&view=new&page=2
+              - link "3" [ref=f4e1016] [cursor=pointer]:
+                - /url: /jobs?q=&source=&country=&contract=&remote=&sort=recent&filter=all&view=new&page=3
+              - link "4" [ref=f4e1017] [cursor=pointer]:
+                - /url: /jobs?q=&source=&country=&contract=&remote=&sort=recent&filter=all&view=new&page=4
+              - link "5" [ref=f4e1018] [cursor=pointer]:
+                - /url: /jobs?q=&source=&country=&contract=&remote=&sort=recent&filter=all&view=new&page=5
+              - generic [aria-hidden] [ref=f4e1019]: ...
+              - link "10" [ref=f4e1020] [cursor=pointer]:
+                - /url: /jobs?q=&source=&country=&contract=&remote=&sort=recent&filter=all&view=new&page=10
+          - link "Next" [ref=f4e1021] [cursor=pointer]:
+            - /url: /jobs?q=&source=&country=&contract=&remote=&sort=recent&filter=all&view=new&page=2
+  - alert [ref=f4e41]

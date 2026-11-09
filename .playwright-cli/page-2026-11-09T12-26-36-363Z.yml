@@ -1,0 +1,249 @@
+- generic [active] [ref=f9e1]:
+  - generic [ref=f9e2]:
+    - banner [ref=f9e3]:
+      - generic [ref=f9e4]:
+        - link "A ATS SNIPER" [ref=f9e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f9e6]: A
+          - generic [ref=f9e7]: ATS SNIPER
+        - button "Sign out" [ref=f9e9] [cursor=pointer]
+    - main [ref=f9e10]:
+      - generic [ref=f9e11]:
+        - generic [ref=f9e12]:
+          - paragraph [ref=f9e13]: Discovery
+          - heading "Open roles" [level=1] [ref=f9e14]
+          - paragraph [ref=f9e15]: All collected roles, including historical roles for onboarding and backfill.
+          - generic [ref=f9e16]:
+            - textbox "Title, company, or location" [ref=f9e17]: MP Data
+            - combobox [ref=f9e18]:
+              - option "All sources" [selected]
+              - option "ashby"
+              - option "gh"
+              - option "hellowork"
+              - option "lever"
+              - option "local-fixture"
+              - option "local-integration"
+              - option "smartrecruiters"
+              - option "sr"
+              - option "wd"
+              - option "welcome_to_the_jungle"
+            - textbox "Country" [ref=f9e19]
+            - textbox "Contract type" [ref=f9e20]
+            - combobox [ref=f9e21]:
+              - option "New jobs"
+              - option "All jobs" [selected]
+            - combobox [ref=f9e22]:
+              - option "All statuses" [selected]
+              - option "High match (80+)"
+              - option "Good match (65-79)"
+              - option "Low match (<65)"
+              - option "Pending analysis"
+              - option "Needs description"
+              - option "Saved"
+              - option "Applied"
+            - generic [ref=f9e23]:
+              - combobox [ref=f9e24]:
+                - option "Recommended order" [selected]
+                - option "Match score"
+                - option "Date discovered"
+                - option "Company"
+              - button "Apply filters" [ref=f9e25] [cursor=pointer]
+        - table [ref=f9e27]:
+          - rowgroup [ref=f9e28]:
+            - row [ref=f9e29]:
+              - columnheader "Job title" [ref=f9e30]
+              - columnheader "Company" [ref=f9e31]
+              - columnheader "Location" [ref=f9e32]
+              - columnheader "Source" [ref=f9e33]
+              - columnheader "First seen" [ref=f9e34]
+              - columnheader "Contract" [ref=f9e35]
+              - columnheader "CV match" [ref=f9e36]
+              - columnheader "Contacts" [ref=f9e37]
+              - columnheader "Status" [ref=f9e38]
+              - columnheader "Action" [ref=f9e39]
+          - rowgroup [ref=f9e40]:
+            - row [ref=f9e41]:
+              - cell "Data Scientist - IA Générative H/F New" [ref=f9e42]:
+                - generic [ref=f9e43]:
+                  - link "Data Scientist - IA Générative H/F" [ref=f9e44] [cursor=pointer]:
+                    - /url: /jobs/7be3674a-5d84-4d41-ba19-aa4d29d976e0
+                  - generic [ref=f9e45]: New
+              - cell "MP Data" [ref=f9e46]
+              - cell "Paris - 75, France" [ref=f9e47]
+              - cell "hellowork" [ref=f9e48]
+              - cell [ref=f9e49]:
+                - time [ref=f9e50]: 11/9/2026, 9:29:44 AM
+              - cell "Not listed" [ref=f9e51]
+              - cell "85/100" [ref=f9e52]
+              - cell [ref=f9e53]:
+                - generic [ref=f9e54]:
+                  - link "Manager search" [ref=f9e55] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22MP%20Data%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f9e56] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22MP%20Data%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "Matched - 85/100" [ref=f9e57]
+              - cell [ref=f9e58]:
+                - link "View role" [ref=f9e59] [cursor=pointer]:
+                  - /url: /jobs/7be3674a-5d84-4d41-ba19-aa4d29d976e0
+                - button "Mark seen" [ref=f9e60] [cursor=pointer]
+            - row [ref=f9e61]:
+              - cell [ref=f9e62]:
+                - link "Data Engineer H/F" [ref=f9e64] [cursor=pointer]:
+                  - /url: /jobs/1cca5142-0a74-46c8-96fc-a84c262a79fb
+              - cell "MP Data" [ref=f9e65]
+              - cell "Paris - 75, France" [ref=f9e66]
+              - cell "hellowork" [ref=f9e67]
+              - cell [ref=f9e68]:
+                - time [ref=f9e69]: 11/7/2026, 10:42:55 PM
+              - cell "Not listed" [ref=f9e70]
+              - cell "-" [ref=f9e71]
+              - cell [ref=f9e72]:
+                - generic [ref=f9e73]:
+                  - link "Manager search" [ref=f9e74] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22MP%20Data%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f9e75] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22MP%20Data%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "To review" [ref=f9e76]
+              - cell [ref=f9e77]:
+                - link "View role" [ref=f9e78] [cursor=pointer]:
+                  - /url: /jobs/1cca5142-0a74-46c8-96fc-a84c262a79fb
+                - button "Mark seen" [ref=f9e79] [cursor=pointer]
+            - row [ref=f9e80]:
+              - cell "Data Scientist H/F New" [ref=f9e81]:
+                - generic [ref=f9e82]:
+                  - link "Data Scientist H/F" [ref=f9e83] [cursor=pointer]:
+                    - /url: /jobs/efce9f75-40c1-4500-8d2c-b1e8b8115f6c
+                  - generic [ref=f9e84]: New
+              - cell "MP Data" [ref=f9e85]
+              - cell "Toulouse - 31, France" [ref=f9e86]
+              - cell "hellowork" [ref=f9e87]
+              - cell [ref=f9e88]:
+                - time [ref=f9e89]: 11/9/2026, 9:26:40 AM
+              - cell "Not listed" [ref=f9e90]
+              - cell "-" [ref=f9e91]
+              - cell [ref=f9e92]:
+                - generic [ref=f9e93]:
+                  - link "Manager search" [ref=f9e94] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22MP%20Data%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f9e95] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22MP%20Data%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "To review" [ref=f9e96]
+              - cell [ref=f9e97]:
+                - link "View role" [ref=f9e98] [cursor=pointer]:
+                  - /url: /jobs/efce9f75-40c1-4500-8d2c-b1e8b8115f6c
+                - button "Mark seen" [ref=f9e99] [cursor=pointer]
+            - row [ref=f9e100]:
+              - cell "Cloud Data Engineer - Paris New" [ref=f9e101]:
+                - generic [ref=f9e102]:
+                  - link "Cloud Data Engineer - Paris" [ref=f9e103] [cursor=pointer]:
+                    - /url: /jobs/9dba80dd-9ff7-4f6f-a156-00fde74f465a
+                  - generic [ref=f9e104]: New
+              - cell "MP DATA" [ref=f9e105]
+              - cell "Boulogne-Billancourt, France" [ref=f9e106]
+              - cell "welcome_to_the_jungle" [ref=f9e107]
+              - cell [ref=f9e108]:
+                - time [ref=f9e109]: 11/9/2026, 9:43:34 AM
+              - cell "Not listed" [ref=f9e110]
+              - cell "-" [ref=f9e111]
+              - cell "Not listed" [ref=f9e112]
+              - cell "Needs description" [ref=f9e114]
+              - cell [ref=f9e115]:
+                - link "View role" [ref=f9e116] [cursor=pointer]:
+                  - /url: /jobs/9dba80dd-9ff7-4f6f-a156-00fde74f465a
+                - button "Mark seen" [ref=f9e117] [cursor=pointer]
+            - row [ref=f9e118]:
+              - cell "Data Engineer New" [ref=f9e119]:
+                - generic [ref=f9e120]:
+                  - link "Data Engineer" [ref=f9e121] [cursor=pointer]:
+                    - /url: /jobs/f477972d-3ab6-43e8-ac2f-7024ae22f4fc
+                  - generic [ref=f9e122]: New
+              - cell "MP DATA" [ref=f9e123]
+              - cell "Boulogne-Billancourt, France" [ref=f9e124]
+              - cell "welcome_to_the_jungle" [ref=f9e125]
+              - cell [ref=f9e126]:
+                - time [ref=f9e127]: 11/9/2026, 9:43:09 AM
+              - cell "Not listed" [ref=f9e128]
+              - cell "-" [ref=f9e129]
+              - cell "Not listed" [ref=f9e130]
+              - cell "Needs description" [ref=f9e132]
+              - cell [ref=f9e133]:
+                - link "View role" [ref=f9e134] [cursor=pointer]:
+                  - /url: /jobs/f477972d-3ab6-43e8-ac2f-7024ae22f4fc
+                - button "Mark seen" [ref=f9e135] [cursor=pointer]
+            - row [ref=f9e136]:
+              - cell "AI Engineer — MLOps & Industrialisation | Paris New" [ref=f9e137]:
+                - generic [ref=f9e138]:
+                  - link "AI Engineer — MLOps & Industrialisation | Paris" [ref=f9e139] [cursor=pointer]:
+                    - /url: /jobs/8f312bf5-ad00-4144-8c82-ff85ac24eaf1
+                  - generic [ref=f9e140]: New
+              - cell "MP DATA" [ref=f9e141]
+              - cell "Boulogne-Billancourt, France" [ref=f9e142]
+              - cell "welcome_to_the_jungle" [ref=f9e143]
+              - cell [ref=f9e144]:
+                - time [ref=f9e145]: 11/9/2026, 9:42:59 AM
+              - cell "Not listed" [ref=f9e146]
+              - cell "-" [ref=f9e147]
+              - cell "Not listed" [ref=f9e148]
+              - cell "Needs description" [ref=f9e150]
+              - cell [ref=f9e151]:
+                - link "View role" [ref=f9e152] [cursor=pointer]:
+                  - /url: /jobs/8f312bf5-ad00-4144-8c82-ff85ac24eaf1
+                - button "Mark seen" [ref=f9e153] [cursor=pointer]
+            - row [ref=f9e154]:
+              - cell "Data Scientist - F/H - Lille New" [ref=f9e155]:
+                - generic [ref=f9e156]:
+                  - link "Data Scientist - F/H - Lille" [ref=f9e157] [cursor=pointer]:
+                    - /url: /jobs/da1c42d7-2baa-4396-9633-feeabba843fc
+                  - generic [ref=f9e158]: New
+              - cell "MP DATA" [ref=f9e159]
+              - cell "Lille, France" [ref=f9e160]
+              - cell "welcome_to_the_jungle" [ref=f9e161]
+              - cell [ref=f9e162]:
+                - time [ref=f9e163]: 11/9/2026, 9:42:58 AM
+              - cell "Not listed" [ref=f9e164]
+              - cell "-" [ref=f9e165]
+              - cell "Not listed" [ref=f9e166]
+              - cell "Needs description" [ref=f9e168]
+              - cell [ref=f9e169]:
+                - link "View role" [ref=f9e170] [cursor=pointer]:
+                  - /url: /jobs/da1c42d7-2baa-4396-9633-feeabba843fc
+                - button "Mark seen" [ref=f9e171] [cursor=pointer]
+            - row [ref=f9e172]:
+              - cell "Data Scientist - H/F New" [ref=f9e173]:
+                - generic [ref=f9e174]:
+                  - link "Data Scientist - H/F" [ref=f9e175] [cursor=pointer]:
+                    - /url: /jobs/27b27f96-cf5c-43b1-a0f3-b7af675bdf98
+                  - generic [ref=f9e176]: New
+              - cell "MP DATA" [ref=f9e177]
+              - cell "Balma, France" [ref=f9e178]
+              - cell "welcome_to_the_jungle" [ref=f9e179]
+              - cell [ref=f9e180]:
+                - time [ref=f9e181]: 11/9/2026, 9:42:55 AM
+              - cell "Not listed" [ref=f9e182]
+              - cell "-" [ref=f9e183]
+              - cell "Not listed" [ref=f9e184]
+              - cell "Needs description" [ref=f9e186]
+              - cell [ref=f9e187]:
+                - link "View role" [ref=f9e188] [cursor=pointer]:
+                  - /url: /jobs/27b27f96-cf5c-43b1-a0f3-b7af675bdf98
+                - button "Mark seen" [ref=f9e189] [cursor=pointer]
+            - row [ref=f9e190]:
+              - cell "Data Scientist - H/F New" [ref=f9e191]:
+                - generic [ref=f9e192]:
+                  - link "Data Scientist - H/F" [ref=f9e193] [cursor=pointer]:
+                    - /url: /jobs/b7a0f6f1-e213-4080-aa12-49e5761774f6
+                  - generic [ref=f9e194]: New
+              - cell "MP DATA" [ref=f9e195]
+              - cell "Boulogne-Billancourt, France" [ref=f9e196]
+              - cell "welcome_to_the_jungle" [ref=f9e197]
+              - cell [ref=f9e198]:
+                - time [ref=f9e199]: 11/9/2026, 9:38:48 AM
+              - cell "Not listed" [ref=f9e200]
+              - cell "-" [ref=f9e201]
+              - cell "Not listed" [ref=f9e202]
+              - cell "Needs description" [ref=f9e204]
+              - cell [ref=f9e205]:
+                - link "View role" [ref=f9e206] [cursor=pointer]:
+                  - /url: /jobs/b7a0f6f1-e213-4080-aa12-49e5761774f6
+                - button "Mark seen" [ref=f9e207] [cursor=pointer]
+  - alert [ref=f9e208]

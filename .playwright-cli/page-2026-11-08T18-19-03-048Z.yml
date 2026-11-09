@@ -1,0 +1,50 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - link "A ATS SNIPER" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e6]: A
+          - generic [ref=e7]: ATS SNIPER
+        - navigation "Primary navigation" [ref=e8]:
+          - link "How it works" [ref=e9] [cursor=pointer]:
+            - /url: "#how-it-works"
+          - link "Features" [ref=e10] [cursor=pointer]:
+            - /url: "#features"
+          - link "Sign in" [ref=e11] [cursor=pointer]:
+            - /url: /login
+          - link "Get started" [ref=e12] [cursor=pointer]:
+            - /url: /login?mode=signup
+        - link "Sign in" [ref=e13] [cursor=pointer]:
+          - /url: /login
+    - main [ref=e14]:
+      - generic [ref=e93]:
+        - paragraph [ref=e94]: Your workspace
+        - heading "Create your workspace" [level=1] [ref=e95]
+        - paragraph [ref=e96]: Use your account to save roles and track applications. Local emails are captured in Mailpit.
+        - generic [ref=e97]:
+          - generic [ref=e98]:
+            - generic [ref=e99]:
+              - text: First name
+              - textbox "First name" [ref=e100]
+            - generic [ref=e101]:
+              - text: Last name
+              - textbox "Last name" [ref=e102]
+          - generic [ref=e103]:
+            - text: Email address
+            - textbox "Email address" [ref=e104]
+          - generic [ref=e105]:
+            - text: Password
+            - textbox "Password" [ref=e106]
+          - generic [ref=e107]:
+            - text: Confirm password
+            - textbox "Confirm password" [ref=e108]
+          - paragraph [ref=e109]: Use at least 8 characters with uppercase, lowercase, and a number.
+          - button "Create account" [ref=e110] [cursor=pointer]
+        - generic [ref=e111]:
+          - button "Already have an account? Sign in" [ref=e112] [cursor=pointer]
+          - button "Forgot password?" [ref=e113] [cursor=pointer]
+        - paragraph [ref=e114]:
+          - link "Return home" [ref=e115] [cursor=pointer]:
+            - /url: /
+  - alert [ref=e92]

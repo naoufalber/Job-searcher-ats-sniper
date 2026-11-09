@@ -1,0 +1,66 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e2]:
+    - banner [ref=f3e3]:
+      - generic [ref=f3e4]:
+        - link "A ATS SNIPER" [ref=f3e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f3e6]: A
+          - generic [ref=f3e7]: ATS SNIPER
+        - navigation "Primary navigation" [ref=f3e8]:
+          - link "Discover" [ref=f3e9] [cursor=pointer]:
+            - /url: /jobs
+          - link "CV" [ref=f3e10] [cursor=pointer]:
+            - /url: /cv
+          - link "Saved" [ref=f3e11] [cursor=pointer]:
+            - /url: /saved
+          - link "Tracker" [ref=f3e12] [cursor=pointer]:
+            - /url: /tracker
+          - link "Settings" [ref=f3e13] [cursor=pointer]:
+            - /url: /settings
+        - button "Sign out" [ref=f3e15] [cursor=pointer]
+    - main [ref=f3e16]:
+      - generic [ref=f3e17]:
+        - paragraph [ref=f3e18]: Workspace settings
+        - heading "Your account" [level=1] [ref=f3e19]
+        - paragraph [ref=f3e20]: Manage your identity and security without leaving the workspace.
+        - generic [ref=f3e21]:
+          - heading "Personal information" [level=2] [ref=f3e22]
+          - paragraph [ref=f3e23]: These details are stored in your user-owned profile.
+          - generic [ref=f3e24]:
+            - generic [ref=f3e25]:
+              - generic [ref=f3e26]:
+                - text: First name
+                - textbox "First name" [ref=f3e27]: Naoufal
+              - generic [ref=f3e28]:
+                - text: Last name
+                - textbox "Last name" [ref=f3e29]: Benkmil
+            - generic [ref=f3e30]:
+              - text: Email address
+              - textbox "Email address" [ref=f3e31]: nawfalbenkmil2@gmail.com
+            - button "Save changes" [ref=f3e33] [cursor=pointer]
+        - generic [ref=f3e34]:
+          - heading "Security" [level=2] [ref=f3e35]
+          - paragraph [ref=f3e36]: Re-enter your current password to confirm the change through Supabase Auth.
+          - generic [ref=f3e37]:
+            - generic [ref=f3e38]:
+              - text: Current password
+              - textbox "Current password" [ref=f3e39]
+            - generic [ref=f3e40]:
+              - text: New password
+              - textbox "New password" [ref=f3e41]
+            - paragraph [ref=f3e42]: Use at least 8 characters with an uppercase letter, lowercase letter, and number.
+            - generic [ref=f3e43]:
+              - text: Confirm new password
+              - textbox "Confirm new password" [ref=f3e44]
+            - button "Change password" [ref=f3e46] [cursor=pointer]
+        - generic [ref=f3e47]:
+          - heading "Account" [level=2] [ref=f3e48]
+          - generic [ref=f3e49]:
+            - generic [ref=f3e50]:
+              - term [ref=f3e51]: Authentication status
+              - definition [ref=f3e52]: Signed in
+            - generic [ref=f3e53]:
+              - term [ref=f3e54]: Created
+              - definition [ref=f3e55]: 11/7/2026
+          - button "Sign out" [ref=f3e57] [cursor=pointer]
+  - alert [ref=f3e58]

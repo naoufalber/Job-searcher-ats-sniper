@@ -1,0 +1,251 @@
+- generic [ref=f6e1]:
+  - generic [ref=f6e2]:
+    - banner [ref=f6e3]:
+      - generic [ref=f6e4]:
+        - link "A ATS SNIPER" [ref=f6e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f6e6]: A
+          - generic [ref=f6e7]: ATS SNIPER
+        - button "Sign out" [ref=f6e15] [cursor=pointer]
+    - main [ref=f6e16]:
+      - generic [ref=f6e17]:
+        - generic [ref=f6e18]:
+          - paragraph [ref=f6e19]: Discovery
+          - heading "Open roles" [level=1] [ref=f6e20]
+          - paragraph [ref=f6e21]: All collected roles, including historical roles for onboarding and backfill.
+          - generic [ref=f6e22]:
+            - textbox "Title, company, or location" [ref=f6e23]
+            - combobox [ref=f6e24]:
+              - option "All sources"
+              - option "ashby"
+              - option "gh"
+              - option "hellowork" [selected]
+              - option "lever"
+              - option "local-fixture"
+              - option "local-integration"
+              - option "smartrecruiters"
+              - option "sr"
+              - option "wd"
+              - option "welcome_to_the_jungle"
+            - textbox "Country" [ref=f6e25]
+            - textbox "Contract type" [ref=f6e26]
+            - combobox [ref=f6e27]:
+              - option "New jobs"
+              - option "All jobs" [selected]
+            - combobox [ref=f6e28]:
+              - option "All statuses" [selected]
+              - option "High match (80+)"
+              - option "Good match (65-79)"
+              - option "Low match (<65)"
+              - option "Pending analysis"
+              - option "Needs description"
+              - option "Saved"
+              - option "Applied"
+            - generic [ref=f6e29]:
+              - combobox [ref=f6e30]:
+                - option "Recommended order" [selected]
+                - option "Match score"
+                - option "Date discovered"
+                - option "Company"
+              - button "Apply filters" [ref=f6e31] [cursor=pointer]
+        - table [ref=f6e33]:
+          - rowgroup [ref=f6e34]:
+            - row [ref=f6e35]:
+              - columnheader "Job title" [ref=f6e36]
+              - columnheader "Company" [ref=f6e37]
+              - columnheader "Location" [ref=f6e38]
+              - columnheader "Source" [ref=f6e39]
+              - columnheader "First seen" [ref=f6e40]
+              - columnheader "Contract" [ref=f6e41]
+              - columnheader "CV match" [ref=f6e42]
+              - columnheader "Contacts" [ref=f6e43]
+              - columnheader "Status" [ref=f6e44]
+              - columnheader "Action" [ref=f6e45]
+          - rowgroup [ref=f6e46]:
+            - row [ref=f6e3648]:
+              - cell [ref=f6e3649]:
+                - link "Data Contrôleur H/F" [ref=f6e3651] [cursor=pointer]:
+                  - /url: /jobs/f27b4600-e924-4de2-a5dc-85b638de603a
+              - cell "In Extenso" [ref=f6e3652]
+              - cell "Montélimar, Auvergne-Rhône-Alpes, FR" [ref=f6e3653]
+              - cell "hellowork" [ref=f6e3654]
+              - cell [ref=f6e3655]:
+                - time [ref=f6e3656]: 11/8/2026, 11:43:04 AM
+              - cell "Not listed" [ref=f6e3657]
+              - cell "-" [ref=f6e3658]
+              - cell "Not listed" [ref=f6e3659]
+              - cell "To review" [ref=f6e3661]
+              - cell [ref=f6e3662]:
+                - link "View role" [ref=f6e3663] [cursor=pointer]:
+                  - /url: /jobs/f27b4600-e924-4de2-a5dc-85b638de603a
+                - button "Mark seen" [ref=f6e3664] [cursor=pointer]
+            - row [ref=f6e3665]:
+              - cell [ref=f6e3666]:
+                - link "Pmo Data H/F" [ref=f6e3668] [cursor=pointer]:
+                  - /url: /jobs/19f32f51-aeb2-4a99-9cde-4317c50713dc
+              - cell "Scalian" [ref=f6e3669]
+              - cell "Vitrolles, Provence-Alpes-Côte d'Azur, FR" [ref=f6e3670]
+              - cell "hellowork" [ref=f6e3671]
+              - cell [ref=f6e3672]:
+                - time [ref=f6e3673]: 11/8/2026, 11:43:03 AM
+              - cell "Not listed" [ref=f6e3674]
+              - cell "-" [ref=f6e3675]
+              - cell "Not listed" [ref=f6e3676]
+              - cell "To review" [ref=f6e3678]
+              - cell [ref=f6e3679]:
+                - link "View role" [ref=f6e3680] [cursor=pointer]:
+                  - /url: /jobs/19f32f51-aeb2-4a99-9cde-4317c50713dc
+                - button "Mark seen" [ref=f6e3681] [cursor=pointer]
+            - row [ref=f6e3682]:
+              - cell [ref=f6e3683]:
+                - link "Data Contrôleur H/F" [ref=f6e3685] [cursor=pointer]:
+                  - /url: /jobs/a635ce4d-4e8f-45b2-a1ba-a15975f6b7c6
+              - cell "In Extenso" [ref=f6e3686]
+              - cell "Albertville, Auvergne-Rhône-Alpes, FR" [ref=f6e3687]
+              - cell "hellowork" [ref=f6e3688]
+              - cell [ref=f6e3689]:
+                - time [ref=f6e3690]: 11/8/2026, 11:43:03 AM
+              - cell "Not listed" [ref=f6e3691]
+              - cell "-" [ref=f6e3692]
+              - cell "Not listed" [ref=f6e3693]
+              - cell "To review" [ref=f6e3695]
+              - cell [ref=f6e3696]:
+                - link "View role" [ref=f6e3697] [cursor=pointer]:
+                  - /url: /jobs/a635ce4d-4e8f-45b2-a1ba-a15975f6b7c6
+                - button "Mark seen" [ref=f6e3698] [cursor=pointer]
+            - row [ref=f6e3699]:
+              - cell [ref=f6e3700]:
+                - link "Data Contrôleur H/F" [ref=f6e3702] [cursor=pointer]:
+                  - /url: /jobs/a916edd1-2328-403a-8dc1-687da909b1e4
+              - cell "In Extenso" [ref=f6e3703]
+              - cell "La Tronche, Auvergne-Rhône-Alpes, FR" [ref=f6e3704]
+              - cell "hellowork" [ref=f6e3705]
+              - cell [ref=f6e3706]:
+                - time [ref=f6e3707]: 11/8/2026, 11:43:03 AM
+              - cell "Not listed" [ref=f6e3708]
+              - cell "-" [ref=f6e3709]
+              - cell "Not listed" [ref=f6e3710]
+              - cell "To review" [ref=f6e3712]
+              - cell [ref=f6e3713]:
+                - link "View role" [ref=f6e3714] [cursor=pointer]:
+                  - /url: /jobs/a916edd1-2328-403a-8dc1-687da909b1e4
+                - button "Mark seen" [ref=f6e3715] [cursor=pointer]
+            - row [ref=f6e3716]:
+              - cell [ref=f6e3717]:
+                - link "Lead Data - Architecte Data H/F" [ref=f6e3719] [cursor=pointer]:
+                  - /url: /jobs/03970baa-dab5-47f5-ab26-4e369c4f0792
+              - cell "Amiltone" [ref=f6e3720]
+              - cell "Villeurbanne, Auvergne-Rhône-Alpes, FR" [ref=f6e3721]
+              - cell "hellowork" [ref=f6e3722]
+              - cell [ref=f6e3723]:
+                - time [ref=f6e3724]: 11/8/2026, 11:43:03 AM
+              - cell "Not listed" [ref=f6e3725]
+              - cell "-" [ref=f6e3726]
+              - cell "Not listed" [ref=f6e3727]
+              - cell "To review" [ref=f6e3729]
+              - cell [ref=f6e3730]:
+                - link "View role" [ref=f6e3731] [cursor=pointer]:
+                  - /url: /jobs/03970baa-dab5-47f5-ab26-4e369c4f0792
+                - button "Mark seen" [ref=f6e3732] [cursor=pointer]
+            - row [ref=f6e3733]:
+              - cell [ref=f6e3734]:
+                - link "Electricien Data H/F" [ref=f6e3736] [cursor=pointer]:
+                  - /url: /jobs/733f5be9-6368-45ed-8706-a85c53e282e0
+              - cell "Lynx RH" [ref=f6e3737]
+              - cell "Villabé, Île-de-France, FR" [ref=f6e3738]
+              - cell "hellowork" [ref=f6e3739]
+              - cell [ref=f6e3740]:
+                - time [ref=f6e3741]: 11/8/2026, 11:43:02 AM
+              - cell "Not listed" [ref=f6e3742]
+              - cell "-" [ref=f6e3743]
+              - cell "Not listed" [ref=f6e3744]
+              - cell "To review" [ref=f6e3746]
+              - cell [ref=f6e3747]:
+                - link "View role" [ref=f6e3748] [cursor=pointer]:
+                  - /url: /jobs/733f5be9-6368-45ed-8706-a85c53e282e0
+                - button "Mark seen" [ref=f6e3749] [cursor=pointer]
+            - row [ref=f6e3750]:
+              - cell [ref=f6e3751]:
+                - link "Data Officer H/F" [ref=f6e3753] [cursor=pointer]:
+                  - /url: /jobs/6f696cad-16f8-4a94-81d1-f374b3cf0a77
+              - cell "Scalian" [ref=f6e3754]
+              - cell "Lille, Hauts-de-France, FR" [ref=f6e3755]
+              - cell "hellowork" [ref=f6e3756]
+              - cell [ref=f6e3757]:
+                - time [ref=f6e3758]: 11/8/2026, 11:43:02 AM
+              - cell "Not listed" [ref=f6e3759]
+              - cell "-" [ref=f6e3760]
+              - cell "Not listed" [ref=f6e3761]
+              - cell "To review" [ref=f6e3763]
+              - cell [ref=f6e3764]:
+                - link "View role" [ref=f6e3765] [cursor=pointer]:
+                  - /url: /jobs/6f696cad-16f8-4a94-81d1-f374b3cf0a77
+                - button "Mark seen" [ref=f6e3766] [cursor=pointer]
+            - row [ref=f6e3767]:
+              - cell [ref=f6e3768]:
+                - link "Stagiaire Data Management - Data Governance H/F" [ref=f6e3770] [cursor=pointer]:
+                  - /url: /jobs/1ba6bbfb-85f1-4707-b349-55e1d7dc1317
+              - cell "Safran" [ref=f6e3771]
+              - cell "Vélizy-Villacoublay, Île-de-France, FR" [ref=f6e3772]
+              - cell "hellowork" [ref=f6e3773]
+              - cell [ref=f6e3774]:
+                - time [ref=f6e3775]: 11/8/2026, 11:43:02 AM
+              - cell "Not listed" [ref=f6e3776]
+              - cell "-" [ref=f6e3777]
+              - cell "Not listed" [ref=f6e3778]
+              - cell "To review" [ref=f6e3780]
+              - cell [ref=f6e3781]:
+                - link "View role" [ref=f6e3782] [cursor=pointer]:
+                  - /url: /jobs/1ba6bbfb-85f1-4707-b349-55e1d7dc1317
+                - button "Mark seen" [ref=f6e3783] [cursor=pointer]
+            - row [ref=f6e3784]:
+              - cell [ref=f6e3785]:
+                - link "Ingénieur IA Agentique H/F" [ref=f6e3787] [cursor=pointer]:
+                  - /url: /jobs/e188f484-6020-4928-b3ee-fb6227400a88
+              - cell "COLLEEN IT" [ref=f6e3788]
+              - cell "Toulouse, Occitanie, FR" [ref=f6e3789]
+              - cell "hellowork" [ref=f6e3790]
+              - cell [ref=f6e3791]:
+                - time [ref=f6e3792]: 11/8/2026, 11:28:17 AM
+              - cell "Not listed" [ref=f6e3793]
+              - cell "-" [ref=f6e3794]
+              - cell "Not listed" [ref=f6e3795]
+              - cell "To review" [ref=f6e3797]
+              - cell [ref=f6e3798]:
+                - link "View role" [ref=f6e3799] [cursor=pointer]:
+                  - /url: /jobs/e188f484-6020-4928-b3ee-fb6227400a88
+                - button "Mark seen" [ref=f6e3800] [cursor=pointer]
+            - row [ref=f6e3801]:
+              - cell [ref=f6e3802]:
+                - link "Data Engineer H/F" [ref=f6e3804] [cursor=pointer]:
+                  - /url: /jobs/97a5de11-0c0a-4a66-8977-6b674cafa642
+              - cell "CGI" [ref=f6e3805]
+              - cell "Tours - 37, France" [ref=f6e3806]
+              - cell "hellowork" [ref=f6e3807]
+              - cell [ref=f6e3808]:
+                - time [ref=f6e3809]: 11/7/2026, 10:42:54 PM
+              - cell "Not listed" [ref=f6e3810]
+              - cell "-" [ref=f6e3811]
+              - cell "Not listed" [ref=f6e3812]
+              - cell "Needs description" [ref=f6e3814]
+              - cell [ref=f6e3815]:
+                - link "View role" [ref=f6e3816] [cursor=pointer]:
+                  - /url: /jobs/97a5de11-0c0a-4a66-8977-6b674cafa642
+                - button "Mark seen" [ref=f6e3817] [cursor=pointer]
+        - navigation "Job pages" [ref=f6e980]:
+          - link "Previous" [ref=f6e1890] [cursor=pointer]:
+            - /url: /jobs?q=&source=hellowork&country=&contract=&remote=&sort=recent&filter=all&view=all&page=4
+          - generic "Page 5 of 5" [ref=f6e3818]:
+            - generic [ref=f6e983]:
+              - link "1" [ref=f6e984] [cursor=pointer]:
+                - /url: /jobs?q=&source=hellowork&country=&contract=&remote=&sort=recent&filter=all&view=all&page=1
+              - link "2" [ref=f6e985] [cursor=pointer]:
+                - /url: /jobs?q=&source=hellowork&country=&contract=&remote=&sort=recent&filter=all&view=all&page=2
+              - link "3" [ref=f6e986] [cursor=pointer]:
+                - /url: /jobs?q=&source=hellowork&country=&contract=&remote=&sort=recent&filter=all&view=all&page=3
+              - link "4" [ref=f6e987] [cursor=pointer]:
+                - /url: /jobs?q=&source=hellowork&country=&contract=&remote=&sort=recent&filter=all&view=all&page=4
+              - link "5" [active] [ref=f6e988] [cursor=pointer]:
+                - /url: /jobs?q=&source=hellowork&country=&contract=&remote=&sort=recent&filter=all&view=all&page=5
+          - generic [ref=f6e3819]: Next
+  - alert [ref=f6e990]

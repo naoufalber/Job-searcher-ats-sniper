@@ -1,0 +1,1317 @@
+- generic [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - banner [ref=f1e3]:
+      - generic [ref=f1e4]:
+        - link "A ATS SNIPER" [ref=f1e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f1e6]: A
+          - generic [ref=f1e7]: ATS SNIPER
+        - button "Sign out" [ref=f1e16] [cursor=pointer]
+      - navigation "Mobile navigation" [ref=f1e1050]:
+        - link "Discover" [ref=f1e1051] [cursor=pointer]:
+          - /url: /jobs
+        - link "Explore more" [ref=f1e1052] [cursor=pointer]:
+          - /url: /jobs/explore
+        - link "CV" [ref=f1e1053] [cursor=pointer]:
+          - /url: /cv
+        - link "Saved" [ref=f1e1054] [cursor=pointer]:
+          - /url: /saved
+        - link "Tracker" [ref=f1e1055] [cursor=pointer]:
+          - /url: /tracker
+        - link "Settings" [ref=f1e1056] [cursor=pointer]:
+          - /url: /settings
+    - main [ref=f1e17]:
+      - generic [ref=f1e18]:
+        - status [ref=f1e19]: Live updates on. Scores appear automatically as matching completes.
+        - generic [ref=f1e20]:
+          - paragraph [ref=f1e21]: Discovery
+          - heading "Explore more" [level=1] [ref=f1e22]
+          - paragraph [ref=f1e23]: Offers awaiting a complete description. Browse the original listing while extraction is retried.
+          - generic [ref=f1e24]:
+            - link "Discover" [ref=f1e25] [cursor=pointer]:
+              - /url: /jobs?q=&source=hellowork&country=&contract=&remote=&sort=recent&filter=all&view=all
+            - link "Explore more" [ref=f1e26] [cursor=pointer]:
+              - /url: /jobs/explore?q=&source=hellowork&country=&contract=&remote=&sort=recent&filter=all&view=all
+            - generic [ref=f1e27]: 60 offers
+          - generic [ref=f1e28]:
+            - textbox "Title, company, or location" [ref=f1e29]
+            - combobox [ref=f1e30]:
+              - option "All sources"
+              - option "ashby"
+              - option "gh"
+              - option "hellowork" [selected]
+              - option "lever"
+              - option "local-fixture"
+              - option "local-integration"
+              - option "smartrecruiters"
+              - option "sr"
+              - option "wd"
+              - option "welcome_to_the_jungle"
+            - textbox "Country" [ref=f1e31]
+            - textbox "Contract type" [ref=f1e32]
+            - combobox [ref=f1e33]:
+              - option "New jobs"
+              - option "All jobs" [selected]
+            - generic [ref=f1e34]:
+              - combobox [ref=f1e35]:
+                - option "Recommended order" [selected]
+                - option "Match score"
+                - option "Date discovered"
+                - option "Company"
+              - button "Apply filters" [ref=f1e36] [cursor=pointer]
+        - table [ref=f1e38]:
+          - rowgroup [ref=f1e39]:
+            - row [ref=f1e40]:
+              - columnheader "Job title" [ref=f1e41]
+              - columnheader "Company" [ref=f1e42]
+              - columnheader "Location" [ref=f1e43]
+              - columnheader "Source" [ref=f1e44]
+              - columnheader "First seen" [ref=f1e45]
+              - columnheader "Contract" [ref=f1e46]
+              - columnheader "Contacts" [ref=f1e47]
+              - columnheader "Status" [ref=f1e48]
+              - columnheader "Action" [ref=f1e49]
+          - rowgroup [ref=f1e50]:
+            - row [ref=f1e51]:
+              - cell "Data Engineer - Nantes H/F New" [ref=f1e52]:
+                - generic [ref=f1e53]:
+                  - link "Data Engineer - Nantes H/F" [ref=f1e54] [cursor=pointer]:
+                    - /url: /jobs/3ff6d47a-4a18-44e1-9b8a-1364086ffa7f
+                  - generic [ref=f1e55]: New
+              - cell "Aubay" [ref=f1e56]
+              - cell "Nantes - 44, France" [ref=f1e57]
+              - cell "hellowork" [ref=f1e58]
+              - cell [ref=f1e59]:
+                - time [ref=f1e60]: 11/9/2026, 12:15:03 PM
+              - cell "Not listed" [ref=f1e61]
+              - cell [ref=f1e62]:
+                - generic [ref=f1e63]:
+                  - link "Manager search" [ref=f1e64] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Aubay%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e65] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Aubay%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e66]:
+                - text: Needs description
+                - paragraph [ref=f1e67]: No extraction details recorded yet.
+              - cell [ref=f1e68]:
+                - link "View role" [ref=f1e69] [cursor=pointer]:
+                  - /url: /jobs/3ff6d47a-4a18-44e1-9b8a-1364086ffa7f
+                - button "Mark seen" [ref=f1e70] [cursor=pointer]
+            - row [ref=f1e71]:
+              - cell "Data Engineer Gcp H/F New" [ref=f1e72]:
+                - generic [ref=f1e73]:
+                  - link "Data Engineer Gcp H/F" [ref=f1e74] [cursor=pointer]:
+                    - /url: /jobs/0b92a2d0-f613-4990-8b1a-4eb1d490b1b1
+                  - generic [ref=f1e75]: New
+              - cell "Astek" [ref=f1e76]
+              - cell "Nice - 06, France" [ref=f1e77]
+              - cell "hellowork" [ref=f1e78]
+              - cell [ref=f1e79]:
+                - time [ref=f1e80]: 11/9/2026, 12:07:31 PM
+              - cell "Not listed" [ref=f1e81]
+              - cell [ref=f1e82]:
+                - generic [ref=f1e83]:
+                  - link "Manager search" [ref=f1e84] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Astek%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e85] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Astek%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e86]:
+                - text: Needs description
+                - paragraph [ref=f1e87]: No extraction details recorded yet.
+              - cell [ref=f1e88]:
+                - link "View role" [ref=f1e89] [cursor=pointer]:
+                  - /url: /jobs/0b92a2d0-f613-4990-8b1a-4eb1d490b1b1
+                - button "Mark seen" [ref=f1e90] [cursor=pointer]
+            - row [ref=f1e91]:
+              - cell "Data Analyst Mode H/F New" [ref=f1e92]:
+                - generic [ref=f1e93]:
+                  - link "Data Analyst Mode H/F" [ref=f1e94] [cursor=pointer]:
+                    - /url: /jobs/7424608a-07f5-4e14-b984-4f4ad3c5162a
+                  - generic [ref=f1e95]: New
+              - cell "Sintel" [ref=f1e96]
+              - cell "Paris 16e - 75, France" [ref=f1e97]
+              - cell "hellowork" [ref=f1e98]
+              - cell [ref=f1e99]:
+                - time [ref=f1e100]: 11/9/2026, 10:53:25 AM
+              - cell "Not listed" [ref=f1e101]
+              - cell [ref=f1e102]:
+                - generic [ref=f1e103]:
+                  - link "Manager search" [ref=f1e104] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Sintel%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e105] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Sintel%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e106]:
+                - text: Needs description
+                - paragraph [ref=f1e107]: No extraction details recorded yet.
+              - cell [ref=f1e108]:
+                - link "View role" [ref=f1e109] [cursor=pointer]:
+                  - /url: /jobs/7424608a-07f5-4e14-b984-4f4ad3c5162a
+                - button "Mark seen" [ref=f1e110] [cursor=pointer]
+            - row [ref=f1e111]:
+              - cell "Data Analyst H/F New" [ref=f1e112]:
+                - generic [ref=f1e113]:
+                  - link "Data Analyst H/F" [ref=f1e114] [cursor=pointer]:
+                    - /url: /jobs/97b9cd2c-ab23-4600-9ce4-222284416899
+                  - generic [ref=f1e115]: New
+              - cell "LHH Recruitment Solutions" [ref=f1e116]
+              - cell "Boulogne-Billancourt - 92, France" [ref=f1e117]
+              - cell "hellowork" [ref=f1e118]
+              - cell [ref=f1e119]:
+                - time [ref=f1e120]: 11/9/2026, 10:53:23 AM
+              - cell "Not listed" [ref=f1e121]
+              - cell [ref=f1e122]:
+                - generic [ref=f1e123]:
+                  - link "Manager search" [ref=f1e124] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22LHH%20Recruitment%20Solutions%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e125] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22LHH%20Recruitment%20Solutions%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e126]:
+                - text: Needs description
+                - paragraph [ref=f1e127]: No extraction details recorded yet.
+              - cell [ref=f1e128]:
+                - link "View role" [ref=f1e129] [cursor=pointer]:
+                  - /url: /jobs/97b9cd2c-ab23-4600-9ce4-222284416899
+                - button "Mark seen" [ref=f1e130] [cursor=pointer]
+            - row [ref=f1e131]:
+              - cell "Data Analyst H/F New" [ref=f1e132]:
+                - generic [ref=f1e133]:
+                  - link "Data Analyst H/F" [ref=f1e134] [cursor=pointer]:
+                    - /url: /jobs/34e4c923-2f1a-4ea6-9da3-3afee4028c8a
+                  - generic [ref=f1e135]: New
+              - cell "Akkodis" [ref=f1e136]
+              - cell "Pau - 64, France" [ref=f1e137]
+              - cell "hellowork" [ref=f1e138]
+              - cell [ref=f1e139]:
+                - time [ref=f1e140]: 11/9/2026, 10:53:22 AM
+              - cell "Not listed" [ref=f1e141]
+              - cell [ref=f1e142]:
+                - generic [ref=f1e143]:
+                  - link "Manager search" [ref=f1e144] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Akkodis%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e145] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Akkodis%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e146]:
+                - text: Needs description
+                - paragraph [ref=f1e147]: No extraction details recorded yet.
+              - cell [ref=f1e148]:
+                - link "View role" [ref=f1e149] [cursor=pointer]:
+                  - /url: /jobs/34e4c923-2f1a-4ea6-9da3-3afee4028c8a
+                - button "Mark seen" [ref=f1e150] [cursor=pointer]
+            - row [ref=f1e151]:
+              - cell "Machine Learning Engineer - Île-De-France H/F New" [ref=f1e152]:
+                - generic [ref=f1e153]:
+                  - link "Machine Learning Engineer - Île-De-France H/F" [ref=f1e154] [cursor=pointer]:
+                    - /url: /jobs/810b2681-5d47-42f6-81a2-bb864a0a1135
+                  - generic [ref=f1e155]: New
+              - cell "Socadek Solutions" [ref=f1e156]
+              - cell "Paris - 75, France" [ref=f1e157]
+              - cell "hellowork" [ref=f1e158]
+              - cell [ref=f1e159]:
+                - time [ref=f1e160]: 11/9/2026, 10:42:26 AM
+              - cell "Not listed" [ref=f1e161]
+              - cell [ref=f1e162]:
+                - generic [ref=f1e163]:
+                  - link "Manager search" [ref=f1e164] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Socadek%20Solutions%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e165] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Socadek%20Solutions%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e166]:
+                - text: Needs description
+                - paragraph [ref=f1e167]: No extraction details recorded yet.
+              - cell [ref=f1e168]:
+                - link "View role" [ref=f1e169] [cursor=pointer]:
+                  - /url: /jobs/810b2681-5d47-42f6-81a2-bb864a0a1135
+                - button "Mark seen" [ref=f1e170] [cursor=pointer]
+            - row [ref=f1e171]:
+              - cell "Machine Learning Engineer H/F New" [ref=f1e172]:
+                - generic [ref=f1e173]:
+                  - link "Machine Learning Engineer H/F" [ref=f1e174] [cursor=pointer]:
+                    - /url: /jobs/8c6cfe86-46e2-4963-bd77-71cec548236b
+                  - generic [ref=f1e175]: New
+              - cell "Storm Group" [ref=f1e176]
+              - cell "Paris 2e - 75, France" [ref=f1e177]
+              - cell "hellowork" [ref=f1e178]
+              - cell [ref=f1e179]:
+                - time [ref=f1e180]: 11/9/2026, 10:42:26 AM
+              - cell "Not listed" [ref=f1e181]
+              - cell [ref=f1e182]:
+                - generic [ref=f1e183]:
+                  - link "Manager search" [ref=f1e184] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Storm%20Group%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e185] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Storm%20Group%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e186]:
+                - text: Needs description
+                - paragraph [ref=f1e187]: No extraction details recorded yet.
+              - cell [ref=f1e188]:
+                - link "View role" [ref=f1e189] [cursor=pointer]:
+                  - /url: /jobs/8c6cfe86-46e2-4963-bd77-71cec548236b
+                - button "Mark seen" [ref=f1e190] [cursor=pointer]
+            - row [ref=f1e191]:
+              - cell "Machine Learning Engineer H/F New" [ref=f1e192]:
+                - generic [ref=f1e193]:
+                  - link "Machine Learning Engineer H/F" [ref=f1e194] [cursor=pointer]:
+                    - /url: /jobs/fc3f2454-338e-43bf-9137-b63d81c1fedd
+                  - generic [ref=f1e195]: New
+              - cell "Klanik" [ref=f1e196]
+              - cell "Lille - 59, France" [ref=f1e197]
+              - cell "hellowork" [ref=f1e198]
+              - cell [ref=f1e199]:
+                - time [ref=f1e200]: 11/9/2026, 10:42:26 AM
+              - cell "Not listed" [ref=f1e201]
+              - cell [ref=f1e202]:
+                - generic [ref=f1e203]:
+                  - link "Manager search" [ref=f1e204] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Klanik%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e205] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Klanik%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e206]:
+                - text: Needs description
+                - paragraph [ref=f1e207]: No extraction details recorded yet.
+              - cell [ref=f1e208]:
+                - link "View role" [ref=f1e209] [cursor=pointer]:
+                  - /url: /jobs/fc3f2454-338e-43bf-9137-b63d81c1fedd
+                - button "Mark seen" [ref=f1e210] [cursor=pointer]
+            - row [ref=f1e211]:
+              - cell "Data Engineer Dbt H/F New" [ref=f1e212]:
+                - generic [ref=f1e213]:
+                  - link "Data Engineer Dbt H/F" [ref=f1e214] [cursor=pointer]:
+                    - /url: /jobs/685457e9-8c87-4110-8ec4-eec5e9473eed
+                  - generic [ref=f1e215]: New
+              - cell "CGI" [ref=f1e216]
+              - cell "Avignon - 84, France" [ref=f1e217]
+              - cell "hellowork" [ref=f1e218]
+              - cell [ref=f1e219]:
+                - time [ref=f1e220]: 11/9/2026, 10:42:25 AM
+              - cell "Not listed" [ref=f1e221]
+              - cell [ref=f1e222]:
+                - generic [ref=f1e223]:
+                  - link "Manager search" [ref=f1e224] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22CGI%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e225] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22CGI%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e226]:
+                - text: Needs description
+                - paragraph [ref=f1e227]: No extraction details recorded yet.
+              - cell [ref=f1e228]:
+                - link "View role" [ref=f1e229] [cursor=pointer]:
+                  - /url: /jobs/685457e9-8c87-4110-8ec4-eec5e9473eed
+                - button "Mark seen" [ref=f1e230] [cursor=pointer]
+            - row [ref=f1e231]:
+              - cell [ref=f1e232]:
+                - link "Data Engineer H/F" [ref=f1e234] [cursor=pointer]:
+                  - /url: /jobs/7a033246-230f-478c-8c53-9e2028a30458
+              - cell "néosoft" [ref=f1e235]
+              - cell "Paris - 75, France" [ref=f1e236]
+              - cell "hellowork" [ref=f1e237]
+              - cell [ref=f1e238]:
+                - time [ref=f1e239]: 11/7/2026, 10:42:55 PM
+              - cell "Not listed" [ref=f1e240]
+              - cell [ref=f1e241]:
+                - generic [ref=f1e242]:
+                  - link "Manager search" [ref=f1e243] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22n%C3%A9osoft%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e244] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22n%C3%A9osoft%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e245]:
+                - text: Needs description
+                - paragraph [ref=f1e246]: No extraction details recorded yet.
+              - cell [ref=f1e247]:
+                - link "View role" [ref=f1e248] [cursor=pointer]:
+                  - /url: /jobs/7a033246-230f-478c-8c53-9e2028a30458
+                - button "Mark seen" [ref=f1e249] [cursor=pointer]
+            - row [ref=f1e250]:
+              - cell "Data Analyst Business Bilingual H/F New" [ref=f1e251]:
+                - generic [ref=f1e252]:
+                  - link "Data Analyst Business Bilingual H/F" [ref=f1e253] [cursor=pointer]:
+                    - /url: /jobs/7a9a37aa-4fb9-4748-853f-c71dfce0318b
+                  - generic [ref=f1e254]: New
+              - cell "Alveor" [ref=f1e255]
+              - cell "Neuilly-sur-Seine - 92, France" [ref=f1e256]
+              - cell "hellowork" [ref=f1e257]
+              - cell [ref=f1e258]:
+                - time [ref=f1e259]: 11/9/2026, 9:42:19 AM
+              - cell "Not listed" [ref=f1e260]
+              - cell [ref=f1e261]:
+                - generic [ref=f1e262]:
+                  - link "Manager search" [ref=f1e263] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Alveor%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e264] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Alveor%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e265]:
+                - text: Needs description
+                - paragraph [ref=f1e266]: No extraction details recorded yet.
+              - cell [ref=f1e267]:
+                - link "View role" [ref=f1e268] [cursor=pointer]:
+                  - /url: /jobs/7a9a37aa-4fb9-4748-853f-c71dfce0318b
+                - button "Mark seen" [ref=f1e269] [cursor=pointer]
+            - row [ref=f1e270]:
+              - cell "Data Analyst H/F New" [ref=f1e271]:
+                - generic [ref=f1e272]:
+                  - link "Data Analyst H/F" [ref=f1e273] [cursor=pointer]:
+                    - /url: /jobs/4a1b06d0-c7bb-4dec-b65b-71cd8fd5d1c2
+                  - generic [ref=f1e274]: New
+              - cell "Expleo" [ref=f1e275]
+              - cell "Montigny-le-Bretonneux - 78, France" [ref=f1e276]
+              - cell "hellowork" [ref=f1e277]
+              - cell [ref=f1e278]:
+                - time [ref=f1e279]: 11/9/2026, 9:42:19 AM
+              - cell "Not listed" [ref=f1e280]
+              - cell [ref=f1e281]:
+                - generic [ref=f1e282]:
+                  - link "Manager search" [ref=f1e283] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Expleo%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e284] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Expleo%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e285]:
+                - text: Needs description
+                - paragraph [ref=f1e286]: No description returned
+              - cell [ref=f1e287]:
+                - link "View role" [ref=f1e288] [cursor=pointer]:
+                  - /url: /jobs/4a1b06d0-c7bb-4dec-b65b-71cd8fd5d1c2
+                - button "Mark seen" [ref=f1e289] [cursor=pointer]
+            - row [ref=f1e290]:
+              - cell "Data Analyst Supply Chain H/F New" [ref=f1e291]:
+                - generic [ref=f1e292]:
+                  - link "Data Analyst Supply Chain H/F" [ref=f1e293] [cursor=pointer]:
+                    - /url: /jobs/91c00330-ef43-473e-9d06-11c3776529fb
+                  - generic [ref=f1e294]: New
+              - cell "Capgemini" [ref=f1e295]
+              - cell "Aix-en-Provence - 13, France" [ref=f1e296]
+              - cell "hellowork" [ref=f1e297]
+              - cell [ref=f1e298]:
+                - time [ref=f1e299]: 11/9/2026, 9:42:18 AM
+              - cell "Not listed" [ref=f1e300]
+              - cell [ref=f1e301]:
+                - generic [ref=f1e302]:
+                  - link "Manager search" [ref=f1e303] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Capgemini%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e304] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Capgemini%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e305]:
+                - text: Needs description
+                - paragraph [ref=f1e306]: No description returned
+              - cell [ref=f1e307]:
+                - link "View role" [ref=f1e308] [cursor=pointer]:
+                  - /url: /jobs/91c00330-ef43-473e-9d06-11c3776529fb
+                - button "Mark seen" [ref=f1e309] [cursor=pointer]
+            - row [ref=f1e310]:
+              - cell "Data Analyst - E-Commerce H/F New" [ref=f1e311]:
+                - generic [ref=f1e312]:
+                  - link "Data Analyst - E-Commerce H/F" [ref=f1e313] [cursor=pointer]:
+                    - /url: /jobs/de52f4a2-1c79-47b4-9d17-d0834d582661
+                  - generic [ref=f1e314]: New
+              - cell "Externatic" [ref=f1e315]
+              - cell "Nantes - 44, France" [ref=f1e316]
+              - cell "hellowork" [ref=f1e317]
+              - cell [ref=f1e318]:
+                - time [ref=f1e319]: 11/9/2026, 9:42:18 AM
+              - cell "Not listed" [ref=f1e320]
+              - cell [ref=f1e321]:
+                - generic [ref=f1e322]:
+                  - link "Manager search" [ref=f1e323] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Externatic%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e324] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Externatic%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e325]:
+                - text: Needs description
+                - paragraph [ref=f1e326]: No description returned
+              - cell [ref=f1e327]:
+                - link "View role" [ref=f1e328] [cursor=pointer]:
+                  - /url: /jobs/de52f4a2-1c79-47b4-9d17-d0834d582661
+                - button "Mark seen" [ref=f1e329] [cursor=pointer]
+            - row [ref=f1e330]:
+              - cell "Ingénieur Bi - Data Analyst H/F New" [ref=f1e331]:
+                - generic [ref=f1e332]:
+                  - link "Ingénieur Bi - Data Analyst H/F" [ref=f1e333] [cursor=pointer]:
+                    - /url: /jobs/2d057bf2-9059-4c7b-9095-f7b4f63196bb
+                  - generic [ref=f1e334]: New
+              - cell "Solutec" [ref=f1e335]
+              - cell "Toulouse - 31, France" [ref=f1e336]
+              - cell "hellowork" [ref=f1e337]
+              - cell [ref=f1e338]:
+                - time [ref=f1e339]: 11/9/2026, 9:42:18 AM
+              - cell "Not listed" [ref=f1e340]
+              - cell [ref=f1e341]:
+                - generic [ref=f1e342]:
+                  - link "Manager search" [ref=f1e343] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Solutec%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e344] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Solutec%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e345]:
+                - text: Needs description
+                - paragraph [ref=f1e346]: No description returned
+              - cell [ref=f1e347]:
+                - link "View role" [ref=f1e348] [cursor=pointer]:
+                  - /url: /jobs/2d057bf2-9059-4c7b-9095-f7b4f63196bb
+                - button "Mark seen" [ref=f1e349] [cursor=pointer]
+            - row [ref=f1e350]:
+              - cell "Data Analyst H/F New" [ref=f1e351]:
+                - generic [ref=f1e352]:
+                  - link "Data Analyst H/F" [ref=f1e353] [cursor=pointer]:
+                    - /url: /jobs/663a24e7-3e85-4437-b52f-d4718dea23f5
+                  - generic [ref=f1e354]: New
+              - cell "Harmonie Mutuelle" [ref=f1e355]
+              - cell "Angers - 49, France" [ref=f1e356]
+              - cell "hellowork" [ref=f1e357]
+              - cell [ref=f1e358]:
+                - time [ref=f1e359]: 11/9/2026, 9:42:18 AM
+              - cell "Not listed" [ref=f1e360]
+              - cell [ref=f1e361]:
+                - generic [ref=f1e362]:
+                  - link "Manager search" [ref=f1e363] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Harmonie%20Mutuelle%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e364] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Harmonie%20Mutuelle%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e365]:
+                - text: Needs description
+                - paragraph [ref=f1e366]: No description returned
+              - cell [ref=f1e367]:
+                - link "View role" [ref=f1e368] [cursor=pointer]:
+                  - /url: /jobs/663a24e7-3e85-4437-b52f-d4718dea23f5
+                - button "Mark seen" [ref=f1e369] [cursor=pointer]
+            - row [ref=f1e370]:
+              - cell "Data Analyst Industriel H/F New" [ref=f1e371]:
+                - generic [ref=f1e372]:
+                  - link "Data Analyst Industriel H/F" [ref=f1e373] [cursor=pointer]:
+                    - /url: /jobs/c781b17a-077e-490a-9db0-00dbc2ca106f
+                  - generic [ref=f1e374]: New
+              - cell "Groupe Piment" [ref=f1e375]
+              - cell "Colombes - 92, France" [ref=f1e376]
+              - cell "hellowork" [ref=f1e377]
+              - cell [ref=f1e378]:
+                - time [ref=f1e379]: 11/9/2026, 9:42:17 AM
+              - cell "Not listed" [ref=f1e380]
+              - cell [ref=f1e381]:
+                - generic [ref=f1e382]:
+                  - link "Manager search" [ref=f1e383] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Groupe%20Piment%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e384] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Groupe%20Piment%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e385]:
+                - text: Needs description
+                - paragraph [ref=f1e386]: No description returned
+              - cell [ref=f1e387]:
+                - link "View role" [ref=f1e388] [cursor=pointer]:
+                  - /url: /jobs/c781b17a-077e-490a-9db0-00dbc2ca106f
+                - button "Mark seen" [ref=f1e389] [cursor=pointer]
+            - row [ref=f1e390]:
+              - cell "Data Analyst - Scientist H/F New" [ref=f1e391]:
+                - generic [ref=f1e392]:
+                  - link "Data Analyst - Scientist H/F" [ref=f1e393] [cursor=pointer]:
+                    - /url: /jobs/3a0a7cc4-6f09-4535-9847-6f6e94875f4e
+                  - generic [ref=f1e394]: New
+              - cell "ATHEIA" [ref=f1e395]
+              - cell "Paris - 75, France" [ref=f1e396]
+              - cell "hellowork" [ref=f1e397]
+              - cell [ref=f1e398]:
+                - time [ref=f1e399]: 11/9/2026, 9:42:17 AM
+              - cell "Not listed" [ref=f1e400]
+              - cell [ref=f1e401]:
+                - generic [ref=f1e402]:
+                  - link "Manager search" [ref=f1e403] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22ATHEIA%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e404] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22ATHEIA%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e405]:
+                - text: Needs description
+                - paragraph [ref=f1e406]: No description returned
+              - cell [ref=f1e407]:
+                - link "View role" [ref=f1e408] [cursor=pointer]:
+                  - /url: /jobs/3a0a7cc4-6f09-4535-9847-6f6e94875f4e
+                - button "Mark seen" [ref=f1e409] [cursor=pointer]
+            - row [ref=f1e410]:
+              - cell "Data Analyst H/F New" [ref=f1e411]:
+                - generic [ref=f1e412]:
+                  - link "Data Analyst H/F" [ref=f1e413] [cursor=pointer]:
+                    - /url: /jobs/9fe60254-0eb0-43ad-aac7-aa690cc466da
+                  - generic [ref=f1e414]: New
+              - cell "ARCESI" [ref=f1e415]
+              - cell "Île-de-France, France" [ref=f1e416]
+              - cell "hellowork" [ref=f1e417]
+              - cell [ref=f1e418]:
+                - time [ref=f1e419]: 11/9/2026, 9:42:16 AM
+              - cell "Not listed" [ref=f1e420]
+              - cell [ref=f1e421]:
+                - generic [ref=f1e422]:
+                  - link "Manager search" [ref=f1e423] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22ARCESI%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e424] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22ARCESI%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e425]:
+                - text: Needs description
+                - paragraph [ref=f1e426]: No description returned
+              - cell [ref=f1e427]:
+                - link "View role" [ref=f1e428] [cursor=pointer]:
+                  - /url: /jobs/9fe60254-0eb0-43ad-aac7-aa690cc466da
+                - button "Mark seen" [ref=f1e429] [cursor=pointer]
+            - row [ref=f1e430]:
+              - cell "Data Analyst - CDI H/F New" [ref=f1e431]:
+                - generic [ref=f1e432]:
+                  - link "Data Analyst - CDI H/F" [ref=f1e433] [cursor=pointer]:
+                    - /url: /jobs/a64bcffd-edb4-4687-a1c6-a55923b7a433
+                  - generic [ref=f1e434]: New
+              - cell "Talan" [ref=f1e435]
+              - cell "Lyon - 69, France" [ref=f1e436]
+              - cell "hellowork" [ref=f1e437]
+              - cell [ref=f1e438]:
+                - time [ref=f1e439]: 11/9/2026, 9:42:16 AM
+              - cell "Not listed" [ref=f1e440]
+              - cell [ref=f1e441]:
+                - generic [ref=f1e442]:
+                  - link "Manager search" [ref=f1e443] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Talan%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e444] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Talan%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e445]:
+                - text: Needs description
+                - paragraph [ref=f1e446]: No description returned
+              - cell [ref=f1e447]:
+                - link "View role" [ref=f1e448] [cursor=pointer]:
+                  - /url: /jobs/a64bcffd-edb4-4687-a1c6-a55923b7a433
+                - button "Mark seen" [ref=f1e449] [cursor=pointer]
+            - row [ref=f1e450]:
+              - cell "Data Analyst H/F New" [ref=f1e451]:
+                - generic [ref=f1e452]:
+                  - link "Data Analyst H/F" [ref=f1e453] [cursor=pointer]:
+                    - /url: /jobs/f6fc3703-71d8-414f-887e-afd4f2d663eb
+                  - generic [ref=f1e454]: New
+              - cell "Scalian" [ref=f1e455]
+              - cell "Montpellier - 34, France" [ref=f1e456]
+              - cell "hellowork" [ref=f1e457]
+              - cell [ref=f1e458]:
+                - time [ref=f1e459]: 11/9/2026, 9:42:15 AM
+              - cell "Not listed" [ref=f1e460]
+              - cell [ref=f1e461]:
+                - generic [ref=f1e462]:
+                  - link "Manager search" [ref=f1e463] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Scalian%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e464] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Scalian%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e465]:
+                - text: Needs description
+                - paragraph [ref=f1e466]: No extraction details recorded yet.
+              - cell [ref=f1e467]:
+                - link "View role" [ref=f1e468] [cursor=pointer]:
+                  - /url: /jobs/f6fc3703-71d8-414f-887e-afd4f2d663eb
+                - button "Mark seen" [ref=f1e469] [cursor=pointer]
+            - row [ref=f1e470]:
+              - cell "Data Analyst H/F New" [ref=f1e471]:
+                - generic [ref=f1e472]:
+                  - link "Data Analyst H/F" [ref=f1e473] [cursor=pointer]:
+                    - /url: /jobs/54a7447b-c47e-4d57-8efd-930d59218d12
+                  - generic [ref=f1e474]: New
+              - cell "WISE RH" [ref=f1e475]
+              - cell "Montpellier - 34, France" [ref=f1e476]
+              - cell "hellowork" [ref=f1e477]
+              - cell [ref=f1e478]:
+                - time [ref=f1e479]: 11/9/2026, 9:42:15 AM
+              - cell "Not listed" [ref=f1e480]
+              - cell [ref=f1e481]:
+                - generic [ref=f1e482]:
+                  - link "Manager search" [ref=f1e483] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22WISE%20RH%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e484] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22WISE%20RH%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e485]:
+                - text: Needs description
+                - paragraph [ref=f1e486]: No extraction details recorded yet.
+              - cell [ref=f1e487]:
+                - link "View role" [ref=f1e488] [cursor=pointer]:
+                  - /url: /jobs/54a7447b-c47e-4d57-8efd-930d59218d12
+                - button "Mark seen" [ref=f1e489] [cursor=pointer]
+            - row [ref=f1e490]:
+              - cell "Data Analyst H/F New" [ref=f1e491]:
+                - generic [ref=f1e492]:
+                  - link "Data Analyst H/F" [ref=f1e493] [cursor=pointer]:
+                    - /url: /jobs/84119f0d-df97-4247-bf04-b3397ba38348
+                  - generic [ref=f1e494]: New
+              - cell "ARCESI" [ref=f1e495]
+              - cell "Lille - 59, France" [ref=f1e496]
+              - cell "hellowork" [ref=f1e497]
+              - cell [ref=f1e498]:
+                - time [ref=f1e499]: 11/9/2026, 9:42:14 AM
+              - cell "Not listed" [ref=f1e500]
+              - cell [ref=f1e501]:
+                - generic [ref=f1e502]:
+                  - link "Manager search" [ref=f1e503] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22ARCESI%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e504] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22ARCESI%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e505]:
+                - text: Needs description
+                - paragraph [ref=f1e506]: No extraction details recorded yet.
+              - cell [ref=f1e507]:
+                - link "View role" [ref=f1e508] [cursor=pointer]:
+                  - /url: /jobs/84119f0d-df97-4247-bf04-b3397ba38348
+                - button "Mark seen" [ref=f1e509] [cursor=pointer]
+            - row [ref=f1e510]:
+              - cell "Data Analyst H/F New" [ref=f1e511]:
+                - generic [ref=f1e512]:
+                  - link "Data Analyst H/F" [ref=f1e513] [cursor=pointer]:
+                    - /url: /jobs/2f8ebb65-2aac-49bf-8dd0-c3e1006f73f9
+                  - generic [ref=f1e514]: New
+              - cell "Inetum" [ref=f1e515]
+              - cell "Nantes - 44, France" [ref=f1e516]
+              - cell "hellowork" [ref=f1e517]
+              - cell [ref=f1e518]:
+                - time [ref=f1e519]: 11/9/2026, 9:42:14 AM
+              - cell "Not listed" [ref=f1e520]
+              - cell [ref=f1e521]:
+                - generic [ref=f1e522]:
+                  - link "Manager search" [ref=f1e523] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Inetum%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e524] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Inetum%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e525]:
+                - text: Needs description
+                - paragraph [ref=f1e526]: No extraction details recorded yet.
+              - cell [ref=f1e527]:
+                - link "View role" [ref=f1e528] [cursor=pointer]:
+                  - /url: /jobs/2f8ebb65-2aac-49bf-8dd0-c3e1006f73f9
+                - button "Mark seen" [ref=f1e529] [cursor=pointer]
+            - row [ref=f1e530]:
+              - cell "Data Analyst H/F New" [ref=f1e531]:
+                - generic [ref=f1e532]:
+                  - link "Data Analyst H/F" [ref=f1e533] [cursor=pointer]:
+                    - /url: /jobs/bdf89640-8113-4970-940e-1cbb1d1b4dcc
+                  - generic [ref=f1e534]: New
+              - cell "CGI" [ref=f1e535]
+              - cell "Niort - 79, France" [ref=f1e536]
+              - cell "hellowork" [ref=f1e537]
+              - cell [ref=f1e538]:
+                - time [ref=f1e539]: 11/9/2026, 9:42:14 AM
+              - cell "Not listed" [ref=f1e540]
+              - cell [ref=f1e541]:
+                - generic [ref=f1e542]:
+                  - link "Manager search" [ref=f1e543] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22CGI%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e544] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22CGI%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e545]:
+                - text: Needs description
+                - paragraph [ref=f1e546]: No extraction details recorded yet.
+              - cell [ref=f1e547]:
+                - link "View role" [ref=f1e548] [cursor=pointer]:
+                  - /url: /jobs/bdf89640-8113-4970-940e-1cbb1d1b4dcc
+                - button "Mark seen" [ref=f1e549] [cursor=pointer]
+            - row [ref=f1e550]:
+              - cell "Data Analyst H/F New" [ref=f1e551]:
+                - generic [ref=f1e552]:
+                  - link "Data Analyst H/F" [ref=f1e553] [cursor=pointer]:
+                    - /url: /jobs/43909cab-2826-4ac8-ab5f-6ea5b9d236fb
+                  - generic [ref=f1e554]: New
+              - cell "Ouihelp" [ref=f1e555]
+              - cell "Paris - 75, France" [ref=f1e556]
+              - cell "hellowork" [ref=f1e557]
+              - cell [ref=f1e558]:
+                - time [ref=f1e559]: 11/9/2026, 9:42:13 AM
+              - cell "Not listed" [ref=f1e560]
+              - cell [ref=f1e561]:
+                - generic [ref=f1e562]:
+                  - link "Manager search" [ref=f1e563] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Ouihelp%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e564] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Ouihelp%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e565]:
+                - text: Needs description
+                - paragraph [ref=f1e566]: No extraction details recorded yet.
+              - cell [ref=f1e567]:
+                - link "View role" [ref=f1e568] [cursor=pointer]:
+                  - /url: /jobs/43909cab-2826-4ac8-ab5f-6ea5b9d236fb
+                - button "Mark seen" [ref=f1e569] [cursor=pointer]
+            - row [ref=f1e570]:
+              - cell "Ingénieur ai H/F New" [ref=f1e571]:
+                - generic [ref=f1e572]:
+                  - link "Ingénieur ai H/F" [ref=f1e573] [cursor=pointer]:
+                    - /url: /jobs/07735515-ba0f-4e51-880e-8ea6dfaba52b
+                  - generic [ref=f1e574]: New
+              - cell "ALTEN" [ref=f1e575]
+              - cell "Paris - 75, France" [ref=f1e576]
+              - cell "hellowork" [ref=f1e577]
+              - cell [ref=f1e578]:
+                - time [ref=f1e579]: 11/9/2026, 9:42:11 AM
+              - cell "Not listed" [ref=f1e580]
+              - cell [ref=f1e581]:
+                - generic [ref=f1e582]:
+                  - link "Manager search" [ref=f1e583] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22ALTEN%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e584] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22ALTEN%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e585]:
+                - text: Needs description
+                - paragraph [ref=f1e586]: No extraction details recorded yet.
+              - cell [ref=f1e587]:
+                - link "View role" [ref=f1e588] [cursor=pointer]:
+                  - /url: /jobs/07735515-ba0f-4e51-880e-8ea6dfaba52b
+                - button "Mark seen" [ref=f1e589] [cursor=pointer]
+            - row [ref=f1e590]:
+              - cell "Agent Builder - Generative ai Engineer H/F New" [ref=f1e591]:
+                - generic [ref=f1e592]:
+                  - link "Agent Builder - Generative ai Engineer H/F" [ref=f1e593] [cursor=pointer]:
+                    - /url: /jobs/b4b2c7a6-4f6a-4540-a448-f8486452689f
+                  - generic [ref=f1e594]: New
+              - cell "Andema" [ref=f1e595]
+              - cell "Lille - 59, France" [ref=f1e596]
+              - cell "hellowork" [ref=f1e597]
+              - cell [ref=f1e598]:
+                - time [ref=f1e599]: 11/9/2026, 9:42:09 AM
+              - cell "Not listed" [ref=f1e600]
+              - cell [ref=f1e601]:
+                - generic [ref=f1e602]:
+                  - link "Manager search" [ref=f1e603] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Andema%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e604] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Andema%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e605]:
+                - text: Needs description
+                - paragraph [ref=f1e606]: No extraction details recorded yet.
+              - cell [ref=f1e607]:
+                - link "View role" [ref=f1e608] [cursor=pointer]:
+                  - /url: /jobs/b4b2c7a6-4f6a-4540-a448-f8486452689f
+                - button "Mark seen" [ref=f1e609] [cursor=pointer]
+            - row [ref=f1e610]:
+              - cell "Ml Ops - Ingénieur Machine Learning H/F New" [ref=f1e611]:
+                - generic [ref=f1e612]:
+                  - link "Ml Ops - Ingénieur Machine Learning H/F" [ref=f1e613] [cursor=pointer]:
+                    - /url: /jobs/b411254d-4c3c-4c4a-b250-3556a5eb94f8
+                  - generic [ref=f1e614]: New
+              - cell "Extia" [ref=f1e615]
+              - cell "Lille - 59, France" [ref=f1e616]
+              - cell "hellowork" [ref=f1e617]
+              - cell [ref=f1e618]:
+                - time [ref=f1e619]: 11/9/2026, 9:41:59 AM
+              - cell "Not listed" [ref=f1e620]
+              - cell [ref=f1e621]:
+                - generic [ref=f1e622]:
+                  - link "Manager search" [ref=f1e623] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Extia%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e624] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Extia%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e625]:
+                - text: Needs description
+                - paragraph [ref=f1e626]: No extraction details recorded yet.
+              - cell [ref=f1e627]:
+                - link "View role" [ref=f1e628] [cursor=pointer]:
+                  - /url: /jobs/b411254d-4c3c-4c4a-b250-3556a5eb94f8
+                - button "Mark seen" [ref=f1e629] [cursor=pointer]
+            - row [ref=f1e630]:
+              - cell "Développeur IA - Machine Learning H/F New" [ref=f1e631]:
+                - generic [ref=f1e632]:
+                  - link "Développeur IA - Machine Learning H/F" [ref=f1e633] [cursor=pointer]:
+                    - /url: /jobs/54f92407-1978-4569-9e26-5348f1341005
+                  - generic [ref=f1e634]: New
+              - cell "Extia" [ref=f1e635]
+              - cell "Lille - 59, France" [ref=f1e636]
+              - cell "hellowork" [ref=f1e637]
+              - cell [ref=f1e638]:
+                - time [ref=f1e639]: 11/9/2026, 9:41:59 AM
+              - cell "Not listed" [ref=f1e640]
+              - cell [ref=f1e641]:
+                - generic [ref=f1e642]:
+                  - link "Manager search" [ref=f1e643] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Extia%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e644] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Extia%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e645]:
+                - text: Needs description
+                - paragraph [ref=f1e646]: No extraction details recorded yet.
+              - cell [ref=f1e647]:
+                - link "View role" [ref=f1e648] [cursor=pointer]:
+                  - /url: /jobs/54f92407-1978-4569-9e26-5348f1341005
+                - button "Mark seen" [ref=f1e649] [cursor=pointer]
+            - row [ref=f1e650]:
+              - cell "Développeur IA - Machine Learning H/F New" [ref=f1e651]:
+                - generic [ref=f1e652]:
+                  - link "Développeur IA - Machine Learning H/F" [ref=f1e653] [cursor=pointer]:
+                    - /url: /jobs/6a9d8110-0d58-4b87-a265-1d5d83a01348
+                  - generic [ref=f1e654]: New
+              - cell "Extia" [ref=f1e655]
+              - cell "Paris - 75, France" [ref=f1e656]
+              - cell "hellowork" [ref=f1e657]
+              - cell [ref=f1e658]:
+                - time [ref=f1e659]: 11/9/2026, 9:41:59 AM
+              - cell "Not listed" [ref=f1e660]
+              - cell [ref=f1e661]:
+                - generic [ref=f1e662]:
+                  - link "Manager search" [ref=f1e663] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Extia%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e664] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Extia%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e665]:
+                - text: Needs description
+                - paragraph [ref=f1e666]: No extraction details recorded yet.
+              - cell [ref=f1e667]:
+                - link "View role" [ref=f1e668] [cursor=pointer]:
+                  - /url: /jobs/6a9d8110-0d58-4b87-a265-1d5d83a01348
+                - button "Mark seen" [ref=f1e669] [cursor=pointer]
+            - row [ref=f1e670]:
+              - cell "Data Engineer H/F New" [ref=f1e671]:
+                - generic [ref=f1e672]:
+                  - link "Data Engineer H/F" [ref=f1e673] [cursor=pointer]:
+                    - /url: /jobs/272636e4-5876-4f5a-8380-1d68aa799fe5
+                  - generic [ref=f1e674]: New
+              - cell "Scalian" [ref=f1e675]
+              - cell "Marseille - 13, France" [ref=f1e676]
+              - cell "hellowork" [ref=f1e677]
+              - cell [ref=f1e678]:
+                - time [ref=f1e679]: 11/9/2026, 9:41:50 AM
+              - cell "Not listed" [ref=f1e680]
+              - cell [ref=f1e681]:
+                - generic [ref=f1e682]:
+                  - link "Manager search" [ref=f1e683] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Scalian%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e684] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Scalian%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e685]:
+                - text: Needs description
+                - paragraph [ref=f1e686]: No extraction details recorded yet.
+              - cell [ref=f1e687]:
+                - link "View role" [ref=f1e688] [cursor=pointer]:
+                  - /url: /jobs/272636e4-5876-4f5a-8380-1d68aa799fe5
+                - button "Mark seen" [ref=f1e689] [cursor=pointer]
+            - row [ref=f1e690]:
+              - cell "Data Engineer H/F New" [ref=f1e691]:
+                - generic [ref=f1e692]:
+                  - link "Data Engineer H/F" [ref=f1e693] [cursor=pointer]:
+                    - /url: /jobs/e23907ad-d467-407c-a7e4-f1705741b47b
+                  - generic [ref=f1e694]: New
+              - cell "Inetum" [ref=f1e695]
+              - cell "Nantes - 44, France" [ref=f1e696]
+              - cell "hellowork" [ref=f1e697]
+              - cell [ref=f1e698]:
+                - time [ref=f1e699]: 11/9/2026, 9:41:49 AM
+              - cell "Not listed" [ref=f1e700]
+              - cell [ref=f1e701]:
+                - generic [ref=f1e702]:
+                  - link "Manager search" [ref=f1e703] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Inetum%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e704] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Inetum%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e705]:
+                - text: Needs description
+                - paragraph [ref=f1e706]: No extraction details recorded yet.
+              - cell [ref=f1e707]:
+                - link "View role" [ref=f1e708] [cursor=pointer]:
+                  - /url: /jobs/e23907ad-d467-407c-a7e4-f1705741b47b
+                - button "Mark seen" [ref=f1e709] [cursor=pointer]
+            - row [ref=f1e710]:
+              - cell "Data Engineer Teradata H/F New" [ref=f1e711]:
+                - generic [ref=f1e712]:
+                  - link "Data Engineer Teradata H/F" [ref=f1e713] [cursor=pointer]:
+                    - /url: /jobs/c6f23a8d-5305-4812-8d7c-0a2ec53118e0
+                  - generic [ref=f1e714]: New
+              - cell "HN Services" [ref=f1e715]
+              - cell "Val-de-Marne - 94, France" [ref=f1e716]
+              - cell "hellowork" [ref=f1e717]
+              - cell [ref=f1e718]:
+                - time [ref=f1e719]: 11/9/2026, 9:37:10 AM
+              - cell "Not listed" [ref=f1e720]
+              - cell [ref=f1e721]:
+                - generic [ref=f1e722]:
+                  - link "Manager search" [ref=f1e723] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22HN%20Services%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e724] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22HN%20Services%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e725]:
+                - text: Needs description
+                - paragraph [ref=f1e726]: No extraction details recorded yet.
+              - cell [ref=f1e727]:
+                - link "View role" [ref=f1e728] [cursor=pointer]:
+                  - /url: /jobs/c6f23a8d-5305-4812-8d7c-0a2ec53118e0
+                - button "Mark seen" [ref=f1e729] [cursor=pointer]
+            - row [ref=f1e730]:
+              - cell "Data Engineer H/F New" [ref=f1e731]:
+                - generic [ref=f1e732]:
+                  - link "Data Engineer H/F" [ref=f1e733] [cursor=pointer]:
+                    - /url: /jobs/22f39706-ef6d-4bbc-89f6-1862ee61cd17
+                  - generic [ref=f1e734]: New
+              - cell "Ippon Technologies" [ref=f1e735]
+              - cell "Bordeaux - 33, France" [ref=f1e736]
+              - cell "hellowork" [ref=f1e737]
+              - cell [ref=f1e738]:
+                - time [ref=f1e739]: 11/9/2026, 9:37:00 AM
+              - cell "Not listed" [ref=f1e740]
+              - cell [ref=f1e741]:
+                - generic [ref=f1e742]:
+                  - link "Manager search" [ref=f1e743] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Ippon%20Technologies%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e744] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Ippon%20Technologies%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e745]:
+                - text: Needs description
+                - paragraph [ref=f1e746]: No extraction details recorded yet.
+              - cell [ref=f1e747]:
+                - link "View role" [ref=f1e748] [cursor=pointer]:
+                  - /url: /jobs/22f39706-ef6d-4bbc-89f6-1862ee61cd17
+                - button "Mark seen" [ref=f1e749] [cursor=pointer]
+            - row [ref=f1e750]:
+              - cell [ref=f1e751]:
+                - link "Data Engineer H/F" [ref=f1e753] [cursor=pointer]:
+                  - /url: /jobs/718521a7-009f-4f89-b888-9923ba377bb3
+              - cell "Adsearch" [ref=f1e754]
+              - cell "Caen - 14, France" [ref=f1e755]
+              - cell "hellowork" [ref=f1e756]
+              - cell [ref=f1e757]:
+                - time [ref=f1e758]: 11/7/2026, 10:42:55 PM
+              - cell "Not listed" [ref=f1e759]
+              - cell [ref=f1e760]:
+                - generic [ref=f1e761]:
+                  - link "Manager search" [ref=f1e762] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Adsearch%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e763] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Adsearch%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e764]:
+                - text: Needs description
+                - paragraph [ref=f1e765]: No extraction details recorded yet.
+              - cell [ref=f1e766]:
+                - link "View role" [ref=f1e767] [cursor=pointer]:
+                  - /url: /jobs/718521a7-009f-4f89-b888-9923ba377bb3
+                - button "Mark seen" [ref=f1e768] [cursor=pointer]
+            - row [ref=f1e769]:
+              - cell [ref=f1e770]:
+                - link "Data Engineer H/F" [ref=f1e772] [cursor=pointer]:
+                  - /url: /jobs/5afe8592-0cd9-413f-82aa-0304cdc89f4e
+              - cell "Fives Groupe" [ref=f1e773]
+              - cell "Montévrain - 77, France" [ref=f1e774]
+              - cell "hellowork" [ref=f1e775]
+              - cell [ref=f1e776]:
+                - time [ref=f1e777]: 11/7/2026, 10:42:54 PM
+              - cell "Not listed" [ref=f1e778]
+              - cell [ref=f1e779]:
+                - generic [ref=f1e780]:
+                  - link "Manager search" [ref=f1e781] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Fives%20Groupe%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e782] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Fives%20Groupe%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e783]:
+                - text: Needs description
+                - paragraph [ref=f1e784]: No extraction details recorded yet.
+              - cell [ref=f1e785]:
+                - link "View role" [ref=f1e786] [cursor=pointer]:
+                  - /url: /jobs/5afe8592-0cd9-413f-82aa-0304cdc89f4e
+                - button "Mark seen" [ref=f1e787] [cursor=pointer]
+            - row [ref=f1e788]:
+              - cell [ref=f1e789]:
+                - link "Data Engineer H/F" [ref=f1e791] [cursor=pointer]:
+                  - /url: /jobs/1af29912-45fd-4002-b6c0-6aa2acb4e4fd
+              - cell "Akkodis" [ref=f1e792]
+              - cell "Niort - 79, France" [ref=f1e793]
+              - cell "hellowork" [ref=f1e794]
+              - cell [ref=f1e795]:
+                - time [ref=f1e796]: 11/7/2026, 10:42:55 PM
+              - cell "Not listed" [ref=f1e797]
+              - cell [ref=f1e798]:
+                - generic [ref=f1e799]:
+                  - link "Manager search" [ref=f1e800] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Akkodis%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e801] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Akkodis%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e802]:
+                - text: Needs description
+                - paragraph [ref=f1e803]: No extraction details recorded yet.
+              - cell [ref=f1e804]:
+                - link "View role" [ref=f1e805] [cursor=pointer]:
+                  - /url: /jobs/1af29912-45fd-4002-b6c0-6aa2acb4e4fd
+                - button "Mark seen" [ref=f1e806] [cursor=pointer]
+            - row [ref=f1e807]:
+              - cell [ref=f1e808]:
+                - link "Data Engineer H/F" [ref=f1e810] [cursor=pointer]:
+                  - /url: /jobs/4d40af17-b7f0-45bc-9941-2069b818be45
+              - cell "OXO Team" [ref=f1e811]
+              - cell "Lyon - 69, France" [ref=f1e812]
+              - cell "hellowork" [ref=f1e813]
+              - cell [ref=f1e814]:
+                - time [ref=f1e815]: 11/7/2026, 10:42:55 PM
+              - cell "Not listed" [ref=f1e816]
+              - cell [ref=f1e817]:
+                - generic [ref=f1e818]:
+                  - link "Manager search" [ref=f1e819] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22OXO%20Team%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e820] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22OXO%20Team%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e821]:
+                - text: Needs description
+                - paragraph [ref=f1e822]: No extraction details recorded yet.
+              - cell [ref=f1e823]:
+                - link "View role" [ref=f1e824] [cursor=pointer]:
+                  - /url: /jobs/4d40af17-b7f0-45bc-9941-2069b818be45
+                - button "Mark seen" [ref=f1e825] [cursor=pointer]
+            - row [ref=f1e826]:
+              - cell "Data Scientist - Ocr Factory H/F New" [ref=f1e827]:
+                - generic [ref=f1e828]:
+                  - link "Data Scientist - Ocr Factory H/F" [ref=f1e829] [cursor=pointer]:
+                    - /url: /jobs/92c7d748-bc1c-4cb8-aff2-7133956f5c0f
+                  - generic [ref=f1e830]: New
+              - cell "EURO INFORMATION" [ref=f1e831]
+              - cell "Laxou - 54, France" [ref=f1e832]
+              - cell "hellowork" [ref=f1e833]
+              - cell [ref=f1e834]:
+                - time [ref=f1e835]: 11/9/2026, 9:34:10 AM
+              - cell "Not listed" [ref=f1e836]
+              - cell [ref=f1e837]:
+                - generic [ref=f1e838]:
+                  - link "Manager search" [ref=f1e839] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22EURO%20INFORMATION%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e840] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22EURO%20INFORMATION%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e841]:
+                - text: Needs description
+                - paragraph [ref=f1e842]: No extraction details recorded yet.
+              - cell [ref=f1e843]:
+                - link "View role" [ref=f1e844] [cursor=pointer]:
+                  - /url: /jobs/92c7d748-bc1c-4cb8-aff2-7133956f5c0f
+                - button "Mark seen" [ref=f1e845] [cursor=pointer]
+            - row [ref=f1e846]:
+              - cell [ref=f1e847]:
+                - link "Data Engineer H/F" [ref=f1e849] [cursor=pointer]:
+                  - /url: /jobs/2dd7c77f-ae07-44a3-a44a-9c640cdbc976
+              - cell "Talan" [ref=f1e850]
+              - cell "Rennes - 35, France" [ref=f1e851]
+              - cell "hellowork" [ref=f1e852]
+              - cell [ref=f1e853]:
+                - time [ref=f1e854]: 11/7/2026, 10:42:54 PM
+              - cell "Not listed" [ref=f1e855]
+              - cell [ref=f1e856]:
+                - generic [ref=f1e857]:
+                  - link "Manager search" [ref=f1e858] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Talan%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e859] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Talan%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e860]:
+                - text: Needs description
+                - paragraph [ref=f1e861]: No extraction details recorded yet.
+              - cell [ref=f1e862]:
+                - link "View role" [ref=f1e863] [cursor=pointer]:
+                  - /url: /jobs/2dd7c77f-ae07-44a3-a44a-9c640cdbc976
+                - button "Mark seen" [ref=f1e864] [cursor=pointer]
+            - row [ref=f1e865]:
+              - cell [ref=f1e866]:
+                - link "Data Engineer H/F" [ref=f1e868] [cursor=pointer]:
+                  - /url: /jobs/c07fb307-4057-4b72-a7c9-0fe524f02083
+              - cell "Open" [ref=f1e869]
+              - cell "Nantes - 44, France" [ref=f1e870]
+              - cell "hellowork" [ref=f1e871]
+              - cell [ref=f1e872]:
+                - time [ref=f1e873]: 11/7/2026, 10:42:54 PM
+              - cell "Not listed" [ref=f1e874]
+              - cell [ref=f1e875]:
+                - generic [ref=f1e876]:
+                  - link "Manager search" [ref=f1e877] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Open%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e878] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Open%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e879]:
+                - text: Needs description
+                - paragraph [ref=f1e880]: No extraction details recorded yet.
+              - cell [ref=f1e881]:
+                - link "View role" [ref=f1e882] [cursor=pointer]:
+                  - /url: /jobs/c07fb307-4057-4b72-a7c9-0fe524f02083
+                - button "Mark seen" [ref=f1e883] [cursor=pointer]
+            - row [ref=f1e884]:
+              - cell [ref=f1e885]:
+                - link "Data Engineer H/F" [ref=f1e887] [cursor=pointer]:
+                  - /url: /jobs/1b86f182-8ef7-40ce-b005-a8aa73841543
+              - cell "MATAWAN SERVICES" [ref=f1e888]
+              - cell "Alpes-Maritimes - 06, France" [ref=f1e889]
+              - cell "hellowork" [ref=f1e890]
+              - cell [ref=f1e891]:
+                - time [ref=f1e892]: 11/7/2026, 10:42:54 PM
+              - cell "Not listed" [ref=f1e893]
+              - cell [ref=f1e894]:
+                - generic [ref=f1e895]:
+                  - link "Manager search" [ref=f1e896] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22MATAWAN%20SERVICES%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e897] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22MATAWAN%20SERVICES%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e898]:
+                - text: Needs description
+                - paragraph [ref=f1e899]: No extraction details recorded yet.
+              - cell [ref=f1e900]:
+                - link "View role" [ref=f1e901] [cursor=pointer]:
+                  - /url: /jobs/1b86f182-8ef7-40ce-b005-a8aa73841543
+                - button "Mark seen" [ref=f1e902] [cursor=pointer]
+            - row [ref=f1e903]:
+              - cell [ref=f1e904]:
+                - link "Data Engineer H/F" [ref=f1e906] [cursor=pointer]:
+                  - /url: /jobs/31e1e320-e520-4ba4-9116-b830a5d5a0fa
+              - cell "Inetum" [ref=f1e907]
+              - cell "Saint-Ouen-sur-Seine - 93, France" [ref=f1e908]
+              - cell "hellowork" [ref=f1e909]
+              - cell [ref=f1e910]:
+                - time [ref=f1e911]: 11/7/2026, 10:42:54 PM
+              - cell "Not listed" [ref=f1e912]
+              - cell [ref=f1e913]:
+                - generic [ref=f1e914]:
+                  - link "Manager search" [ref=f1e915] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Inetum%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e916] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Inetum%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e917]:
+                - text: Needs description
+                - paragraph [ref=f1e918]: No extraction details recorded yet.
+              - cell [ref=f1e919]:
+                - link "View role" [ref=f1e920] [cursor=pointer]:
+                  - /url: /jobs/31e1e320-e520-4ba4-9116-b830a5d5a0fa
+                - button "Mark seen" [ref=f1e921] [cursor=pointer]
+            - row [ref=f1e922]:
+              - cell "Data Scientist Fp&A H/F New" [ref=f1e923]:
+                - generic [ref=f1e924]:
+                  - link "Data Scientist Fp&A H/F" [ref=f1e925] [cursor=pointer]:
+                    - /url: /jobs/a6f43346-2457-4a57-9d02-f1925a32b403
+                  - generic [ref=f1e926]: New
+              - cell "Les Grands Chais de France" [ref=f1e927]
+              - cell "H/F à Petersbach - 67, France" [ref=f1e928]
+              - cell "hellowork" [ref=f1e929]
+              - cell [ref=f1e930]:
+                - time [ref=f1e931]: 11/9/2026, 9:29:41 AM
+              - cell "Not listed" [ref=f1e932]
+              - cell [ref=f1e933]:
+                - generic [ref=f1e934]:
+                  - link "Manager search" [ref=f1e935] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Les%20Grands%20Chais%20de%20France%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e936] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Les%20Grands%20Chais%20de%20France%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e937]:
+                - text: Needs description
+                - paragraph [ref=f1e938]: No extraction details recorded yet.
+              - cell [ref=f1e939]:
+                - link "View role" [ref=f1e940] [cursor=pointer]:
+                  - /url: /jobs/a6f43346-2457-4a57-9d02-f1925a32b403
+                - button "Mark seen" [ref=f1e941] [cursor=pointer]
+            - row [ref=f1e942]:
+              - cell "Data Quality - Data Steward H/F New" [ref=f1e943]:
+                - generic [ref=f1e944]:
+                  - link "Data Quality - Data Steward H/F" [ref=f1e945] [cursor=pointer]:
+                    - /url: /jobs/efc3d320-5351-4f8a-84a7-0973593fc3e1
+                  - generic [ref=f1e946]: New
+              - cell "Storm Group" [ref=f1e947]
+              - cell "Paris 2e - 75, France" [ref=f1e948]
+              - cell "hellowork" [ref=f1e949]
+              - cell [ref=f1e950]:
+                - time [ref=f1e951]: 11/9/2026, 9:29:41 AM
+              - cell "Not listed" [ref=f1e952]
+              - cell [ref=f1e953]:
+                - generic [ref=f1e954]:
+                  - link "Manager search" [ref=f1e955] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Storm%20Group%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e956] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Storm%20Group%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e957]:
+                - text: Needs description
+                - paragraph [ref=f1e958]: No extraction details recorded yet.
+              - cell [ref=f1e959]:
+                - link "View role" [ref=f1e960] [cursor=pointer]:
+                  - /url: /jobs/efc3d320-5351-4f8a-84a7-0973593fc3e1
+                - button "Mark seen" [ref=f1e961] [cursor=pointer]
+            - row [ref=f1e962]:
+              - cell "Data Scientist - Prompt Engineer H/F New" [ref=f1e963]:
+                - generic [ref=f1e964]:
+                  - link "Data Scientist - Prompt Engineer H/F" [ref=f1e965] [cursor=pointer]:
+                    - /url: /jobs/065b8a28-1deb-433d-b8c0-fbe4ce3dead6
+                  - generic [ref=f1e966]: New
+              - cell "StarClay" [ref=f1e967]
+              - cell "Puteaux - 92, France" [ref=f1e968]
+              - cell "hellowork" [ref=f1e969]
+              - cell [ref=f1e970]:
+                - time [ref=f1e971]: 11/9/2026, 9:26:42 AM
+              - cell "Not listed" [ref=f1e972]
+              - cell [ref=f1e973]:
+                - generic [ref=f1e974]:
+                  - link "Manager search" [ref=f1e975] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22StarClay%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e976] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22StarClay%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e977]:
+                - text: Needs description
+                - paragraph [ref=f1e978]: No extraction details recorded yet.
+              - cell [ref=f1e979]:
+                - link "View role" [ref=f1e980] [cursor=pointer]:
+                  - /url: /jobs/065b8a28-1deb-433d-b8c0-fbe4ce3dead6
+                - button "Mark seen" [ref=f1e981] [cursor=pointer]
+            - row [ref=f1e982]:
+              - cell "Data Scientist IA H/F New" [ref=f1e983]:
+                - generic [ref=f1e984]:
+                  - link "Data Scientist IA H/F" [ref=f1e985] [cursor=pointer]:
+                    - /url: /jobs/97835666-c0b8-44d5-990c-4c6a9e515266
+                  - generic [ref=f1e986]: New
+              - cell "Storm Group" [ref=f1e987]
+              - cell "Paris 2e - 75, France" [ref=f1e988]
+              - cell "hellowork" [ref=f1e989]
+              - cell [ref=f1e990]:
+                - time [ref=f1e991]: 11/9/2026, 9:26:41 AM
+              - cell "Not listed" [ref=f1e992]
+              - cell [ref=f1e993]:
+                - generic [ref=f1e994]:
+                  - link "Manager search" [ref=f1e995] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Storm%20Group%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e996] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Storm%20Group%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e997]:
+                - text: Needs description
+                - paragraph [ref=f1e998]: No extraction details recorded yet.
+              - cell [ref=f1e999]:
+                - link "View role" [ref=f1e1000] [cursor=pointer]:
+                  - /url: /jobs/97835666-c0b8-44d5-990c-4c6a9e515266
+                - button "Mark seen" [ref=f1e1001] [cursor=pointer]
+            - row [ref=f1e1002]:
+              - cell "Data Scientist H/F New" [ref=f1e1003]:
+                - generic [ref=f1e1004]:
+                  - link "Data Scientist H/F" [ref=f1e1005] [cursor=pointer]:
+                    - /url: /jobs/7d49c987-19fb-4122-9b35-eba400a7bda7
+                  - generic [ref=f1e1006]: New
+              - cell "Cofidis Group" [ref=f1e1007]
+              - cell "Villeneuve-d'Ascq - 59, France" [ref=f1e1008]
+              - cell "hellowork" [ref=f1e1009]
+              - cell [ref=f1e1010]:
+                - time [ref=f1e1011]: 11/9/2026, 9:26:41 AM
+              - cell "Not listed" [ref=f1e1012]
+              - cell [ref=f1e1013]:
+                - generic [ref=f1e1014]:
+                  - link "Manager search" [ref=f1e1015] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Cofidis%20Group%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e1016] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Cofidis%20Group%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e1017]:
+                - text: Needs description
+                - paragraph [ref=f1e1018]: No extraction details recorded yet.
+              - cell [ref=f1e1019]:
+                - link "View role" [ref=f1e1020] [cursor=pointer]:
+                  - /url: /jobs/7d49c987-19fb-4122-9b35-eba400a7bda7
+                - button "Mark seen" [ref=f1e1021] [cursor=pointer]
+            - row [ref=f1e1022]:
+              - cell "Data Scientist - Ai Engineer H/F New" [ref=f1e1023]:
+                - generic [ref=f1e1024]:
+                  - link "Data Scientist - Ai Engineer H/F" [ref=f1e1025] [cursor=pointer]:
+                    - /url: /jobs/4d1fa5cc-082d-4df3-a533-5f4a599a90bc
+                  - generic [ref=f1e1026]: New
+              - cell "ENI PLENITUDE FRANCE S.A.S" [ref=f1e1027]
+              - cell "Levallois-Perret - 92, France" [ref=f1e1028]
+              - cell "hellowork" [ref=f1e1029]
+              - cell [ref=f1e1030]:
+                - time [ref=f1e1031]: 11/9/2026, 9:26:41 AM
+              - cell "Not listed" [ref=f1e1032]
+              - cell [ref=f1e1033]:
+                - generic [ref=f1e1034]:
+                  - link "Manager search" [ref=f1e1035] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22ENI%20PLENITUDE%20FRANCE%20S.A.S%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f1e1036] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22ENI%20PLENITUDE%20FRANCE%20S.A.S%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell [ref=f1e1037]:
+                - text: Needs description
+                - paragraph [ref=f1e1038]: No extraction details recorded yet.
+              - cell [ref=f1e1039]:
+                - link "View role" [ref=f1e1040] [cursor=pointer]:
+                  - /url: /jobs/4d1fa5cc-082d-4df3-a533-5f4a599a90bc
+                - button "Mark seen" [ref=f1e1041] [cursor=pointer]
+        - navigation "Job pages" [ref=f1e1042]:
+          - generic [ref=f1e1043]: Previous
+          - generic "Page 1 of 2" [ref=f1e1044]:
+            - generic [ref=f1e1045]:
+              - link "1" [ref=f1e1046] [cursor=pointer]:
+                - /url: /jobs/explore?q=&source=hellowork&country=&contract=&remote=&sort=recent&filter=all&view=all&page=1
+              - link "2" [ref=f1e1047] [cursor=pointer]:
+                - /url: /jobs/explore?q=&source=hellowork&country=&contract=&remote=&sort=recent&filter=all&view=all&page=2
+          - link "Next" [active] [ref=f1e1048] [cursor=pointer]:
+            - /url: /jobs/explore?q=&source=hellowork&country=&contract=&remote=&sort=recent&filter=all&view=all&page=2
+  - alert [ref=f1e1049]

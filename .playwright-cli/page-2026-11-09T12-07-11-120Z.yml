@@ -1,0 +1,1041 @@
+- generic [ref=f6e1]:
+  - generic [ref=f6e2]:
+    - banner [ref=f6e3]:
+      - generic [ref=f6e4]:
+        - link "A ATS SNIPER" [ref=f6e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f6e6]: A
+          - generic [ref=f6e7]: ATS SNIPER
+        - navigation "Primary navigation" [ref=f6e8]:
+          - link "Discover" [ref=f6e9] [cursor=pointer]:
+            - /url: /jobs
+          - link "CV" [ref=f6e10] [cursor=pointer]:
+            - /url: /cv
+          - link "Saved" [ref=f6e11] [cursor=pointer]:
+            - /url: /saved
+          - link "Tracker" [ref=f6e12] [cursor=pointer]:
+            - /url: /tracker
+          - link "Settings" [ref=f6e13] [cursor=pointer]:
+            - /url: /settings
+        - button "Sign out" [ref=f6e15] [cursor=pointer]
+    - main [ref=f6e16]:
+      - generic [ref=f6e17]:
+        - generic [ref=f6e18]:
+          - paragraph [ref=f6e19]: Discovery
+          - heading "Open roles" [level=1] [ref=f6e20]
+          - paragraph [ref=f6e21]: All collected roles, including historical roles for onboarding and backfill.
+          - generic [ref=f6e22]:
+            - textbox "Title, company, or location" [ref=f6e23]
+            - combobox [ref=f6e24]:
+              - option "All sources"
+              - option "ashby"
+              - option "gh"
+              - option "hellowork" [selected]
+              - option "lever"
+              - option "local-fixture"
+              - option "local-integration"
+              - option "smartrecruiters"
+              - option "sr"
+              - option "wd"
+              - option "welcome_to_the_jungle"
+            - textbox "Country" [ref=f6e25]
+            - textbox "Contract type" [ref=f6e26]
+            - combobox [ref=f6e27]:
+              - option "New jobs"
+              - option "All jobs" [selected]
+            - combobox [ref=f6e28]:
+              - option "All statuses" [selected]
+              - option "High match (80+)"
+              - option "Good match (65-79)"
+              - option "Low match (<65)"
+              - option "Pending analysis"
+              - option "Needs description"
+              - option "Saved"
+              - option "Applied"
+            - generic [ref=f6e29]:
+              - combobox [ref=f6e30]:
+                - option "Recommended order" [selected]
+                - option "Match score"
+                - option "Date discovered"
+                - option "Company"
+              - button "Apply filters" [ref=f6e31] [cursor=pointer]
+        - table [ref=f6e33]:
+          - rowgroup [ref=f6e34]:
+            - row [ref=f6e35]:
+              - columnheader "Job title" [ref=f6e36]
+              - columnheader "Company" [ref=f6e37]
+              - columnheader "Location" [ref=f6e38]
+              - columnheader "Source" [ref=f6e39]
+              - columnheader "First seen" [ref=f6e40]
+              - columnheader "Contract" [ref=f6e41]
+              - columnheader "CV match" [ref=f6e42]
+              - columnheader "Contacts" [ref=f6e43]
+              - columnheader "Status" [ref=f6e44]
+              - columnheader "Action" [ref=f6e45]
+          - rowgroup [ref=f6e46]:
+            - row [ref=f6e991]:
+              - cell "Data Analyst H/F New" [ref=f6e992]:
+                - generic [ref=f6e993]:
+                  - link "Data Analyst H/F" [ref=f6e994] [cursor=pointer]:
+                    - /url: /jobs/43909cab-2826-4ac8-ab5f-6ea5b9d236fb
+                  - generic [ref=f6e995]: New
+              - cell "Ouihelp" [ref=f6e996]
+              - cell "Paris - 75, France" [ref=f6e997]
+              - cell "hellowork" [ref=f6e998]
+              - cell [ref=f6e999]:
+                - time [ref=f6e1000]: 11/9/2026, 9:42:13 AM
+              - cell "Not listed" [ref=f6e1001]
+              - cell "-" [ref=f6e1002]
+              - cell "Not listed" [ref=f6e1003]
+              - cell "Needs description" [ref=f6e1005]
+              - cell [ref=f6e1006]:
+                - link "View role" [ref=f6e1007] [cursor=pointer]:
+                  - /url: /jobs/43909cab-2826-4ac8-ab5f-6ea5b9d236fb
+                - button "Mark seen" [ref=f6e1008] [cursor=pointer]
+            - row [ref=f6e1009]:
+              - cell "Data Analyst H/F New" [ref=f6e1010]:
+                - generic [ref=f6e1011]:
+                  - link "Data Analyst H/F" [ref=f6e1012] [cursor=pointer]:
+                    - /url: /jobs/42a740a2-4d4f-43b0-bbf8-8ffd726e8af2
+                  - generic [ref=f6e1013]: New
+              - cell "GRADIANT" [ref=f6e1014]
+              - cell "Île-de-France, France" [ref=f6e1015]
+              - cell "hellowork" [ref=f6e1016]
+              - cell [ref=f6e1017]:
+                - time [ref=f6e1018]: 11/9/2026, 9:42:13 AM
+              - cell "Not listed" [ref=f6e1019]
+              - cell "-" [ref=f6e1020]
+              - cell "Not listed" [ref=f6e1021]
+              - cell "Needs description" [ref=f6e1023]
+              - cell [ref=f6e1024]:
+                - link "View role" [ref=f6e1025] [cursor=pointer]:
+                  - /url: /jobs/42a740a2-4d4f-43b0-bbf8-8ffd726e8af2
+                - button "Mark seen" [ref=f6e1026] [cursor=pointer]
+            - row [ref=f6e1027]:
+              - cell "Data Analyst H/F New" [ref=f6e1028]:
+                - generic [ref=f6e1029]:
+                  - link "Data Analyst H/F" [ref=f6e1030] [cursor=pointer]:
+                    - /url: /jobs/1545c701-059b-4d24-9181-8b32c5b156b4
+                  - generic [ref=f6e1031]: New
+              - cell "Astek" [ref=f6e1032]
+              - cell "Lille - 59, France" [ref=f6e1033]
+              - cell "hellowork" [ref=f6e1034]
+              - cell [ref=f6e1035]:
+                - time [ref=f6e1036]: 11/9/2026, 9:42:12 AM
+              - cell "Not listed" [ref=f6e1037]
+              - cell "-" [ref=f6e1038]
+              - cell "Not listed" [ref=f6e1039]
+              - cell "Needs description" [ref=f6e1041]
+              - cell [ref=f6e1042]:
+                - link "View role" [ref=f6e1043] [cursor=pointer]:
+                  - /url: /jobs/1545c701-059b-4d24-9181-8b32c5b156b4
+                - button "Mark seen" [ref=f6e1044] [cursor=pointer]
+            - row [ref=f6e1045]:
+              - cell "Data Analyst H/F New" [ref=f6e1046]:
+                - generic [ref=f6e1047]:
+                  - link "Data Analyst H/F" [ref=f6e1048] [cursor=pointer]:
+                    - /url: /jobs/b6496d79-4b40-425c-a8bf-b95739eaa5b8
+                  - generic [ref=f6e1049]: New
+              - cell "CNP ASSURANCES" [ref=f6e1050]
+              - cell "Issy-les-Moulineaux - 92, France" [ref=f6e1051]
+              - cell "hellowork" [ref=f6e1052]
+              - cell [ref=f6e1053]:
+                - time [ref=f6e1054]: 11/9/2026, 9:42:12 AM
+              - cell "Not listed" [ref=f6e1055]
+              - cell "-" [ref=f6e1056]
+              - cell "Not listed" [ref=f6e1057]
+              - cell "Needs description" [ref=f6e1059]
+              - cell [ref=f6e1060]:
+                - link "View role" [ref=f6e1061] [cursor=pointer]:
+                  - /url: /jobs/b6496d79-4b40-425c-a8bf-b95739eaa5b8
+                - button "Mark seen" [ref=f6e1062] [cursor=pointer]
+            - row [ref=f6e1063]:
+              - cell "Data Analyst H/F New" [ref=f6e1064]:
+                - generic [ref=f6e1065]:
+                  - link "Data Analyst H/F" [ref=f6e1066] [cursor=pointer]:
+                    - /url: /jobs/25f245d4-f2a7-4a59-be49-9d20224dc5c9
+                  - generic [ref=f6e1067]: New
+              - cell "E.Leclerc" [ref=f6e1068]
+              - cell "Châlons-en-Champagne - 51, France" [ref=f6e1069]
+              - cell "hellowork" [ref=f6e1070]
+              - cell [ref=f6e1071]:
+                - time [ref=f6e1072]: 11/9/2026, 9:42:12 AM
+              - cell "Not listed" [ref=f6e1073]
+              - cell "-" [ref=f6e1074]
+              - cell "Not listed" [ref=f6e1075]
+              - cell "Needs description" [ref=f6e1077]
+              - cell [ref=f6e1078]:
+                - link "View role" [ref=f6e1079] [cursor=pointer]:
+                  - /url: /jobs/25f245d4-f2a7-4a59-be49-9d20224dc5c9
+                - button "Mark seen" [ref=f6e1080] [cursor=pointer]
+            - row [ref=f6e1081]:
+              - cell "Data Analyst H/F New" [ref=f6e1082]:
+                - generic [ref=f6e1083]:
+                  - link "Data Analyst H/F" [ref=f6e1084] [cursor=pointer]:
+                    - /url: /jobs/1e08de8c-0fed-4ae5-bc28-59355a14601f
+                  - generic [ref=f6e1085]: New
+              - cell "MCA Groupe" [ref=f6e1086]
+              - cell "Strasbourg - 67, France" [ref=f6e1087]
+              - cell "hellowork" [ref=f6e1088]
+              - cell [ref=f6e1089]:
+                - time [ref=f6e1090]: 11/9/2026, 9:42:12 AM
+              - cell "Not listed" [ref=f6e1091]
+              - cell "-" [ref=f6e1092]
+              - cell "Not listed" [ref=f6e1093]
+              - cell "Needs description" [ref=f6e1095]
+              - cell [ref=f6e1096]:
+                - link "View role" [ref=f6e1097] [cursor=pointer]:
+                  - /url: /jobs/1e08de8c-0fed-4ae5-bc28-59355a14601f
+                - button "Mark seen" [ref=f6e1098] [cursor=pointer]
+            - row [ref=f6e1099]:
+              - cell "Consultant ai Risk Analyst H/F New" [ref=f6e1100]:
+                - generic [ref=f6e1101]:
+                  - link "Consultant ai Risk Analyst H/F" [ref=f6e1102] [cursor=pointer]:
+                    - /url: /jobs/a59b2353-4912-4f85-8785-1c8e43bb932a
+                  - generic [ref=f6e1103]: New
+              - cell "Onepoint" [ref=f6e1104]
+              - cell "Paris - 75, France" [ref=f6e1105]
+              - cell "hellowork" [ref=f6e1106]
+              - cell [ref=f6e1107]:
+                - time [ref=f6e1108]: 11/9/2026, 9:42:11 AM
+              - cell "Not listed" [ref=f6e1109]
+              - cell "-" [ref=f6e1110]
+              - cell "Not listed" [ref=f6e1111]
+              - cell "Needs description" [ref=f6e1113]
+              - cell [ref=f6e1114]:
+                - link "View role" [ref=f6e1115] [cursor=pointer]:
+                  - /url: /jobs/a59b2353-4912-4f85-8785-1c8e43bb932a
+                - button "Mark seen" [ref=f6e1116] [cursor=pointer]
+            - row [ref=f6e1117]:
+              - cell "Ingénieur ai H/F New" [ref=f6e1118]:
+                - generic [ref=f6e1119]:
+                  - link "Ingénieur ai H/F" [ref=f6e1120] [cursor=pointer]:
+                    - /url: /jobs/07735515-ba0f-4e51-880e-8ea6dfaba52b
+                  - generic [ref=f6e1121]: New
+              - cell "ALTEN" [ref=f6e1122]
+              - cell "Paris - 75, France" [ref=f6e1123]
+              - cell "hellowork" [ref=f6e1124]
+              - cell [ref=f6e1125]:
+                - time [ref=f6e1126]: 11/9/2026, 9:42:11 AM
+              - cell "Not listed" [ref=f6e1127]
+              - cell "-" [ref=f6e1128]
+              - cell "Not listed" [ref=f6e1129]
+              - cell "Needs description" [ref=f6e1131]
+              - cell [ref=f6e1132]:
+                - link "View role" [ref=f6e1133] [cursor=pointer]:
+                  - /url: /jobs/07735515-ba0f-4e51-880e-8ea6dfaba52b
+                - button "Mark seen" [ref=f6e1134] [cursor=pointer]
+            - row [ref=f6e1135]:
+              - cell "Engineer - Llm & ai Agents - Cybersécurité H/F New" [ref=f6e1136]:
+                - generic [ref=f6e1137]:
+                  - link "Engineer - Llm & ai Agents - Cybersécurité H/F" [ref=f6e1138] [cursor=pointer]:
+                    - /url: /jobs/a70d9b92-ba98-41ac-85c9-bc9cfc09649d
+                  - generic [ref=f6e1139]: New
+              - cell "Bureau des Talents" [ref=f6e1140]
+              - cell "Paris 8e - 75, France" [ref=f6e1141]
+              - cell "hellowork" [ref=f6e1142]
+              - cell [ref=f6e1143]:
+                - time [ref=f6e1144]: 11/9/2026, 9:42:10 AM
+              - cell "Not listed" [ref=f6e1145]
+              - cell "-" [ref=f6e1146]
+              - cell "Not listed" [ref=f6e1147]
+              - cell "Needs description" [ref=f6e1149]
+              - cell [ref=f6e1150]:
+                - link "View role" [ref=f6e1151] [cursor=pointer]:
+                  - /url: /jobs/a70d9b92-ba98-41ac-85c9-bc9cfc09649d
+                - button "Mark seen" [ref=f6e1152] [cursor=pointer]
+            - row [ref=f6e1153]:
+              - cell "Ingénieur IA - ai Software Engineer H/F New" [ref=f6e1154]:
+                - generic [ref=f6e1155]:
+                  - link "Ingénieur IA - ai Software Engineer H/F" [ref=f6e1156] [cursor=pointer]:
+                    - /url: /jobs/40bf6301-933d-4793-8860-9292f789b265
+                  - generic [ref=f6e1157]: New
+              - cell "Groupe Adenes" [ref=f6e1158]
+              - cell "Nîmes - 30, France" [ref=f6e1159]
+              - cell "hellowork" [ref=f6e1160]
+              - cell [ref=f6e1161]:
+                - time [ref=f6e1162]: 11/9/2026, 9:42:10 AM
+              - cell "Not listed" [ref=f6e1163]
+              - cell "-" [ref=f6e1164]
+              - cell "Not listed" [ref=f6e1165]
+              - cell "Needs description" [ref=f6e1167]
+              - cell [ref=f6e1168]:
+                - link "View role" [ref=f6e1169] [cursor=pointer]:
+                  - /url: /jobs/40bf6301-933d-4793-8860-9292f789b265
+                - button "Mark seen" [ref=f6e1170] [cursor=pointer]
+            - row [ref=f6e1171]:
+              - cell "Forward Deployed ai Engineer Fde H/F New" [ref=f6e1172]:
+                - generic [ref=f6e1173]:
+                  - link "Forward Deployed ai Engineer Fde H/F" [ref=f6e1174] [cursor=pointer]:
+                    - /url: /jobs/f5086b7d-3338-421b-88a6-86612e6ea0ce
+                  - generic [ref=f6e1175]: New
+              - cell "Groupe SII" [ref=f6e1176]
+              - cell "Aix-en-Provence - 13, France" [ref=f6e1177]
+              - cell "hellowork" [ref=f6e1178]
+              - cell [ref=f6e1179]:
+                - time [ref=f6e1180]: 11/9/2026, 9:42:10 AM
+              - cell "Not listed" [ref=f6e1181]
+              - cell "-" [ref=f6e1182]
+              - cell "Not listed" [ref=f6e1183]
+              - cell "Needs description" [ref=f6e1185]
+              - cell [ref=f6e1186]:
+                - link "View role" [ref=f6e1187] [cursor=pointer]:
+                  - /url: /jobs/f5086b7d-3338-421b-88a6-86612e6ea0ce
+                - button "Mark seen" [ref=f6e1188] [cursor=pointer]
+            - row [ref=f6e1189]:
+              - cell "Ingénieur IA Embarquée - Embedded ai Engineer H/F New" [ref=f6e1190]:
+                - generic [ref=f6e1191]:
+                  - link "Ingénieur IA Embarquée - Embedded ai Engineer H/F" [ref=f6e1192] [cursor=pointer]:
+                    - /url: /jobs/79fbbabf-8e44-427d-958c-c0d5d84601b3
+                  - generic [ref=f6e1193]: New
+              - cell "Mercato de l'emploi" [ref=f6e1194]
+              - cell "Meudon - 92, France" [ref=f6e1195]
+              - cell "hellowork" [ref=f6e1196]
+              - cell [ref=f6e1197]:
+                - time [ref=f6e1198]: 11/9/2026, 9:42:10 AM
+              - cell "Not listed" [ref=f6e1199]
+              - cell "-" [ref=f6e1200]
+              - cell "Not listed" [ref=f6e1201]
+              - cell "Needs description" [ref=f6e1203]
+              - cell [ref=f6e1204]:
+                - link "View role" [ref=f6e1205] [cursor=pointer]:
+                  - /url: /jobs/79fbbabf-8e44-427d-958c-c0d5d84601b3
+                - button "Mark seen" [ref=f6e1206] [cursor=pointer]
+            - row [ref=f6e1207]:
+              - cell "Consultant ai Engineer & Data Scientist - Paris Top Écoles H/F New" [ref=f6e1208]:
+                - generic [ref=f6e1209]:
+                  - link "Consultant ai Engineer & Data Scientist - Paris Top Écoles H/F" [ref=f6e1210] [cursor=pointer]:
+                    - /url: /jobs/fad9882d-dea5-4102-8e36-3374c3f14480
+                  - generic [ref=f6e1211]: New
+              - cell "Team.is" [ref=f6e1212]
+              - cell "Paris 8e - 75, France" [ref=f6e1213]
+              - cell "hellowork" [ref=f6e1214]
+              - cell [ref=f6e1215]:
+                - time [ref=f6e1216]: 11/9/2026, 9:42:09 AM
+              - cell "Not listed" [ref=f6e1217]
+              - cell "-" [ref=f6e1218]
+              - cell "Not listed" [ref=f6e1219]
+              - cell "Needs description" [ref=f6e1221]
+              - cell [ref=f6e1222]:
+                - link "View role" [ref=f6e1223] [cursor=pointer]:
+                  - /url: /jobs/fad9882d-dea5-4102-8e36-3374c3f14480
+                - button "Mark seen" [ref=f6e1224] [cursor=pointer]
+            - row [ref=f6e1225]:
+              - cell "Ingénieur IA Ai Engineer H/F New" [ref=f6e1226]:
+                - generic [ref=f6e1227]:
+                  - link "Ingénieur IA Ai Engineer H/F" [ref=f6e1228] [cursor=pointer]:
+                    - /url: /jobs/023cc3aa-f81f-40ae-812d-29edadf5624d
+                  - generic [ref=f6e1229]: New
+              - cell "Hardis Group" [ref=f6e1230]
+              - cell "Lyon - 69, France" [ref=f6e1231]
+              - cell "hellowork" [ref=f6e1232]
+              - cell [ref=f6e1233]:
+                - time [ref=f6e1234]: 11/9/2026, 9:42:09 AM
+              - cell "Not listed" [ref=f6e1235]
+              - cell "-" [ref=f6e1236]
+              - cell "Not listed" [ref=f6e1237]
+              - cell "Needs description" [ref=f6e1239]
+              - cell [ref=f6e1240]:
+                - link "View role" [ref=f6e1241] [cursor=pointer]:
+                  - /url: /jobs/023cc3aa-f81f-40ae-812d-29edadf5624d
+                - button "Mark seen" [ref=f6e1242] [cursor=pointer]
+            - row [ref=f6e1243]:
+              - cell "Agent Builder - Generative ai Engineer H/F New" [ref=f6e1244]:
+                - generic [ref=f6e1245]:
+                  - link "Agent Builder - Generative ai Engineer H/F" [ref=f6e1246] [cursor=pointer]:
+                    - /url: /jobs/b4b2c7a6-4f6a-4540-a448-f8486452689f
+                  - generic [ref=f6e1247]: New
+              - cell "Andema" [ref=f6e1248]
+              - cell "Lille - 59, France" [ref=f6e1249]
+              - cell "hellowork" [ref=f6e1250]
+              - cell [ref=f6e1251]:
+                - time [ref=f6e1252]: 11/9/2026, 9:42:09 AM
+              - cell "Not listed" [ref=f6e1253]
+              - cell "-" [ref=f6e1254]
+              - cell "Not listed" [ref=f6e1255]
+              - cell "Needs description" [ref=f6e1257]
+              - cell [ref=f6e1258]:
+                - link "View role" [ref=f6e1259] [cursor=pointer]:
+                  - /url: /jobs/b4b2c7a6-4f6a-4540-a448-f8486452689f
+                - button "Mark seen" [ref=f6e1260] [cursor=pointer]
+            - row [ref=f6e1261]:
+              - cell "Applied Gen ai Engineer H/F New" [ref=f6e1262]:
+                - generic [ref=f6e1263]:
+                  - link "Applied Gen ai Engineer H/F" [ref=f6e1264] [cursor=pointer]:
+                    - /url: /jobs/d2744045-45b2-433b-be1c-a20aaaa24abb
+                  - generic [ref=f6e1265]: New
+              - cell "Devoteam France" [ref=f6e1266]
+              - cell "Levallois-Perret - 92, France" [ref=f6e1267]
+              - cell "hellowork" [ref=f6e1268]
+              - cell [ref=f6e1269]:
+                - time [ref=f6e1270]: 11/9/2026, 9:42:08 AM
+              - cell "Not listed" [ref=f6e1271]
+              - cell "-" [ref=f6e1272]
+              - cell "Not listed" [ref=f6e1273]
+              - cell "Needs description" [ref=f6e1275]
+              - cell [ref=f6e1276]:
+                - link "View role" [ref=f6e1277] [cursor=pointer]:
+                  - /url: /jobs/d2744045-45b2-433b-be1c-a20aaaa24abb
+                - button "Mark seen" [ref=f6e1278] [cursor=pointer]
+            - row [ref=f6e1279]:
+              - cell "Data Scientist - ai Engineer H/F New" [ref=f6e1280]:
+                - generic [ref=f6e1281]:
+                  - link "Data Scientist - ai Engineer H/F" [ref=f6e1282] [cursor=pointer]:
+                    - /url: /jobs/4b13fef4-cb48-4e44-bc42-7df9f97ddf74
+                  - generic [ref=f6e1283]: New
+              - cell "Devoteam France" [ref=f6e1284]
+              - cell "Levallois-Perret - 92, France" [ref=f6e1285]
+              - cell "hellowork" [ref=f6e1286]
+              - cell [ref=f6e1287]:
+                - time [ref=f6e1288]: 11/9/2026, 9:42:08 AM
+              - cell "Not listed" [ref=f6e1289]
+              - cell "-" [ref=f6e1290]
+              - cell "Not listed" [ref=f6e1291]
+              - cell "Needs description" [ref=f6e1293]
+              - cell [ref=f6e1294]:
+                - link "View role" [ref=f6e1295] [cursor=pointer]:
+                  - /url: /jobs/4b13fef4-cb48-4e44-bc42-7df9f97ddf74
+                - button "Mark seen" [ref=f6e1296] [cursor=pointer]
+            - row [ref=f6e1297]:
+              - cell "Engineer - Agentic ai Engineer H/F New" [ref=f6e1298]:
+                - generic [ref=f6e1299]:
+                  - link "Engineer - Agentic ai Engineer H/F" [ref=f6e1300] [cursor=pointer]:
+                    - /url: /jobs/d1712634-a445-45c4-ab21-d601e9483c4e
+                  - generic [ref=f6e1301]: New
+              - cell "Accenture France" [ref=f6e1302]
+              - cell "Paris - 75, France" [ref=f6e1303]
+              - cell "hellowork" [ref=f6e1304]
+              - cell [ref=f6e1305]:
+                - time [ref=f6e1306]: 11/9/2026, 9:42:06 AM
+              - cell "Not listed" [ref=f6e1307]
+              - cell "-" [ref=f6e1308]
+              - cell "Not listed" [ref=f6e1309]
+              - cell "Needs description" [ref=f6e1311]
+              - cell [ref=f6e1312]:
+                - link "View role" [ref=f6e1313] [cursor=pointer]:
+                  - /url: /jobs/d1712634-a445-45c4-ab21-d601e9483c4e
+                - button "Mark seen" [ref=f6e1314] [cursor=pointer]
+            - row [ref=f6e1315]:
+              - cell "Forward Deployed ai Engineer H/F New" [ref=f6e1316]:
+                - generic [ref=f6e1317]:
+                  - link "Forward Deployed ai Engineer H/F" [ref=f6e1318] [cursor=pointer]:
+                    - /url: /jobs/6aa2f43c-01d9-4111-bc09-d8c44290e441
+                  - generic [ref=f6e1319]: New
+              - cell "Accenture France" [ref=f6e1320]
+              - cell "Paris - 75, France" [ref=f6e1321]
+              - cell "hellowork" [ref=f6e1322]
+              - cell [ref=f6e1323]:
+                - time [ref=f6e1324]: 11/9/2026, 9:42:04 AM
+              - cell "Not listed" [ref=f6e1325]
+              - cell "-" [ref=f6e1326]
+              - cell "Not listed" [ref=f6e1327]
+              - cell "Needs description" [ref=f6e1329]
+              - cell [ref=f6e1330]:
+                - link "View role" [ref=f6e1331] [cursor=pointer]:
+                  - /url: /jobs/6aa2f43c-01d9-4111-bc09-d8c44290e441
+                - button "Mark seen" [ref=f6e1332] [cursor=pointer]
+            - row [ref=f6e1333]:
+              - cell "Ml - Ai Engineer H/F New" [ref=f6e1334]:
+                - generic [ref=f6e1335]:
+                  - link "Ml - Ai Engineer H/F" [ref=f6e1336] [cursor=pointer]:
+                    - /url: /jobs/4facae74-765f-4552-80d8-c8ce23b505ad
+                  - generic [ref=f6e1337]: New
+              - cell "Ippon Technologies" [ref=f6e1338]
+              - cell "Bordeaux - 33, France" [ref=f6e1339]
+              - cell "hellowork" [ref=f6e1340]
+              - cell [ref=f6e1341]:
+                - time [ref=f6e1342]: 11/9/2026, 9:42:03 AM
+              - cell "Not listed" [ref=f6e1343]
+              - cell "-" [ref=f6e1344]
+              - cell "Not listed" [ref=f6e1345]
+              - cell "Needs description" [ref=f6e1347]
+              - cell [ref=f6e1348]:
+                - link "View role" [ref=f6e1349] [cursor=pointer]:
+                  - /url: /jobs/4facae74-765f-4552-80d8-c8ce23b505ad
+                - button "Mark seen" [ref=f6e1350] [cursor=pointer]
+            - row [ref=f6e1351]:
+              - cell "Machine Learning Researcher - Engineer Foundation Models H/F New" [ref=f6e1352]:
+                - generic [ref=f6e1353]:
+                  - link "Machine Learning Researcher - Engineer Foundation Models H/F" [ref=f6e1354] [cursor=pointer]:
+                    - /url: /jobs/50b975aa-2c05-41b3-9db1-fd4d8789448d
+                  - generic [ref=f6e1355]: New
+              - cell "Pathway" [ref=f6e1356]
+              - cell "Paris - 75, France" [ref=f6e1357]
+              - cell "hellowork" [ref=f6e1358]
+              - cell [ref=f6e1359]:
+                - time [ref=f6e1360]: 11/9/2026, 9:42:03 AM
+              - cell "Not listed" [ref=f6e1361]
+              - cell "-" [ref=f6e1362]
+              - cell "Not listed" [ref=f6e1363]
+              - cell "Needs description" [ref=f6e1365]
+              - cell [ref=f6e1366]:
+                - link "View role" [ref=f6e1367] [cursor=pointer]:
+                  - /url: /jobs/50b975aa-2c05-41b3-9db1-fd4d8789448d
+                - button "Mark seen" [ref=f6e1368] [cursor=pointer]
+            - row [ref=f6e1369]:
+              - cell "Data Scientist IA - Développeur Machine Learning H/F New" [ref=f6e1370]:
+                - generic [ref=f6e1371]:
+                  - link "Data Scientist IA - Développeur Machine Learning H/F" [ref=f6e1372] [cursor=pointer]:
+                    - /url: /jobs/2882e7cf-93d4-4f6a-addc-dce657557c10
+                  - generic [ref=f6e1373]: New
+              - cell "LCL" [ref=f6e1374]
+              - cell "Villejuif - 94, France" [ref=f6e1375]
+              - cell "hellowork" [ref=f6e1376]
+              - cell [ref=f6e1377]:
+                - time [ref=f6e1378]: 11/9/2026, 9:42:03 AM
+              - cell "Not listed" [ref=f6e1379]
+              - cell "-" [ref=f6e1380]
+              - cell "Not listed" [ref=f6e1381]
+              - cell "Needs description" [ref=f6e1383]
+              - cell [ref=f6e1384]:
+                - link "View role" [ref=f6e1385] [cursor=pointer]:
+                  - /url: /jobs/2882e7cf-93d4-4f6a-addc-dce657557c10
+                - button "Mark seen" [ref=f6e1386] [cursor=pointer]
+            - row [ref=f6e1387]:
+              - cell "Confirmed Machine Learning Engineer Productivity H/F New" [ref=f6e1388]:
+                - generic [ref=f6e1389]:
+                  - link "Confirmed Machine Learning Engineer Productivity H/F" [ref=f6e1390] [cursor=pointer]:
+                    - /url: /jobs/961b1dd0-ce6a-4474-89d1-ed5e37fd2a2a
+                  - generic [ref=f6e1391]: New
+              - cell "Doctrine" [ref=f6e1392]
+              - cell "Paris - 75, France" [ref=f6e1393]
+              - cell "hellowork" [ref=f6e1394]
+              - cell [ref=f6e1395]:
+                - time [ref=f6e1396]: 11/9/2026, 9:42:02 AM
+              - cell "Not listed" [ref=f6e1397]
+              - cell "-" [ref=f6e1398]
+              - cell "Not listed" [ref=f6e1399]
+              - cell "Needs description" [ref=f6e1401]
+              - cell [ref=f6e1402]:
+                - link "View role" [ref=f6e1403] [cursor=pointer]:
+                  - /url: /jobs/961b1dd0-ce6a-4474-89d1-ed5e37fd2a2a
+                - button "Mark seen" [ref=f6e1404] [cursor=pointer]
+            - row [ref=f6e1405]:
+              - cell "Aiml - Machine Learning Researcher Mlr H/F New" [ref=f6e1406]:
+                - generic [ref=f6e1407]:
+                  - link "Aiml - Machine Learning Researcher Mlr H/F" [ref=f6e1408] [cursor=pointer]:
+                    - /url: /jobs/926ad27d-6620-429d-813a-3c09cb3e107b
+                  - generic [ref=f6e1409]: New
+              - cell "apple" [ref=f6e1410]
+              - cell "Paris - 75, France" [ref=f6e1411]
+              - cell "hellowork" [ref=f6e1412]
+              - cell [ref=f6e1413]:
+                - time [ref=f6e1414]: 11/9/2026, 9:42:02 AM
+              - cell "Not listed" [ref=f6e1415]
+              - cell "-" [ref=f6e1416]
+              - cell "Not listed" [ref=f6e1417]
+              - cell "Needs description" [ref=f6e1419]
+              - cell [ref=f6e1420]:
+                - link "View role" [ref=f6e1421] [cursor=pointer]:
+                  - /url: /jobs/926ad27d-6620-429d-813a-3c09cb3e107b
+                - button "Mark seen" [ref=f6e1422] [cursor=pointer]
+            - row [ref=f6e1423]:
+              - cell "Consultant·e Ai - Machine Learning Aws H/F New" [ref=f6e1424]:
+                - generic [ref=f6e1425]:
+                  - link "Consultant·e Ai - Machine Learning Aws H/F" [ref=f6e1426] [cursor=pointer]:
+                    - /url: /jobs/38c59ea2-a9cf-4d60-b378-abcab1b777b6
+                  - generic [ref=f6e1427]: New
+              - cell "Devoteam" [ref=f6e1428]
+              - cell "Levallois-Perret - 92, France" [ref=f6e1429]
+              - cell "hellowork" [ref=f6e1430]
+              - cell [ref=f6e1431]:
+                - time [ref=f6e1432]: 11/9/2026, 9:42:01 AM
+              - cell "Not listed" [ref=f6e1433]
+              - cell "-" [ref=f6e1434]
+              - cell "Not listed" [ref=f6e1435]
+              - cell "Needs description" [ref=f6e1437]
+              - cell [ref=f6e1438]:
+                - link "View role" [ref=f6e1439] [cursor=pointer]:
+                  - /url: /jobs/38c59ea2-a9cf-4d60-b378-abcab1b777b6
+                - button "Mark seen" [ref=f6e1440] [cursor=pointer]
+            - row [ref=f6e1441]:
+              - cell "Assistant Projets IA & Machine Learning H/F New" [ref=f6e1442]:
+                - generic [ref=f6e1443]:
+                  - link "Assistant Projets IA & Machine Learning H/F" [ref=f6e1444] [cursor=pointer]:
+                    - /url: /jobs/0c47f0d5-e417-482d-8464-af874819cae8
+                  - generic [ref=f6e1445]: New
+              - cell "Crédit Agricole CIB" [ref=f6e1446]
+              - cell "Montrouge - 92, France" [ref=f6e1447]
+              - cell "hellowork" [ref=f6e1448]
+              - cell [ref=f6e1449]:
+                - time [ref=f6e1450]: 11/9/2026, 9:42:01 AM
+              - cell "Not listed" [ref=f6e1451]
+              - cell "-" [ref=f6e1452]
+              - cell "Not listed" [ref=f6e1453]
+              - cell "Needs description" [ref=f6e1455]
+              - cell [ref=f6e1456]:
+                - link "View role" [ref=f6e1457] [cursor=pointer]:
+                  - /url: /jobs/0c47f0d5-e417-482d-8464-af874819cae8
+                - button "Mark seen" [ref=f6e1458] [cursor=pointer]
+            - row [ref=f6e1459]:
+              - cell "Machine Learning Engineer H/F New" [ref=f6e1460]:
+                - generic [ref=f6e1461]:
+                  - link "Machine Learning Engineer H/F" [ref=f6e1462] [cursor=pointer]:
+                    - /url: /jobs/a9677005-0b46-4d2e-894f-60f6365f91e3
+                  - generic [ref=f6e1463]: New
+              - cell "Nexton" [ref=f6e1464]
+              - cell "Paris - 75, France" [ref=f6e1465]
+              - cell "hellowork" [ref=f6e1466]
+              - cell [ref=f6e1467]:
+                - time [ref=f6e1468]: 11/9/2026, 9:42:01 AM
+              - cell "Not listed" [ref=f6e1469]
+              - cell "-" [ref=f6e1470]
+              - cell "Not listed" [ref=f6e1471]
+              - cell "Needs description" [ref=f6e1473]
+              - cell [ref=f6e1474]:
+                - link "View role" [ref=f6e1475] [cursor=pointer]:
+                  - /url: /jobs/a9677005-0b46-4d2e-894f-60f6365f91e3
+                - button "Mark seen" [ref=f6e1476] [cursor=pointer]
+            - row [ref=f6e1477]:
+              - cell "Ingénieur de Recherche en Optimisation et Machine Learning H/F New" [ref=f6e1478]:
+                - generic [ref=f6e1479]:
+                  - link "Ingénieur de Recherche en Optimisation et Machine Learning H/F" [ref=f6e1480] [cursor=pointer]:
+                    - /url: /jobs/1f66e59e-e729-4e09-b32f-e748b1cb7285
+                  - generic [ref=f6e1481]: New
+              - cell "Thales" [ref=f6e1482]
+              - cell "Palaiseau - 91, France" [ref=f6e1483]
+              - cell "hellowork" [ref=f6e1484]
+              - cell [ref=f6e1485]:
+                - time [ref=f6e1486]: 11/9/2026, 9:42:01 AM
+              - cell "Not listed" [ref=f6e1487]
+              - cell "-" [ref=f6e1488]
+              - cell "Not listed" [ref=f6e1489]
+              - cell "Needs description" [ref=f6e1491]
+              - cell [ref=f6e1492]:
+                - link "View role" [ref=f6e1493] [cursor=pointer]:
+                  - /url: /jobs/1f66e59e-e729-4e09-b32f-e748b1cb7285
+                - button "Mark seen" [ref=f6e1494] [cursor=pointer]
+            - row [ref=f6e1495]:
+              - cell "Machine Learning Engineer H/F New" [ref=f6e1496]:
+                - generic [ref=f6e1497]:
+                  - link "Machine Learning Engineer H/F" [ref=f6e1498] [cursor=pointer]:
+                    - /url: /jobs/106ff4ea-4f0c-4688-bc70-7ccf2ac80206
+                  - generic [ref=f6e1499]: New
+              - cell "Ubisoft" [ref=f6e1500]
+              - cell "Paris - 75, France" [ref=f6e1501]
+              - cell "hellowork" [ref=f6e1502]
+              - cell [ref=f6e1503]:
+                - time [ref=f6e1504]: 11/9/2026, 9:42:00 AM
+              - cell "Not listed" [ref=f6e1505]
+              - cell "-" [ref=f6e1506]
+              - cell "Not listed" [ref=f6e1507]
+              - cell "Needs description" [ref=f6e1509]
+              - cell [ref=f6e1510]:
+                - link "View role" [ref=f6e1511] [cursor=pointer]:
+                  - /url: /jobs/106ff4ea-4f0c-4688-bc70-7ccf2ac80206
+                - button "Mark seen" [ref=f6e1512] [cursor=pointer]
+            - row [ref=f6e1513]:
+              - cell "Machine Learning Engineer H/F New" [ref=f6e1514]:
+                - generic [ref=f6e1515]:
+                  - link "Machine Learning Engineer H/F" [ref=f6e1516] [cursor=pointer]:
+                    - /url: /jobs/711b7a0c-c242-498b-92dc-ac6fac8c93a4
+                  - generic [ref=f6e1517]: New
+              - cell "Surfjob Consulting" [ref=f6e1518]
+              - cell "Lille - 59, France" [ref=f6e1519]
+              - cell "hellowork" [ref=f6e1520]
+              - cell [ref=f6e1521]:
+                - time [ref=f6e1522]: 11/9/2026, 9:42:00 AM
+              - cell "Not listed" [ref=f6e1523]
+              - cell "-" [ref=f6e1524]
+              - cell "Not listed" [ref=f6e1525]
+              - cell "Needs description" [ref=f6e1527]
+              - cell [ref=f6e1528]:
+                - link "View role" [ref=f6e1529] [cursor=pointer]:
+                  - /url: /jobs/711b7a0c-c242-498b-92dc-ac6fac8c93a4
+                - button "Mark seen" [ref=f6e1530] [cursor=pointer]
+            - row [ref=f6e1531]:
+              - cell "Ml Ops - Ingénieur Machine Learning H/F New" [ref=f6e1532]:
+                - generic [ref=f6e1533]:
+                  - link "Ml Ops - Ingénieur Machine Learning H/F" [ref=f6e1534] [cursor=pointer]:
+                    - /url: /jobs/b411254d-4c3c-4c4a-b250-3556a5eb94f8
+                  - generic [ref=f6e1535]: New
+              - cell "Extia" [ref=f6e1536]
+              - cell "Lille - 59, France" [ref=f6e1537]
+              - cell "hellowork" [ref=f6e1538]
+              - cell [ref=f6e1539]:
+                - time [ref=f6e1540]: 11/9/2026, 9:41:59 AM
+              - cell "Not listed" [ref=f6e1541]
+              - cell "-" [ref=f6e1542]
+              - cell "Not listed" [ref=f6e1543]
+              - cell "Needs description" [ref=f6e1545]
+              - cell [ref=f6e1546]:
+                - link "View role" [ref=f6e1547] [cursor=pointer]:
+                  - /url: /jobs/b411254d-4c3c-4c4a-b250-3556a5eb94f8
+                - button "Mark seen" [ref=f6e1548] [cursor=pointer]
+            - row [ref=f6e1549]:
+              - cell "Développeur IA - Machine Learning H/F New" [ref=f6e1550]:
+                - generic [ref=f6e1551]:
+                  - link "Développeur IA - Machine Learning H/F" [ref=f6e1552] [cursor=pointer]:
+                    - /url: /jobs/54f92407-1978-4569-9e26-5348f1341005
+                  - generic [ref=f6e1553]: New
+              - cell "Extia" [ref=f6e1554]
+              - cell "Lille - 59, France" [ref=f6e1555]
+              - cell "hellowork" [ref=f6e1556]
+              - cell [ref=f6e1557]:
+                - time [ref=f6e1558]: 11/9/2026, 9:41:59 AM
+              - cell "Not listed" [ref=f6e1559]
+              - cell "-" [ref=f6e1560]
+              - cell "Not listed" [ref=f6e1561]
+              - cell "Needs description" [ref=f6e1563]
+              - cell [ref=f6e1564]:
+                - link "View role" [ref=f6e1565] [cursor=pointer]:
+                  - /url: /jobs/54f92407-1978-4569-9e26-5348f1341005
+                - button "Mark seen" [ref=f6e1566] [cursor=pointer]
+            - row [ref=f6e1567]:
+              - cell "Développeur IA - Machine Learning H/F New" [ref=f6e1568]:
+                - generic [ref=f6e1569]:
+                  - link "Développeur IA - Machine Learning H/F" [ref=f6e1570] [cursor=pointer]:
+                    - /url: /jobs/6a9d8110-0d58-4b87-a265-1d5d83a01348
+                  - generic [ref=f6e1571]: New
+              - cell "Extia" [ref=f6e1572]
+              - cell "Paris - 75, France" [ref=f6e1573]
+              - cell "hellowork" [ref=f6e1574]
+              - cell [ref=f6e1575]:
+                - time [ref=f6e1576]: 11/9/2026, 9:41:59 AM
+              - cell "Not listed" [ref=f6e1577]
+              - cell "-" [ref=f6e1578]
+              - cell "Not listed" [ref=f6e1579]
+              - cell "Needs description" [ref=f6e1581]
+              - cell [ref=f6e1582]:
+                - link "View role" [ref=f6e1583] [cursor=pointer]:
+                  - /url: /jobs/6a9d8110-0d58-4b87-a265-1d5d83a01348
+                - button "Mark seen" [ref=f6e1584] [cursor=pointer]
+            - row [ref=f6e1585]:
+              - cell "Ml Engineer H/F New" [ref=f6e1586]:
+                - generic [ref=f6e1587]:
+                  - link "Ml Engineer H/F" [ref=f6e1588] [cursor=pointer]:
+                    - /url: /jobs/c9896091-002d-4426-b94f-e01cadd3d420
+                  - generic [ref=f6e1589]: New
+              - cell "Ippon Technologies" [ref=f6e1590]
+              - cell "Lyon - 69, France" [ref=f6e1591]
+              - cell "hellowork" [ref=f6e1592]
+              - cell [ref=f6e1593]:
+                - time [ref=f6e1594]: 11/9/2026, 9:41:59 AM
+              - cell "Not listed" [ref=f6e1595]
+              - cell "-" [ref=f6e1596]
+              - cell "Not listed" [ref=f6e1597]
+              - cell "Needs description" [ref=f6e1599]
+              - cell [ref=f6e1600]:
+                - link "View role" [ref=f6e1601] [cursor=pointer]:
+                  - /url: /jobs/c9896091-002d-4426-b94f-e01cadd3d420
+                - button "Mark seen" [ref=f6e1602] [cursor=pointer]
+            - row [ref=f6e1603]:
+              - cell "IA - Ml Engineer H/F New" [ref=f6e1604]:
+                - generic [ref=f6e1605]:
+                  - link "IA - Ml Engineer H/F" [ref=f6e1606] [cursor=pointer]:
+                    - /url: /jobs/8b842378-fc52-4ab5-b6cd-e4c0ba8a6d95
+                  - generic [ref=f6e1607]: New
+              - cell "Ippon Technologies" [ref=f6e1608]
+              - cell "Paris - 75, France" [ref=f6e1609]
+              - cell "hellowork" [ref=f6e1610]
+              - cell [ref=f6e1611]:
+                - time [ref=f6e1612]: 11/9/2026, 9:41:57 AM
+              - cell "Not listed" [ref=f6e1613]
+              - cell "-" [ref=f6e1614]
+              - cell "Not listed" [ref=f6e1615]
+              - cell "Needs description" [ref=f6e1617]
+              - cell [ref=f6e1618]:
+                - link "View role" [ref=f6e1619] [cursor=pointer]:
+                  - /url: /jobs/8b842378-fc52-4ab5-b6cd-e4c0ba8a6d95
+                - button "Mark seen" [ref=f6e1620] [cursor=pointer]
+            - row [ref=f6e1621]:
+              - cell "Post-Doctorat - Interaction Spin-Réseau par Simulations Ab Initio et Machine Learning H/F New" [ref=f6e1622]:
+                - generic [ref=f6e1623]:
+                  - link "Post-Doctorat - Interaction Spin-Réseau par Simulations Ab Initio et Machine Learning H/F" [ref=f6e1624] [cursor=pointer]:
+                    - /url: /jobs/ebe9a6fc-ae97-4979-b705-aea9a5216dad
+                  - generic [ref=f6e1625]: New
+              - cell "CEA" [ref=f6e1626]
+              - cell "Bruyères-le-Châtel - 91, France" [ref=f6e1627]
+              - cell "hellowork" [ref=f6e1628]
+              - cell [ref=f6e1629]:
+                - time [ref=f6e1630]: 11/9/2026, 9:41:57 AM
+              - cell "Not listed" [ref=f6e1631]
+              - cell "-" [ref=f6e1632]
+              - cell "Not listed" [ref=f6e1633]
+              - cell "Needs description" [ref=f6e1635]
+              - cell [ref=f6e1636]:
+                - link "View role" [ref=f6e1637] [cursor=pointer]:
+                  - /url: /jobs/ebe9a6fc-ae97-4979-b705-aea9a5216dad
+                - button "Mark seen" [ref=f6e1638] [cursor=pointer]
+            - row [ref=f6e1639]:
+              - cell "Development Of Machine Learning Models For Critical Heat Flux Predictions H/F New" [ref=f6e1640]:
+                - generic [ref=f6e1641]:
+                  - link "Development Of Machine Learning Models For Critical Heat Flux Predictions H/F" [ref=f6e1642] [cursor=pointer]:
+                    - /url: /jobs/3a435b0c-4867-4f5b-9df9-f55b90b1252e
+                  - generic [ref=f6e1643]: New
+              - cell "CEA" [ref=f6e1644]
+              - cell "Saclay - 91, France" [ref=f6e1645]
+              - cell "hellowork" [ref=f6e1646]
+              - cell [ref=f6e1647]:
+                - time [ref=f6e1648]: 11/9/2026, 9:41:57 AM
+              - cell "Not listed" [ref=f6e1649]
+              - cell "-" [ref=f6e1650]
+              - cell "Not listed" [ref=f6e1651]
+              - cell "Needs description" [ref=f6e1653]
+              - cell [ref=f6e1654]:
+                - link "View role" [ref=f6e1655] [cursor=pointer]:
+                  - /url: /jobs/3a435b0c-4867-4f5b-9df9-f55b90b1252e
+                - button "Mark seen" [ref=f6e1656] [cursor=pointer]
+            - row [ref=f6e1657]:
+              - cell "Post-Doctorat - Modélisation Atomique d'Actinides par Modèles Machine Learning H/F New" [ref=f6e1658]:
+                - generic [ref=f6e1659]:
+                  - link "Post-Doctorat - Modélisation Atomique d'Actinides par Modèles Machine Learning H/F" [ref=f6e1660] [cursor=pointer]:
+                    - /url: /jobs/ff46316a-ee68-4621-b2cd-c18e5e0cec31
+                  - generic [ref=f6e1661]: New
+              - cell "CEA" [ref=f6e1662]
+              - cell "Bruyères-le-Châtel - 91, France" [ref=f6e1663]
+              - cell "hellowork" [ref=f6e1664]
+              - cell [ref=f6e1665]:
+                - time [ref=f6e1666]: 11/9/2026, 9:41:57 AM
+              - cell "Not listed" [ref=f6e1667]
+              - cell "-" [ref=f6e1668]
+              - cell "Not listed" [ref=f6e1669]
+              - cell "Needs description" [ref=f6e1671]
+              - cell [ref=f6e1672]:
+                - link "View role" [ref=f6e1673] [cursor=pointer]:
+                  - /url: /jobs/ff46316a-ee68-4621-b2cd-c18e5e0cec31
+                - button "Mark seen" [ref=f6e1674] [cursor=pointer]
+            - row [ref=f6e1675]:
+              - cell "Post-Doctorat - Méthodes de Machine Learning pour la Simulation Rapide des Ondes de Choc 3D H/F New" [ref=f6e1676]:
+                - generic [ref=f6e1677]:
+                  - link "Post-Doctorat - Méthodes de Machine Learning pour la Simulation Rapide des Ondes de Choc 3D H/F" [ref=f6e1678] [cursor=pointer]:
+                    - /url: /jobs/3cccd9e6-2279-4739-b3dd-75a965ed3ef2
+                  - generic [ref=f6e1679]: New
+              - cell "CEA" [ref=f6e1680]
+              - cell "Bruyères-le-Châtel - 91, France" [ref=f6e1681]
+              - cell "hellowork" [ref=f6e1682]
+              - cell [ref=f6e1683]:
+                - time [ref=f6e1684]: 11/9/2026, 9:41:56 AM
+              - cell "Not listed" [ref=f6e1685]
+              - cell "-" [ref=f6e1686]
+              - cell "Not listed" [ref=f6e1687]
+              - cell "Needs description" [ref=f6e1689]
+              - cell [ref=f6e1690]:
+                - link "View role" [ref=f6e1691] [cursor=pointer]:
+                  - /url: /jobs/3cccd9e6-2279-4739-b3dd-75a965ed3ef2
+                - button "Mark seen" [ref=f6e1692] [cursor=pointer]
+            - row [ref=f6e1693]:
+              - cell "Incertitude de Métamodèles de Machine Learning pour le Calcul de Débit de Dose H/F New" [ref=f6e1694]:
+                - generic [ref=f6e1695]:
+                  - link "Incertitude de Métamodèles de Machine Learning pour le Calcul de Débit de Dose H/F" [ref=f6e1696] [cursor=pointer]:
+                    - /url: /jobs/4d05c9a6-7ec9-477e-a967-0d370b7256d0
+                  - generic [ref=f6e1697]: New
+              - cell "CEA" [ref=f6e1698]
+              - cell "Bouches-du-Rhône - 13, France" [ref=f6e1699]
+              - cell "hellowork" [ref=f6e1700]
+              - cell [ref=f6e1701]:
+                - time [ref=f6e1702]: 11/9/2026, 9:41:56 AM
+              - cell "Not listed" [ref=f6e1703]
+              - cell "-" [ref=f6e1704]
+              - cell "Not listed" [ref=f6e1705]
+              - cell "Needs description" [ref=f6e1707]
+              - cell [ref=f6e1708]:
+                - link "View role" [ref=f6e1709] [cursor=pointer]:
+                  - /url: /jobs/4d05c9a6-7ec9-477e-a967-0d370b7256d0
+                - button "Mark seen" [ref=f6e1710] [cursor=pointer]
+            - row [ref=f6e1711]:
+              - cell "Data Scientist - Machine Deep Learning H/F New" [ref=f6e1712]:
+                - generic [ref=f6e1713]:
+                  - link "Data Scientist - Machine Deep Learning H/F" [ref=f6e1714] [cursor=pointer]:
+                    - /url: /jobs/7257a01d-ffe7-4cea-a135-fd6a5f65d771
+                  - generic [ref=f6e1715]: New
+              - cell "Davidson consulting" [ref=f6e1716]
+              - cell "Tours - 37, France" [ref=f6e1717]
+              - cell "hellowork" [ref=f6e1718]
+              - cell [ref=f6e1719]:
+                - time [ref=f6e1720]: 11/9/2026, 9:41:55 AM
+              - cell "Not listed" [ref=f6e1721]
+              - cell "-" [ref=f6e1722]
+              - cell "Not listed" [ref=f6e1723]
+              - cell "Needs description" [ref=f6e1725]
+              - cell [ref=f6e1726]:
+                - link "View role" [ref=f6e1727] [cursor=pointer]:
+                  - /url: /jobs/7257a01d-ffe7-4cea-a135-fd6a5f65d771
+                - button "Mark seen" [ref=f6e1728] [cursor=pointer]
+            - row [ref=f6e1729]:
+              - cell "Ingénieur IA - Machine Learning H/F New" [ref=f6e1730]:
+                - generic [ref=f6e1731]:
+                  - link "Ingénieur IA - Machine Learning H/F" [ref=f6e1732] [cursor=pointer]:
+                    - /url: /jobs/f8c9ed37-8c41-4227-8db8-4c680b4eee01
+                  - generic [ref=f6e1733]: New
+              - cell "Peaks" [ref=f6e1734]
+              - cell "Lyon - 69, France" [ref=f6e1735]
+              - cell "hellowork" [ref=f6e1736]
+              - cell [ref=f6e1737]:
+                - time [ref=f6e1738]: 11/9/2026, 9:41:55 AM
+              - cell "Not listed" [ref=f6e1739]
+              - cell "-" [ref=f6e1740]
+              - cell "Not listed" [ref=f6e1741]
+              - cell "Needs description" [ref=f6e1743]
+              - cell [ref=f6e1744]:
+                - link "View role" [ref=f6e1745] [cursor=pointer]:
+                  - /url: /jobs/f8c9ed37-8c41-4227-8db8-4c680b4eee01
+                - button "Mark seen" [ref=f6e1746] [cursor=pointer]
+            - row [ref=f6e1747]:
+              - cell "Consultant·e Ai - Machine Learning Aws H/F New" [ref=f6e1748]:
+                - generic [ref=f6e1749]:
+                  - link "Consultant·e Ai - Machine Learning Aws H/F" [ref=f6e1750] [cursor=pointer]:
+                    - /url: /jobs/f63e2fe0-c8e4-4dd4-b69d-511b0a3ae9a4
+                  - generic [ref=f6e1751]: New
+              - cell "Devoteam France" [ref=f6e1752]
+              - cell "Levallois-Perret - 92, France" [ref=f6e1753]
+              - cell "hellowork" [ref=f6e1754]
+              - cell [ref=f6e1755]:
+                - time [ref=f6e1756]: 11/9/2026, 9:41:55 AM
+              - cell "Not listed" [ref=f6e1757]
+              - cell "-" [ref=f6e1758]
+              - cell "Not listed" [ref=f6e1759]
+              - cell "Needs description" [ref=f6e1761]
+              - cell [ref=f6e1762]:
+                - link "View role" [ref=f6e1763] [cursor=pointer]:
+                  - /url: /jobs/f63e2fe0-c8e4-4dd4-b69d-511b0a3ae9a4
+                - button "Mark seen" [ref=f6e1764] [cursor=pointer]
+            - row [ref=f6e1765]:
+              - 'cell "Data Engineer - Machine Learning - # H/F New" [ref=f6e1766]':
+                - generic [ref=f6e1767]:
+                  - 'link "Data Engineer - Machine Learning - # H/F" [ref=f6e1768] [cursor=pointer]':
+                    - /url: /jobs/7e2a4d2e-dcbd-4b99-8f9b-dc7b2616022e
+                  - generic [ref=f6e1769]: New
+              - cell "Astek" [ref=f6e1770]
+              - cell "Lille - 59, France" [ref=f6e1771]
+              - cell "hellowork" [ref=f6e1772]
+              - cell [ref=f6e1773]:
+                - time [ref=f6e1774]: 11/9/2026, 9:41:54 AM
+              - cell "Not listed" [ref=f6e1775]
+              - cell "-" [ref=f6e1776]
+              - cell "Not listed" [ref=f6e1777]
+              - cell "To review" [ref=f6e1779]
+              - cell [ref=f6e1780]:
+                - link "View role" [ref=f6e1781] [cursor=pointer]:
+                  - /url: /jobs/7e2a4d2e-dcbd-4b99-8f9b-dc7b2616022e
+                - button "Mark seen" [ref=f6e1782] [cursor=pointer]
+            - row [ref=f6e1783]:
+              - cell "Machine Learning Engineers H/F New" [ref=f6e1784]:
+                - generic [ref=f6e1785]:
+                  - link "Machine Learning Engineers H/F" [ref=f6e1786] [cursor=pointer]:
+                    - /url: /jobs/e2332cb1-27ed-4e59-af46-97aa22130eeb
+                  - generic [ref=f6e1787]: New
+              - cell "Approach People Recruitment" [ref=f6e1788]
+              - cell "Paris - 75, France" [ref=f6e1789]
+              - cell "hellowork" [ref=f6e1790]
+              - cell [ref=f6e1791]:
+                - time [ref=f6e1792]: 11/9/2026, 9:41:53 AM
+              - cell "Not listed" [ref=f6e1793]
+              - cell "-" [ref=f6e1794]
+              - cell "Not listed" [ref=f6e1795]
+              - cell "To review" [ref=f6e1797]
+              - cell [ref=f6e1798]:
+                - link "View role" [ref=f6e1799] [cursor=pointer]:
+                  - /url: /jobs/e2332cb1-27ed-4e59-af46-97aa22130eeb
+                - button "Mark seen" [ref=f6e1800] [cursor=pointer]
+            - row [ref=f6e1801]:
+              - cell "Développeur Python - Machine Learning H/F New" [ref=f6e1802]:
+                - generic [ref=f6e1803]:
+                  - link "Développeur Python - Machine Learning H/F" [ref=f6e1804] [cursor=pointer]:
+                    - /url: /jobs/5924d595-4b4c-4809-b71f-c8a099be6ee9
+                  - generic [ref=f6e1805]: New
+              - cell "Amiltone" [ref=f6e1806]
+              - cell "Lyon - 69, France" [ref=f6e1807]
+              - cell "hellowork" [ref=f6e1808]
+              - cell [ref=f6e1809]:
+                - time [ref=f6e1810]: 11/9/2026, 9:41:52 AM
+              - cell "Not listed" [ref=f6e1811]
+              - cell "-" [ref=f6e1812]
+              - cell "Not listed" [ref=f6e1813]
+              - cell "To review" [ref=f6e1815]
+              - cell [ref=f6e1816]:
+                - link "View role" [ref=f6e1817] [cursor=pointer]:
+                  - /url: /jobs/5924d595-4b4c-4809-b71f-c8a099be6ee9
+                - button "Mark seen" [ref=f6e1818] [cursor=pointer]
+            - row [ref=f6e1819]:
+              - cell "Data Engineer - Dataops H/F New" [ref=f6e1820]:
+                - generic [ref=f6e1821]:
+                  - link "Data Engineer - Dataops H/F" [ref=f6e1822] [cursor=pointer]:
+                    - /url: /jobs/5646aa1d-f575-4eb5-93ea-d8d246ceffd8
+                  - generic [ref=f6e1823]: New
+              - cell "Inetum" [ref=f6e1824]
+              - cell "La Chapelle-sur-Erdre - 44, France" [ref=f6e1825]
+              - cell "hellowork" [ref=f6e1826]
+              - cell [ref=f6e1827]:
+                - time [ref=f6e1828]: 11/9/2026, 9:41:51 AM
+              - cell "Not listed" [ref=f6e1829]
+              - cell "-" [ref=f6e1830]
+              - cell "Not listed" [ref=f6e1831]
+              - cell "To review" [ref=f6e1833]
+              - cell [ref=f6e1834]:
+                - link "View role" [ref=f6e1835] [cursor=pointer]:
+                  - /url: /jobs/5646aa1d-f575-4eb5-93ea-d8d246ceffd8
+                - button "Mark seen" [ref=f6e1836] [cursor=pointer]
+            - row [ref=f6e1837]:
+              - cell "Data Engineer H/F New" [ref=f6e1838]:
+                - generic [ref=f6e1839]:
+                  - link "Data Engineer H/F" [ref=f6e1840] [cursor=pointer]:
+                    - /url: /jobs/272636e4-5876-4f5a-8380-1d68aa799fe5
+                  - generic [ref=f6e1841]: New
+              - cell "Scalian" [ref=f6e1842]
+              - cell "Marseille - 13, France" [ref=f6e1843]
+              - cell "hellowork" [ref=f6e1844]
+              - cell [ref=f6e1845]:
+                - time [ref=f6e1846]: 11/9/2026, 9:41:50 AM
+              - cell "Not listed" [ref=f6e1847]
+              - cell "-" [ref=f6e1848]
+              - cell "Not listed" [ref=f6e1849]
+              - cell "Needs description" [ref=f6e1851]
+              - cell [ref=f6e1852]:
+                - link "View role" [ref=f6e1853] [cursor=pointer]:
+                  - /url: /jobs/272636e4-5876-4f5a-8380-1d68aa799fe5
+                - button "Mark seen" [ref=f6e1854] [cursor=pointer]
+            - row [ref=f6e1855]:
+              - cell "Data Engineer H/F New" [ref=f6e1856]:
+                - generic [ref=f6e1857]:
+                  - link "Data Engineer H/F" [ref=f6e1858] [cursor=pointer]:
+                    - /url: /jobs/e23907ad-d467-407c-a7e4-f1705741b47b
+                  - generic [ref=f6e1859]: New
+              - cell "Inetum" [ref=f6e1860]
+              - cell "Nantes - 44, France" [ref=f6e1861]
+              - cell "hellowork" [ref=f6e1862]
+              - cell [ref=f6e1863]:
+                - time [ref=f6e1864]: 11/9/2026, 9:41:49 AM
+              - cell "Not listed" [ref=f6e1865]
+              - cell "-" [ref=f6e1866]
+              - cell "Not listed" [ref=f6e1867]
+              - cell "Needs description" [ref=f6e1869]
+              - cell [ref=f6e1870]:
+                - link "View role" [ref=f6e1871] [cursor=pointer]:
+                  - /url: /jobs/e23907ad-d467-407c-a7e4-f1705741b47b
+                - button "Mark seen" [ref=f6e1872] [cursor=pointer]
+            - row [ref=f6e1873]:
+              - cell [ref=f6e1874]:
+                - link "Data Engineer H/F" [ref=f6e1876] [cursor=pointer]:
+                  - /url: /jobs/633498b8-37cd-4131-be2b-7cda8547c218
+              - cell "Mercato de l'emploi" [ref=f6e1877]
+              - cell "Bordeaux - 33, France" [ref=f6e1878]
+              - cell "hellowork" [ref=f6e1879]
+              - cell [ref=f6e1880]:
+                - time [ref=f6e1881]: 11/7/2026, 10:42:55 PM
+              - cell "Not listed" [ref=f6e1882]
+              - cell "-" [ref=f6e1883]
+              - cell "Not listed" [ref=f6e1884]
+              - cell "To review" [ref=f6e1886]
+              - cell [ref=f6e1887]:
+                - link "View role" [ref=f6e1888] [cursor=pointer]:
+                  - /url: /jobs/633498b8-37cd-4131-be2b-7cda8547c218
+                - button "Mark seen" [ref=f6e1889] [cursor=pointer]
+        - navigation "Job pages" [ref=f6e980]:
+          - link "Previous" [ref=f6e1890] [cursor=pointer]:
+            - /url: /jobs?q=&source=hellowork&country=&contract=&remote=&sort=recent&filter=all&view=all&page=1
+          - generic "Page 2 of 5" [ref=f6e1891]:
+            - generic [ref=f6e983]:
+              - link "1" [ref=f6e984] [cursor=pointer]:
+                - /url: /jobs?q=&source=hellowork&country=&contract=&remote=&sort=recent&filter=all&view=all&page=1
+              - link "2" [active] [ref=f6e985] [cursor=pointer]:
+                - /url: /jobs?q=&source=hellowork&country=&contract=&remote=&sort=recent&filter=all&view=all&page=2
+              - link "3" [ref=f6e986] [cursor=pointer]:
+                - /url: /jobs?q=&source=hellowork&country=&contract=&remote=&sort=recent&filter=all&view=all&page=3
+              - link "4" [ref=f6e987] [cursor=pointer]:
+                - /url: /jobs?q=&source=hellowork&country=&contract=&remote=&sort=recent&filter=all&view=all&page=4
+              - link "5" [ref=f6e988] [cursor=pointer]:
+                - /url: /jobs?q=&source=hellowork&country=&contract=&remote=&sort=recent&filter=all&view=all&page=5
+          - link "Next" [ref=f6e989] [cursor=pointer]:
+            - /url: /jobs?q=&source=hellowork&country=&contract=&remote=&sort=recent&filter=all&view=all&page=3
+  - alert [ref=f6e990]

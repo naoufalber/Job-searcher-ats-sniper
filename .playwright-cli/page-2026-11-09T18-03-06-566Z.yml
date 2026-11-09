@@ -1,0 +1,109 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e2]:
+    - banner [ref=f4e3]:
+      - generic [ref=f4e4]:
+        - link "A ATS SNIPER" [ref=f4e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f4e6]: A
+          - generic [ref=f4e7]: ATS SNIPER
+        - navigation "Primary navigation" [ref=f4e8]:
+          - link "Discover" [ref=f4e9] [cursor=pointer]:
+            - /url: /jobs
+          - link "Explore more" [ref=f4e10] [cursor=pointer]:
+            - /url: /jobs/explore
+          - link "CV" [ref=f4e11] [cursor=pointer]:
+            - /url: /cv
+          - link "Saved" [ref=f4e12] [cursor=pointer]:
+            - /url: /saved
+          - link "Tracker" [ref=f4e13] [cursor=pointer]:
+            - /url: /tracker
+          - link "Settings" [ref=f4e14] [cursor=pointer]:
+            - /url: /settings
+        - button "Sign out" [ref=f4e16] [cursor=pointer]
+    - main [ref=f4e17]:
+      - generic [ref=f4e18]:
+        - status [ref=f4e19]: Live updates on. Scores appear automatically as matching completes.
+        - generic [ref=f4e20]:
+          - paragraph [ref=f4e21]: Discovery
+          - heading "Open roles" [level=1] [ref=f4e22]
+          - paragraph [ref=f4e23]: Roles with complete descriptions, ready for CV matching and review.
+          - generic [ref=f4e24]:
+            - link "Discover" [ref=f4e25] [cursor=pointer]:
+              - /url: /jobs?q=Silkhom&source=&country=&contract=&remote=&sort=recent&filter=all&view=all
+            - link "Explore more" [ref=f4e26] [cursor=pointer]:
+              - /url: /jobs/explore?q=Silkhom&source=&country=&contract=&remote=&sort=recent&filter=all&view=all
+            - generic [ref=f4e27]: 1 offer
+          - generic [ref=f4e28]:
+            - textbox "Title, company, or location" [ref=f4e29]: Silkhom
+            - combobox [ref=f4e30]:
+              - option "All sources" [selected]
+              - option "ashby"
+              - option "gh"
+              - option "hellowork"
+              - option "lever"
+              - option "local-fixture"
+              - option "local-integration"
+              - option "smartrecruiters"
+              - option "sr"
+              - option "wd"
+              - option "welcome_to_the_jungle"
+            - textbox "Country" [ref=f4e31]
+            - textbox "Contract type" [ref=f4e32]
+            - combobox [ref=f4e33]:
+              - option "New jobs"
+              - option "All jobs" [selected]
+            - combobox [ref=f4e34]:
+              - option "All statuses" [selected]
+              - option "High match (80+)"
+              - option "Good match (65-79)"
+              - option "Low match (<65)"
+              - option "Pending analysis"
+              - option "Saved"
+              - option "Applied"
+            - generic [ref=f4e35]:
+              - combobox [ref=f4e36]:
+                - option "Recommended order" [selected]
+                - option "Match score"
+                - option "Date discovered"
+                - option "Company"
+              - button "Apply filters" [ref=f4e37] [cursor=pointer]
+        - table [ref=f4e39]:
+          - rowgroup [ref=f4e40]:
+            - row [ref=f4e41]:
+              - columnheader "Job title" [ref=f4e42]
+              - columnheader "Company" [ref=f4e43]
+              - columnheader "Location" [ref=f4e44]
+              - columnheader "Source" [ref=f4e45]
+              - columnheader "First seen" [ref=f4e46]
+              - columnheader "Contract" [ref=f4e47]
+              - columnheader "CV match" [ref=f4e48]
+              - columnheader "Contacts" [ref=f4e49]
+              - columnheader "Status" [ref=f4e50]
+              - columnheader "Action" [ref=f4e51]
+          - rowgroup [ref=f4e52]:
+            - row [ref=f4e53]:
+              - cell "Data Engineer H/F New" [ref=f4e54]:
+                - generic [ref=f4e55]:
+                  - link "Data Engineer H/F" [ref=f4e56] [cursor=pointer]:
+                    - /url: /jobs/ee9b5625-65ad-4150-a4d8-70a5609475c1
+                  - generic [ref=f4e57]: New
+              - cell "Silkhom" [ref=f4e58]
+              - cell "Nantes - 44, France" [ref=f4e59]
+              - cell "hellowork" [ref=f4e60]
+              - cell [ref=f4e61]:
+                - time [ref=f4e62]: 11/9/2026, 9:37:08 AM
+              - cell "CDIAI" [ref=f4e63]:
+                - 'generic "Extracted by AI: Contrat : CDI, statut cadre" [ref=f4e64]': CDIAI
+              - cell "75/100" [ref=f4e65]
+              - cell [ref=f4e66]:
+                - generic [ref=f4e67]:
+                  - link "Manager search" [ref=f4e68] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Silkhom%22%20%28%22Head%20of%20Data%22%20OR%20%22Lead%20Data%22%20OR%20%22Manager%20Data%22%20OR%20%22Head%20of%20AI%22%20OR%20%22Data%20Science%20Manager%22%29
+                  - link "Recruiter search" [ref=f4e69] [cursor=pointer]:
+                    - /url: https://www.google.com/search?q=site%3Afr.linkedin.com/in/%20%22Silkhom%22%20%28%22Talent%20Acquisition%22%20OR%20%22Recruteur%22%20OR%20%22Recruiter%22%29%20%28%22Data%22%20OR%20%22Tech%22%20OR%20%22IT%22%29
+              - cell "To review" [ref=f4e70]
+              - cell [ref=f4e71]:
+                - link "View role" [ref=f4e72] [cursor=pointer]:
+                  - /url: /jobs/ee9b5625-65ad-4150-a4d8-70a5609475c1
+                - button "Mark seen" [ref=f4e73] [cursor=pointer]
+  - alert [ref=f4e74]

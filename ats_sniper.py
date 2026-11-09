@@ -6,6 +6,7 @@ import signal
 import sqlite3
 import subprocess
 import sys
+import tempfile
 import time
 import unicodedata
 import urllib.parse
@@ -1235,51 +1236,43 @@ def run_provider_isolated(provider_name, silent_init, deadline):
     child_env["ATS_DB_FILE"] = DB_FILE
     remaining = max(1, int(deadline - time.monotonic()))
     timeout = min(PROVIDER_TIMEOUT_SECONDS, remaining)
-    try:
-        process = subprocess.Popen(
-            command,
-            cwd=str(Path(__file__).resolve().parent),
-            env=child_env,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            creationflags=(
-                subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0
-            ),
-            start_new_session=(os.name != "nt"),
-        )
-    except OSError as exc:
-        SCAN_HAD_FAILURES = True
-        log_event(
-            "provider_start_failed", provider=provider_name,
-            error_type=type(exc).__name__, error=str(exc)[:200],
-        )
-        return 0
     output = ""
     timed_out = False
-    try:
-        output, _ = process.communicate(timeout=timeout)
-    except subprocess.TimeoutExpired as exc:
-        timed_out = True
-        terminate_provider_process(process)
-        output = exc.output or ""
+    with tempfile.TemporaryFile(mode="w+", encoding="utf-8") as output_file:
         try:
-            tail, _ = process.communicate(timeout=5)
-        except subprocess.TimeoutExpired as cleanup_exc:
-            tail = cleanup_exc.output or ""
-            process.kill()
+            process = subprocess.Popen(
+                command,
+                cwd=str(Path(__file__).resolve().parent),
+                env=child_env,
+                stdout=output_file,
+                stderr=subprocess.STDOUT,
+                creationflags=(
+                    subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0
+                ),
+                start_new_session=(os.name != "nt"),
+            )
+        except OSError as exc:
+            SCAN_HAD_FAILURES = True
+            log_event(
+                "provider_start_failed", provider=provider_name,
+                error_type=type(exc).__name__, error=str(exc)[:200],
+            )
+            return 0
+        try:
+            process.wait(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            timed_out = True
+            terminate_provider_process(process)
             try:
                 process.wait(timeout=5)
             except subprocess.TimeoutExpired:
-                pass
-        chunks = [output, tail or ""]
-        output = "".join(
-            chunk.decode("utf-8", errors="replace")
-            if isinstance(chunk, bytes) else chunk
-            for chunk in chunks
-        )
+                process.kill()
+                try:
+                    process.wait(timeout=2)
+                except subprocess.TimeoutExpired:
+                    pass
+        output_file.seek(0)
+        output = output_file.read()
     if output:
         print(output, end="" if output.endswith("\n") else "\n", flush=True)
     elapsed_ms = round((time.monotonic() - started) * 1000)

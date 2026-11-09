@@ -205,6 +205,45 @@ class WebOnlyDetailTests(unittest.TestCase):
 
 
 class DatabaseTests(unittest.TestCase):
+    def test_detail_budget_deferral_does_not_consume_retry_attempt(self):
+        with patch.object(sniper, "DB_FILE", self.db_path), \
+             patch.object(sniper, "WEB_ONLY_MODE", True), \
+             patch.object(sniper, "WEB_ONLY_DETAIL_CACHE", {}), \
+             patch.object(sniper, "WEB_ONLY_DETAIL_LAST_ERROR", {}), \
+             patch.object(sniper, "WEB_ONLY_DETAIL_MAX_REQUESTS", 1), \
+             patch.object(sniper, "WEB_ONLY_DETAIL_REQUESTS_NEW", 1):
+            conn, _ = sniper.init_db()
+            try:
+                url = "https://jobs.smartrecruiters.com/Test/1"
+                self.assertTrue(sniper.web_only_enrichment_due(conn, "budget", url))
+                description = sniper.fetch_web_only_description("SmartRecruiters", url, object())
+                sniper.record_web_only_enrichment(conn, "budget", url, description)
+                self.assertEqual(conn.execute("SELECT status, attempts FROM web_only_enrichment").fetchone(), ("retry", 0))
+                conn.execute("UPDATE web_only_enrichment SET adapter_revision = 1, status = 'terminal', attempts = 4")
+                conn.commit()
+                self.assertTrue(sniper.web_only_enrichment_due(conn, "budget", url))
+                self.assertEqual(conn.execute("SELECT adapter_revision, attempts FROM web_only_enrichment").fetchone(), (2, 0))
+            finally:
+                conn.close()
+
+    def test_new_ingestion_precedes_sent_job_enrichment_backlog(self):
+        with patch.object(sniper, "DB_FILE", self.db_path), \
+             patch.object(sniper, "INGESTION_API_URL", "http://ingest.test"), \
+             patch.object(sniper, "INGESTION_SHARED_SECRET", "local-secret"), \
+             patch.object(sniper, "INGESTION_BATCH_SIZE", 1):
+            conn, _ = sniper.init_db()
+            try:
+                for job_id in ("old-enrichment", "new-vacancy"):
+                    sniper.queue_ingestion(conn, sniper.build_ingestion_payload(job_id, "Test", "Data Engineer", "Paris", "https://example.test/job", "TestATS"))
+                conn.execute("UPDATE supabase_ingestion_queue SET sent_at = '2020-01-01' WHERE job_id = 'old-enrichment'")
+                conn.commit()
+                session = unittest.mock.Mock()
+                session.post.return_value = FakeResponse({})
+                self.assertEqual(sniper.flush_ingestion_queue(conn, session), 1)
+                self.assertEqual(session.post.call_args.kwargs["json"]["external_job_id"], "new-vacancy")
+            finally:
+                conn.close()
+
     def test_permanently_hanging_provider_is_terminated(self):
         real_popen = sniper.subprocess.Popen
         children = []

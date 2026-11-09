@@ -350,10 +350,12 @@ def fetch_web_only_description(provider, url, session, existing_job=False):
     if existing_job:
         detail_limit = min(detail_limit, INGESTION_DETAIL_MAX_REQUESTS)
         if WEB_ONLY_DETAIL_REQUESTS_EXISTING >= detail_limit:
+            WEB_ONLY_DETAIL_LAST_ERROR[url] = "Detail request budget deferred"
             return ""
         WEB_ONLY_DETAIL_REQUESTS_EXISTING += 1
     else:
         if WEB_ONLY_DETAIL_REQUESTS_NEW >= detail_limit:
+            WEB_ONLY_DETAIL_LAST_ERROR[url] = "Detail request budget deferred"
             return ""
         WEB_ONLY_DETAIL_REQUESTS_NEW += 1
     WEB_ONLY_DETAIL_REQUESTS += 1
@@ -425,17 +427,25 @@ def web_only_enrichment_due(conn, job_id, url):
     if not (WEB_ONLY_MODE or INGESTION_ENRICH_DETAILS):
         return False
     row = conn.execute(
-        "SELECT status, attempts, next_attempt_at FROM web_only_enrichment WHERE job_id = ?",
+        "SELECT status, attempts, next_attempt_at, adapter_revision FROM web_only_enrichment WHERE job_id = ?",
         (job_id,),
     ).fetchone()
+    revision = 2 if urllib.parse.urlparse(url).hostname == "jobs.smartrecruiters.com" else 1
     if not row:
         conn.execute(
-            "INSERT OR IGNORE INTO web_only_enrichment(job_id, url, updated_at) VALUES (?, ?, ?)",
-            (job_id, url, datetime.now(timezone.utc).isoformat()),
+            "INSERT OR IGNORE INTO web_only_enrichment(job_id, url, updated_at, adapter_revision) VALUES (?, ?, ?, ?)",
+            (job_id, url, datetime.now(timezone.utc).isoformat(), revision),
         )
         conn.commit()
         return True
-    status, attempts, next_attempt_at = row
+    status, attempts, next_attempt_at, previous_revision = row
+    if status != "complete" and previous_revision < revision:
+        conn.execute(
+            "UPDATE web_only_enrichment SET status = 'pending', attempts = 0, next_attempt_at = NULL, adapter_revision = ? WHERE job_id = ?",
+            (revision, job_id),
+        )
+        conn.commit()
+        return True
     if status in {"complete", "terminal"} or attempts >= WEB_ONLY_ENRICH_MAX_ATTEMPTS:
         return False
     if not next_attempt_at:
@@ -448,6 +458,13 @@ def web_only_enrichment_due(conn, job_id, url):
 
 def record_web_only_enrichment(conn, job_id, url, description):
     now = datetime.now(timezone.utc)
+    if not description and WEB_ONLY_DETAIL_LAST_ERROR.get(url) == "Detail request budget deferred":
+        conn.execute(
+            "UPDATE web_only_enrichment SET status = 'retry', next_attempt_at = ?, last_error = ?, updated_at = ? WHERE job_id = ?",
+            ((now + timedelta(seconds=300)).isoformat(), "Detail request budget deferred", now.isoformat(), job_id),
+        )
+        conn.commit()
+        return
     if description:
         conn.execute(
             """
@@ -507,10 +524,14 @@ def init_db():
                 attempts INTEGER NOT NULL DEFAULT 0,
                 next_attempt_at TEXT,
                 last_error TEXT,
+                adapter_revision INTEGER NOT NULL DEFAULT 1,
                 updated_at TEXT NOT NULL
             )
             """
         )
+        enrichment_columns = {row[1] for row in conn.execute("PRAGMA table_info(web_only_enrichment)")}
+        if "adapter_revision" not in enrichment_columns:
+            conn.execute("ALTER TABLE web_only_enrichment ADD COLUMN adapter_revision INTEGER NOT NULL DEFAULT 1")
     conn.execute(
         """
         CREATE TABLE IF NOT EXISTS supabase_ingestion_queue (
@@ -678,7 +699,7 @@ def flush_ingestion_queue(conn, session, deadline=None):
             FROM supabase_ingestion_queue
             WHERE status = 'pending'
               AND (next_attempt_at IS NULL OR next_attempt_at <= ?)
-            ORDER BY queued_at
+            ORDER BY CASE WHEN sent_at IS NULL THEN 0 ELSE 1 END, queued_at
             LIMIT ?
             """,
             (now.isoformat(), INGESTION_BATCH_SIZE),

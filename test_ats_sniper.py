@@ -205,6 +205,31 @@ class WebOnlyDetailTests(unittest.TestCase):
 
 
 class DatabaseTests(unittest.TestCase):
+    def test_blocked_description_reason_is_ingested_and_notifications_continue(self):
+        response = sniper.requests.Response()
+        response.status_code = 403
+        error = sniper.requests.HTTPError("Blocked", response=response)
+        with patch.object(sniper, "DB_FILE", self.db_path), \
+             patch.object(sniper, "INGESTION_API_URL", "http://ingest.test"), \
+             patch.object(sniper, "INGESTION_SHARED_SECRET", "test-secret"), \
+             patch.object(sniper, "INGESTION_ENRICH_DETAILS", True), \
+             patch.object(sniper, "WEB_ONLY_DETAIL_REQUESTS_NEW", 0), \
+             patch.object(sniper, "WEB_ONLY_DETAIL_CACHE", {}), \
+             patch.object(sniper, "WEB_ONLY_DETAIL_LAST_ERROR", {}), \
+             patch.object(sniper, "send_alert", return_value=True) as alert:
+            conn, _ = sniper.init_db()
+            try:
+                session = unittest.mock.Mock()
+                session.request.side_effect = error
+                sniper.process_job(conn,"blocked","Example","Data Engineer","Paris, France",
+                    "https://www.hellowork.com/fr-fr/emplois/123.html","HelloWork",False,session)
+                alert.assert_called_once()
+                payload = conn.execute("SELECT payload_json FROM supabase_ingestion_queue").fetchone()[0]
+                self.assertIn("HTTP 403", payload)
+                self.assertEqual(conn.execute("SELECT notification_status FROM seen_jobs").fetchone()[0], "sent")
+            finally:
+                conn.close()
+
     def test_detail_budget_deferral_does_not_consume_retry_attempt(self):
         with patch.object(sniper, "DB_FILE", self.db_path), \
              patch.object(sniper, "WEB_ONLY_MODE", True), \

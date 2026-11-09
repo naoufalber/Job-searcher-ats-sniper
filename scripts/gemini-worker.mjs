@@ -3,6 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { setTimeout as delay } from "node:timers/promises";
 import { normalizeAnalysis, parseAnalysisResponse } from "./gemini-result.mjs";
 import { requestGemini } from "./gemini-provider.mjs";
 
@@ -38,14 +39,18 @@ const supabase = createClient(url, serviceRoleKey, { auth: { autoRefreshToken: f
 const workerId = `gemini-worker-${randomUUID()}`;
 const model = process.env.GEMINI_MODEL || "gemini-2.0-flash";
 const rubric = process.env.GEMINI_RUBRIC_VERSION || "v1";
-const rpm = Math.max(1, Number.parseInt(process.env.GEMINI_RATE_LIMIT_RPM || "14", 10) || 14);
+const rpm = Math.min(10, Math.max(1, Number.parseInt(process.env.GEMINI_RATE_LIMIT_RPM || "10", 10) || 10));
 const maxAttempts = Math.max(1, Number.parseInt(process.env.GEMINI_MAX_ATTEMPTS || "5", 10) || 5);
 const dailyBudget = Math.max(0, Number.parseInt(process.env.GEMINI_DAILY_REQUEST_BUDGET || "0", 10) || 0);
 const useMock = mockMode || Boolean(mockResponse);
 const scope = useMock ? "local-mock" : createHash("sha256").update(apiKey).digest("hex").slice(0, 24);
 let stopping = false;
+const shutdown = new AbortController();
 
-function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
+async function sleep(ms) {
+  try { await delay(ms, undefined, { signal: shutdown.signal }); }
+  catch (error) { if (error.name !== "AbortError") throw error; }
+}
 function retryDelay(attempt) { return Math.min(300_000, 2 ** Math.max(0, attempt - 1) * 1_000) + Math.floor(Math.random() * 500); }
 function retryAfterMs(response) {
   const value = response.headers.get("retry-after");
@@ -78,6 +83,7 @@ async function processTask(task) {
   const reservation = Array.isArray(slot) ? slot[0] : slot;
   if (slotError) { await scheduleFailure(task, "Rate limiter unavailable.", 5_000); return 0; }
   if (!reservation?.allowed) { const wait = Math.max(1, Number(reservation?.wait_seconds || 1)); await supabase.from("gemini_analysis_queue").update({ status: "pending", next_attempt_at: new Date(Date.now() + wait * 1_000).toISOString(), processing_started_at: null, worker_id: null, updated_at: new Date().toISOString() }).eq("id", task.id); return wait * 1_000; }
+  task.attempts += 1;
   const [{ data: job }, { data: cv }] = await Promise.all([
     supabase.from("jobs").select("title,company_name,location,description").eq("id", task.job_id).single(),
     supabase.from("cv_documents").select("extracted_text").eq("id", task.cv_document_id).eq("user_id", task.user_id).single(),
@@ -105,22 +111,38 @@ async function processTask(task) {
 async function runOnce() {
   const { data: tasks, error } = await supabase.rpc("claim_gemini_analysis_tasks", { p_limit: 1, p_worker_id: workerId });
   if (error) throw new Error("Unable to claim Gemini queue tasks.");
-  for (const task of tasks || []) await processTask(task);
-  return (tasks || []).length;
+  let waitMs = 0;
+  for (const task of tasks || []) waitMs = Math.max(waitMs, await processTask(task));
+  return { count: (tasks || []).length, waitMs };
 }
 
-process.on("SIGINT", () => { stopping = true; });
-process.on("SIGTERM", () => { stopping = true; });
+process.on("SIGINT", () => { stopping = true; shutdown.abort(); });
+process.on("SIGTERM", () => { stopping = true; shutdown.abort(); });
 const once = process.argv.includes("--once");
+const drain = process.argv.includes("--drain");
+const runtimeArgIndex = process.argv.indexOf("--max-runtime-seconds");
+const runtimeSeconds = Math.max(1, Number(process.argv[runtimeArgIndex + 1]) || 660);
+const deadline = performance.now() + runtimeSeconds * 1000;
 const maxTasksArgIndex = process.argv.indexOf("--max-tasks");
 const maxTasksArg = maxTasksArgIndex >= 0 ? process.argv[maxTasksArgIndex + 1] : null;
 const maxTasks = Math.max(1, Number.parseInt(maxTasksArg || process.env.GEMINI_WORKER_MAX_TASKS || (once ? "1" : "1000000"), 10) || 1);
 console.log(`Gemini worker started (limit ${rpm} requests per rolling 60 seconds; mode=${useMock ? "mock" : "provider"}).`);
 let processedTasks = 0;
-while (!stopping) {
-  const count = await runOnce();
+while (!stopping && performance.now() < deadline - 35_000) {
+  const { count, waitMs } = await runOnce();
   processedTasks += count;
   if ((once && !count) || stopping || processedTasks >= maxTasks) break;
-  if (!count) await sleep(2_000);
+  if (waitMs > 0) {
+    console.log(JSON.stringify({ event: "gemini_capacity_wait", wait_ms: waitMs }));
+    await sleep(Math.min(waitMs, Math.max(0, deadline - performance.now() - 35_000)));
+  } else if (!count && drain) {
+    const { data: next, error } = await supabase.from("gemini_analysis_queue").select("next_attempt_at").eq("status", "pending").order("next_attempt_at").limit(1).maybeSingle();
+    if (error) throw new Error("Unable to inspect pending queue deadline.");
+    if (!next) break;
+    const wait = Math.max(1000, Date.parse(next.next_attempt_at) - Date.now());
+    if (wait >= deadline - performance.now() - 35_000) break;
+    console.log(JSON.stringify({ event: "gemini_retry_wait", wait_ms: wait }));
+    await sleep(wait);
+  } else if (!count) await sleep(15_000);
 }
 console.log("Gemini worker stopped.");

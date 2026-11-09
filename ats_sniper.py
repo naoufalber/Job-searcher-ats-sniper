@@ -212,6 +212,7 @@ def create_ingestion_session():
 
 
 def request_json(session, method, url, source, **kwargs):
+    raise_errors = kwargs.pop("_raise_errors", False)
     started = time.monotonic()
     log_event("request_start", source=source, method=method)
     timeout = kwargs.pop("_timeout", REQUEST_TIMEOUT)
@@ -231,10 +232,13 @@ def request_json(session, method, url, source, **kwargs):
             error_type=type(exc).__name__, error=str(exc)[:200],
         )
         print(f"[ERREUR API] {source}: {exc}", flush=True)
+        if raise_errors:
+            raise
         return None
 
 
 def request_text(session, method, url, source, **kwargs):
+    raise_errors = kwargs.pop("_raise_errors", False)
     started = time.monotonic()
     log_event("request_start", source=source, method=method)
     timeout = kwargs.pop("_timeout", REQUEST_TIMEOUT)
@@ -253,6 +257,8 @@ def request_text(session, method, url, source, **kwargs):
             error_type=type(exc).__name__, error=str(exc)[:200],
         )
         print(f"[ERREUR HTTP] {source}: {exc}", flush=True)
+        if raise_errors:
+            raise
         return None
 
 
@@ -368,7 +374,7 @@ def fetch_web_only_description(provider, url, session, existing_job=False):
             data = request_json(
                 session, "GET",
                 f"https://api.smartrecruiters.com/v1/companies/{parts[-2]}/postings/{parts[-1]}",
-                "SmartRecruiters/detail", _timeout=DETAIL_REQUEST_TIMEOUT,
+                "SmartRecruiters/detail", _timeout=DETAIL_REQUEST_TIMEOUT, _raise_errors=True,
             ) or {}
             sections = (data.get("jobAd") or {}).get("sections") or []
             if isinstance(sections, dict):
@@ -377,7 +383,7 @@ def fetch_web_only_description(provider, url, session, existing_job=False):
         elif provider_key == "lever" and len(parts) >= 2:
             data = request_json(
                 session, "GET", f"https://api.lever.co/v0/postings/{parts[-2]}",
-                "Lever/detail", params={"mode": "json"}, _timeout=DETAIL_REQUEST_TIMEOUT,
+                "Lever/detail", params={"mode": "json"}, _timeout=DETAIL_REQUEST_TIMEOUT, _raise_errors=True,
             ) or []
             jobs = data if isinstance(data, list) else [data]
             match = next((job for job in jobs if str(job.get("id", "")) in url), jobs[0] if jobs else {})
@@ -385,28 +391,30 @@ def fetch_web_only_description(provider, url, session, existing_job=False):
         elif provider_key == "greenhouse" and len(parts) >= 2:
             data = request_json(
                 session, "GET", f"https://boards-api.greenhouse.io/v1/jobs/{parts[-1]}",
-                "Greenhouse/detail", params={"content": "true"}, _timeout=DETAIL_REQUEST_TIMEOUT,
+                "Greenhouse/detail", params={"content": "true"}, _timeout=DETAIL_REQUEST_TIMEOUT, _raise_errors=True,
             ) or {}
             value = data.get("content", "")
         elif provider_key == "ashby" and len(parts) >= 2:
             data = request_json(
                 session, "GET", f"https://api.ashbyhq.com/posting-api/job-board/{parts[-2]}",
-                "Ashby/detail", _timeout=DETAIL_REQUEST_TIMEOUT,
+                "Ashby/detail", _timeout=DETAIL_REQUEST_TIMEOUT, _raise_errors=True,
             ) or {}
             jobs = data.get("jobs", []) if isinstance(data, dict) else []
             match = next((job for job in jobs if str(job.get("jobUrl", "")) == url or str(job.get("id", "")) in url), jobs[0] if jobs else {})
             value = match.get("descriptionPlain", "")
         elif provider_key == "hellowork":
             markup = request_text(
-                session, "GET", url, "HelloWork/detail", _timeout=DETAIL_REQUEST_TIMEOUT
+                session, "GET", url, "HelloWork/detail", _timeout=DETAIL_REQUEST_TIMEOUT, _raise_errors=True
             ) or ""
             value = extract_hellowork_job_detail(markup).get("description", "")
         elif provider_key in {"workday", "welcome_to_the_jungle"}:
             markup = request_text(
-                session, "GET", url, f"{provider}/detail", _timeout=DETAIL_REQUEST_TIMEOUT
+                session, "GET", url, f"{provider}/detail", _timeout=DETAIL_REQUEST_TIMEOUT, _raise_errors=True
             ) or ""
             value = extract_jsonld_job_description(markup)
         description = normalize_job_description(value)
+        if not description:
+            WEB_ONLY_DETAIL_LAST_ERROR[url] = "Provider response contained no extractable job description."
         WEB_ONLY_DETAIL_CACHE[url] = description
         stats = WEB_ONLY_DETAIL_STATS.setdefault(provider_key, {"attempted": 0, "with_description": 0, "failed": 0})
         stats["attempted"] += 1
@@ -415,7 +423,12 @@ def fetch_web_only_description(provider, url, session, existing_job=False):
         return description
     except (requests.RequestException, ValueError, TypeError, KeyError) as exc:
         WEB_ONLY_DETAIL_CACHE[url] = ""
-        WEB_ONLY_DETAIL_LAST_ERROR[url] = f"{type(exc).__name__}: {str(exc)[:300]}"
+        response = getattr(exc, "response", None)
+        status = getattr(response, "status_code", None)
+        WEB_ONLY_DETAIL_LAST_ERROR[url] = (
+            f"Provider detail request returned HTTP {status}." if status
+            else f"Description request failed: {type(exc).__name__}."
+        )
         stats = WEB_ONLY_DETAIL_STATS.setdefault(provider_key, {"attempted": 0, "with_description": 0, "failed": 0})
         stats["attempted"] += 1
         stats["failed"] += 1
@@ -623,6 +636,9 @@ def build_ingestion_payload(job_id, company, title, location, url, ats_source,
         "first_seen_at": ingestion_timestamp(),
         "publication_date": None,
         "metadata": {
+            "description_extraction": {
+                "reason": None if description else WEB_ONLY_DETAIL_LAST_ERROR.get(url) or "No extraction details recorded yet.",
+            },
             "experience_level": experience_level or None,
             "contacts": {
                 "manager_search_url": manager_search_url,
@@ -646,8 +662,10 @@ def queue_ingestion(conn, payload):
         if previous_payload.get("description") and not payload.get("description"):
             payload = {**payload, "description": previous_payload["description"]}
         refresh_sent = (
-            existing[1] == "sent" and bool(payload.get("description"))
-            and payload.get("description") != existing[2]
+            existing[1] == "sent" and (
+                (bool(payload.get("description")) and payload.get("description") != existing[2])
+                or ((payload.get("metadata") or {}).get("description_extraction") != (previous_payload.get("metadata") or {}).get("description_extraction"))
+            )
         )
     payload_json = json.dumps(payload, ensure_ascii=False, sort_keys=True)
     conn.execute(
@@ -681,6 +699,10 @@ def try_queue_ingestion(conn, job_id, company, title, location, url,
             job_id, company, title, location, url, ats_source,
             description, experience_level,
         )
+        if not description and (WEB_ONLY_MODE or INGESTION_ENRICH_DETAILS):
+            state = conn.execute("SELECT last_error FROM web_only_enrichment WHERE job_id = ?", (job_id,)).fetchone()
+            if state and state[0]:
+                payload["metadata"]["description_extraction"]["reason"] = state[0]
         queue_ingestion(conn, payload)
     except Exception as exc:  # Keep failures isolated to the additive path.
         SCAN_HAD_FAILURES = True
@@ -882,13 +904,17 @@ def process_job(conn, job_id, company, title, location, url, ats_source,
     # enrichment was enabled can remain permanently without descriptions.
     should_enrich = WEB_ONLY_MODE or INGESTION_ENRICH_DETAILS
     if should_enrich and not description:
-        if web_only_enrichment_due(conn, job_id, url):
-            description = fetch_web_only_description(
-                ats_source, url, session, existing_job=already_seen
-            )
-            record_web_only_enrichment(conn, job_id, url, description)
-        else:
-            description = WEB_ONLY_DETAIL_CACHE.get(url, "")
+        try:
+            if web_only_enrichment_due(conn, job_id, url):
+                description = fetch_web_only_description(
+                    ats_source, url, session, existing_job=already_seen
+                )
+                record_web_only_enrichment(conn, job_id, url, description)
+            else:
+                description = WEB_ONLY_DETAIL_CACHE.get(url, "")
+        except Exception as exc:
+            WEB_ONLY_DETAIL_LAST_ERROR[url] = f"Description extraction failed: {type(exc).__name__}."
+            log_event("job_enrichment_error", provider=ats_source, error_type=type(exc).__name__)
     if not description and ingestion_enabled():
         try:
             cached = conn.execute(
@@ -904,7 +930,7 @@ def process_job(conn, job_id, company, title, location, url, ats_source,
         return 0
     queued = queue_job(conn, job_id, company, title, url)
     if not queued:
-        if (WEB_ONLY_MODE or INGESTION_ENRICH_DETAILS) and description:
+        if WEB_ONLY_MODE or INGESTION_ENRICH_DETAILS:
             try_queue_ingestion(
                 conn, job_id, company, title, location, url, ats_source,
                 description, experience_level,

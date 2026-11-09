@@ -19,13 +19,13 @@ begin
     values(u, j, c, 'local-test', 'v1', 'local-test') returning id into q;
   insert into public.gemini_api_attempts(api_key_scope, queue_id, attempted_at)
     values(scope, q, now() - interval '12 hours');
-  for i in 1..14 loop
+  for i in 1..10 loop
     select * into slot from public.reserve_gemini_api_slot(scope, 14, 60, q);
     if not slot.allowed then raise exception 'Request % unexpectedly blocked', i; end if;
   end loop;
   select * into slot from public.reserve_gemini_api_slot(scope, 14, 60, q);
-  if slot.allowed or slot.wait_seconds <> 60 then raise exception '15th request was not correctly delayed'; end if;
-  if (select count(*) from public.gemini_api_attempts where api_key_scope = scope) <> 15 then
+  if slot.allowed or slot.wait_seconds <> 60 then raise exception '11th request was not correctly delayed'; end if;
+  if (select count(*) from public.gemini_api_attempts where api_key_scope = scope) <> 11 then
     raise exception 'Daily-budget history was lost';
   end if;
   update public.gemini_api_attempts set attempted_at = now() - interval '59 seconds'

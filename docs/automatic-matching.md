@@ -10,14 +10,15 @@ not require a running laptop, local Docker, or local Supabase.
 The Gemini workflow runs after a successful production collector run on `main`,
 and also has a 15-minute fallback schedule (`7,22,37,52 * * * *`, UTC). GitHub schedules
 are best effort; a configured cron is not evidence that a particular scheduled run executed.
-Worker concurrency is serialized. Each run considers at most two tasks, uses the
-database-enforced 14-attempt rolling-minute limit, and keeps the existing conservative
-two-attempt daily budget. Consequently, additional analyses can remain queued until
-budget becomes available. Do not increase that budget without checking the API project's
-daily/token quotas and billing configuration.
+Worker concurrency is serialized. Each run drains the queue for up to eleven minutes,
+using a database-enforced ceiling of ten actual attempts per rolling minute. There
+is no application-imposed daily request cap or two-task batch cap. When capacity
+is exhausted, the worker waits for the next available slot; pending work persists
+between runs. Provider daily/token quotas still apply, and 429/5xx responses retain
+bounded retry state. No paid billing configuration is enabled by these settings.
 
 Automatic eligibility requires an active CV and completed onboarding preferences.
-The current SQL matches target role text and target locations. A description must
+Role/location browsing filters do not exclude newly ingested jobs from matching. A description must
 contain at least 240 characters plus section signals or three sentence markers
 before ingestion queues a match. Missing descriptions remain visible and use the
 collector's bounded enrichment retries; blocked pages are never bypassed.
@@ -31,7 +32,7 @@ Reaching a scan's detail budget defers enrichment without consuming a failed att
 Manual analysis and automatic matching use the same PostgreSQL-compatible cache
 key (CV content hash, job ID, description, model, rubric). Matching POST requests use
 the atomic database enqueue function. Reopening an analysis only reads saved results.
-Migrations 018 and 019 preserve quota history and restrict internal pipeline RPCs to
+Migrations 018–021 preserve quota history, enforce ten RPM, and restrict internal pipeline RPCs to
 the service role; credentials remain on the server.
 
 Read-only diagnostics (provide Supabase credentials only through the process environment):
@@ -80,4 +81,4 @@ cd apps/web
 npm run gemini:worker
 ```
 
-Keep `GEMINI_RATE_LIMIT_RPM=14` or lower. Do not enable the toggle for bulk historical runs. The Discover page shows score, pending, failed, CV-required, and needs-description states without assigning fake scores.
+Use `GEMINI_RATE_LIMIT_RPM=10` (the database also caps reservations at ten). Missing-description rows display a recorded provider error, budget deferral, or an explicit message that extraction details have not yet been recorded. No scores are fabricated.

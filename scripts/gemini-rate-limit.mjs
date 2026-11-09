@@ -1,4 +1,4 @@
-export function nextPermittedTime(attempts, nowMs, limit = 14, windowMs = 60_000) {
+export function nextPermittedTime(attempts, nowMs, limit = 10, windowMs = 60_000) {
   const recent = attempts.filter((timestamp) => timestamp > nowMs - windowMs).sort((a, b) => a - b);
   if (recent.length < limit) return nowMs;
   return recent[recent.length - limit] + windowMs;

@@ -61,4 +61,26 @@ jobs:
           git config --global user.email "bot@noreply.github.com"
           git add jobs_seen.db
           git diff --staged --quiet || git commit -m "Mise à jour de la base jobs_seen.db"
-          git push
+          # A concurrent application deployment may advance main during a scan.
+          # Rebase the SQLite commit over code-only changes; never force-push.
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git rebase --abort
+              echo "State persistence conflict; recover SQLite from the run artifact."
+              exit 1
+            fi
+          done
+          exit 1
+
+      - name: Preserve SQLite recovery snapshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sniper-state-${{ github.run_id }}
+          path: jobs_seen.db
+          retention-days: 7
+          if-no-files-found: error

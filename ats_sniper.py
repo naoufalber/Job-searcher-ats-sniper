@@ -1242,11 +1242,14 @@ def run_provider_isolated(provider_name, silent_init, deadline):
     except subprocess.TimeoutExpired as exc:
         timed_out = True
         process.kill()
-        output = (exc.output or "")
+        output = exc.output or ""
         tail, _ = process.communicate()
-        output += tail or ""
-    if isinstance(output, bytes):
-        output = output.decode("utf-8", errors="replace")
+        chunks = [output, tail or ""]
+        output = "".join(
+            chunk.decode("utf-8", errors="replace")
+            if isinstance(chunk, bytes) else chunk
+            for chunk in chunks
+        )
     if output:
         print(output, end="" if output.endswith("\n") else "\n", flush=True)
     elapsed_ms = round((time.monotonic() - started) * 1000)

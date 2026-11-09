@@ -1,6 +1,10 @@
 name: ATS staging Gemini worker
 
 on:
+  workflow_run:
+    workflows: ['ATS Job Sniper 24/7']
+    branches: [main]
+    types: [completed]
   schedule:
     # Offset from the quarter-hour burst; still runs every 15 minutes.
     - cron: '7,22,37,52 * * * *'
@@ -15,6 +19,7 @@ concurrency:
 
 jobs:
   worker:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:

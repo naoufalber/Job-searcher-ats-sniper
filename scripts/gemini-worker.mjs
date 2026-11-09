@@ -58,6 +58,7 @@ function retryAfterMs(response) {
 
 async function scheduleFailure(task, message, delay, permanent = false) {
   const terminal = permanent || task.attempts >= maxAttempts;
+  console.warn(JSON.stringify({ event: "gemini_task_retry", task_id: task.id, status: terminal ? "failed" : "pending", reason: message, retry_delay_ms: delay }));
   await supabase.from("gemini_analysis_queue").update({ status: terminal ? "failed" : "pending", next_attempt_at: new Date(Date.now() + delay).toISOString(), last_error: message.slice(0, 1000), processing_started_at: null, worker_id: null, updated_at: new Date().toISOString() }).eq("id", task.id);
   await supabase.from("job_analyses").update({ status: terminal ? "failed" : "pending", error_message: message.slice(0, 1000), updated_at: new Date().toISOString() }).eq("user_id", task.user_id).eq("job_id", task.job_id).eq("cv_document_id", task.cv_document_id).eq("model_id", task.model_id).eq("rubric_version", task.rubric_version);
 }

@@ -1,5 +1,6 @@
 import { createRequire } from "node:module";
 import { resolve } from "node:path";
+import { analysisInputHash } from "../apps/web/lib/matching-input.mjs";
 
 const { createClient } = createRequire(resolve(process.cwd(), "apps", "web", "package.json"))("@supabase/supabase-js");
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -12,7 +13,6 @@ const model = process.env.GEMINI_MODEL || "gemini-2.0-flash";
 const rubric = process.env.GEMINI_RUBRIC_VERSION || "v1";
 const relevant = /data|machine learning|ai|mlops|scientist|engineer/i;
 const excluded = /intern|stage|stagiaire|senior|director|head of/i;
-const hash = (await import("node:crypto")).createHash;
 
 const [{ data: cv, error: cvError }, { data: jobs, error: jobsError }] = await Promise.all([
   supabase.from("cv_documents").select("id,content_hash").eq("user_id", userId).eq("is_active", true).maybeSingle(),
@@ -23,7 +23,7 @@ if (jobsError) throw new Error(jobsError.message);
 if (!cv) throw new Error("No active CV found for ATS_AUTO_MATCH_USER_ID.");
 const selected = (jobs ?? []).filter((job) => relevant.test(`${job.title} ${job.company_name}`) && !excluded.test(job.title)).slice(0, limit);
 for (const job of selected) {
-  const inputHash = hash("sha256").update(JSON.stringify({ cv: cv.content_hash, job: job.id, description: job.description, model, rubric })).digest("hex");
+  const inputHash = analysisInputHash(cv.content_hash, job.id, job.description, model, rubric);
   const { error } = await supabase.rpc("enqueue_gemini_analysis_atomic", { p_user_id: userId, p_job_id: job.id, p_cv_document_id: cv.id, p_model_id: model, p_rubric_version: rubric, p_input_hash: inputHash });
   console.log(JSON.stringify({ job_id: job.id, title: job.title, company: job.company_name, queued: !error, error: error?.message ?? null }));
 }

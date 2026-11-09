@@ -2,6 +2,8 @@ import "server-only";
 import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { analysisInputHash, isDescriptionComplete } from "@/lib/analysis";
 
 export const runtime = "nodejs";
 
@@ -29,16 +31,18 @@ export async function POST(request: Request) {
   ]);
   if (!job) return NextResponse.json({ error: "Job not found." }, { status: 404 });
   if (!cv) return NextResponse.json({ error: "Upload an active CV first." }, { status: 422 });
-  if (!job.description || job.description.trim().length < 120) return NextResponse.json({ status: "insufficient", error: "This job does not contain enough description text for a reliable analysis." }, { status: 422 });
+  if (!isDescriptionComplete(job.description)) return NextResponse.json({ status: "insufficient", error: "This job does not contain enough description text for a reliable analysis." }, { status: 422 });
   const model = process.env.GEMINI_MODEL || "gemini-2.0-flash";
   const rubric = process.env.GEMINI_RUBRIC_VERSION || "v1";
-  const inputHash = createHash("sha256").update(JSON.stringify({ cv: cv.content_hash, job: job.id, description: job.description, model, rubric })).digest("hex");
-  const { data: cached } = await supabase.from("job_analyses").select("id,status,score,result,error_message,updated_at").eq("user_id", auth.user.id).eq("job_id", job.id).eq("cv_document_id", cv.id).eq("model_id", model).eq("rubric_version", rubric).eq("input_hash", inputHash).maybeSingle();
+  const inputHash = analysisInputHash(cv.content_hash, job.id, job.description!, model, rubric);
+  const legacyHash = createHash("sha256").update(JSON.stringify({ cv: cv.content_hash, job: job.id, description: job.description, model, rubric })).digest("hex");
+  const { data: cached } = await supabase.from("job_analyses").select("id,status,score,result,error_message,updated_at").eq("user_id", auth.user.id).eq("job_id", job.id).eq("cv_document_id", cv.id).eq("model_id", model).eq("rubric_version", rubric).in("input_hash", [inputHash, legacyHash]).maybeSingle();
   if (cached?.status === "completed") return NextResponse.json({ status: "completed", analysis: cached, cached: true });
   if (!process.env.GEMINI_API_KEY && !process.env.GEMINI_MOCK_RESPONSE) return NextResponse.json({ error: "AI matching is not configured locally." }, { status: 503 });
-  const { data: analysis, error: analysisError } = await supabase.from("job_analyses").upsert({ user_id: auth.user.id, job_id: job.id, cv_document_id: cv.id, model_id: model, rubric_version: rubric, input_hash: inputHash, status: "pending", score: null, result: {}, error_message: null, updated_at: new Date().toISOString() }, { onConflict: "user_id,job_id,cv_document_id,model_id,rubric_version" }).select("id,status,score,result,error_message,updated_at").single();
-  if (analysisError || !analysis) return NextResponse.json({ error: "Unable to queue analysis." }, { status: 500 });
-  const { data: queued, error: queueError } = await supabase.from("gemini_analysis_queue").upsert({ user_id: auth.user.id, job_id: job.id, cv_document_id: cv.id, model_id: model, rubric_version: rubric, input_hash: inputHash, status: "pending", next_attempt_at: new Date().toISOString(), updated_at: new Date().toISOString() }, { onConflict: "user_id,job_id,cv_document_id,model_id,rubric_version,input_hash" }).select("id,status,attempts,next_attempt_at,last_error,updated_at").single();
-  if (queueError || !queued) return NextResponse.json({ error: "Unable to queue analysis." }, { status: 500 });
-  return NextResponse.json({ status: queued.status, queue: queued, analysis }, { status: 202 });
+  const admin = createAdminClient();
+  if (!admin) return NextResponse.json({ error: "Analysis queue is unavailable." }, { status: 503 });
+  const { data: queueId, error: queueError } = await admin.rpc("enqueue_gemini_analysis_atomic", { p_user_id: auth.user.id, p_job_id: job.id, p_cv_document_id: cv.id, p_model_id: model, p_rubric_version: rubric, p_input_hash: inputHash });
+  if (queueError || !queueId) return NextResponse.json({ error: "Unable to queue analysis." }, { status: 500 });
+  const { data: queued } = await supabase.from("gemini_analysis_queue").select("id,status,attempts,next_attempt_at,last_error,updated_at").eq("id", queueId).single();
+  return NextResponse.json({ status: queued?.status ?? "pending", queue: queued }, { status: 202 });
 }

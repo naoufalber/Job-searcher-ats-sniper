@@ -2,9 +2,8 @@ name: ATS staging collector
 
 # Scheduled and manually dispatchable; activation still requires the workflow on the default branch.
 on:
-  schedule:
-    # Offset from the quarter-hour burst; still runs every 15 minutes.
-    - cron: '7,22,37,52 * * * *'
+  # Production is now the single scheduled collector. Keep manual staging
+  # dispatch as a safe fallback without duplicating provider scraping.
   workflow_dispatch:
 
 permissions:

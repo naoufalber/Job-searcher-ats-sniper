@@ -60,6 +60,7 @@ INGESTION_API_URL = os.getenv("ATS_INGESTION_API_URL", "").strip().rstrip("/")
 INGESTION_SHARED_SECRET = os.getenv("ATS_INGESTION_SHARED_SECRET", "")
 INGESTION_TIMEOUT = min(int(os.getenv("ATS_INGESTION_TIMEOUT", "8")), REQUEST_TIMEOUT)
 INGESTION_BATCH_SIZE = int(os.getenv("ATS_INGESTION_BATCH_SIZE", "50"))
+INGESTION_ENRICH_DETAILS = os.getenv("ATS_INGESTION_ENRICH_DETAILS", "false").lower() == "true"
 WEB_ONLY_MODE = False
 WEB_ONLY_DETAIL_MAX_REQUESTS = int(os.getenv("ATS_WEB_ONLY_DETAIL_MAX_REQUESTS", "50"))
 WEB_ONLY_MAX_JOBS = max(1, int(os.getenv("ATS_WEB_ONLY_MAX_JOBS", "50")))
@@ -272,8 +273,8 @@ def _path_parts(url):
 
 
 def fetch_web_only_description(provider, url, session):
-    """Fetch only public detail data, and only from the explicit web-only path."""
-    if not WEB_ONLY_MODE or not url:
+    """Fetch permitted public detail data for the explicit ingestion/web-only paths."""
+    if not (WEB_ONLY_MODE or INGESTION_ENRICH_DETAILS) or not url:
         return ""
     global WEB_ONLY_DETAIL_REQUESTS
     if url in WEB_ONLY_DETAIL_CACHE:
@@ -341,7 +342,7 @@ def fetch_web_only_description(provider, url, session):
 
 
 def web_only_enrichment_due(conn, job_id, url):
-    if not WEB_ONLY_MODE:
+    if not (WEB_ONLY_MODE or INGESTION_ENRICH_DETAILS):
         return False
     row = conn.execute(
         "SELECT status, attempts, next_attempt_at FROM web_only_enrichment WHERE job_id = ?",
@@ -416,7 +417,7 @@ def init_db():
         )
         """
     )
-    if WEB_ONLY_MODE:
+    if WEB_ONLY_MODE or INGESTION_ENRICH_DETAILS:
         conn.execute(
             """
             CREATE TABLE IF NOT EXISTS web_only_enrichment (
@@ -724,7 +725,7 @@ def process_job(conn, job_id, company, title, location, url, ats_source,
     global WEB_ONLY_ACCEPTED_JOBS
     if not matches_criteria(title, location, "", experience_level):
         return 0
-    if WEB_ONLY_MODE and not description:
+    if (WEB_ONLY_MODE or INGESTION_ENRICH_DETAILS) and not description:
         if web_only_enrichment_due(conn, job_id, url):
             description = fetch_web_only_description(ats_source, url, session)
             record_web_only_enrichment(conn, job_id, url, description)
@@ -736,7 +737,7 @@ def process_job(conn, job_id, company, title, location, url, ats_source,
         return 0
     queued = queue_job(conn, job_id, company, title, url)
     if not queued:
-        if WEB_ONLY_MODE and description:
+        if (WEB_ONLY_MODE or INGESTION_ENRICH_DETAILS) and description:
             try_queue_ingestion(
                 conn, job_id, company, title, location, url, ats_source,
                 description, experience_level,

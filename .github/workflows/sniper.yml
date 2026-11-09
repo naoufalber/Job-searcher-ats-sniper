@@ -19,6 +19,7 @@ concurrency:
 jobs:
   scan_jobs:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: 1. Récupération du code et de la base SQLite
         uses: actions/checkout@v4

@@ -30,6 +30,10 @@ TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
 DB_FILE = os.getenv("ATS_DB_FILE", "jobs_seen.db")
 REQUEST_TIMEOUT = int(os.getenv("ATS_REQUEST_TIMEOUT", "20"))
+DETAIL_REQUEST_TIMEOUT = min(
+    REQUEST_TIMEOUT,
+    max(1, int(os.getenv("ATS_DETAIL_REQUEST_TIMEOUT", "8"))),
+)
 WORKDAY_MAX_PAGES = int(os.getenv("WORKDAY_MAX_PAGES", "100"))
 PROVIDER_TIMEOUT_SECONDS = max(10, int(os.getenv("ATS_PROVIDER_TIMEOUT_SECONDS", "90")))
 SCAN_TIMEOUT_SECONDS = max(
@@ -205,8 +209,9 @@ def create_ingestion_session():
 def request_json(session, method, url, source, **kwargs):
     started = time.monotonic()
     log_event("request_start", source=source, method=method)
+    timeout = kwargs.pop("_timeout", REQUEST_TIMEOUT)
     try:
-        response = session.request(method, url, timeout=REQUEST_TIMEOUT, **kwargs)
+        response = session.request(method, url, timeout=timeout, **kwargs)
         response.raise_for_status()
         payload = response.json()
         log_event(
@@ -227,8 +232,9 @@ def request_json(session, method, url, source, **kwargs):
 def request_text(session, method, url, source, **kwargs):
     started = time.monotonic()
     log_event("request_start", source=source, method=method)
+    timeout = kwargs.pop("_timeout", REQUEST_TIMEOUT)
     try:
-        response = session.request(method, url, timeout=REQUEST_TIMEOUT, **kwargs)
+        response = session.request(method, url, timeout=timeout, **kwargs)
         response.raise_for_status()
         log_event(
             "request_success", source=source, method=method,
@@ -346,14 +352,14 @@ def fetch_web_only_description(provider, url, session):
             data = request_json(
                 session, "GET",
                 f"https://api.smartrecruiters.com/v1/companies/{parts[-2]}/postings/{parts[-1]}",
-                "SmartRecruiters/detail",
+                "SmartRecruiters/detail", _timeout=DETAIL_REQUEST_TIMEOUT,
             ) or {}
             sections = (data.get("jobAd") or {}).get("sections") or []
             value = "\n\n".join(str(section.get("content", "")) for section in sections if isinstance(section, dict))
         elif provider_key == "lever" and len(parts) >= 2:
             data = request_json(
                 session, "GET", f"https://api.lever.co/v0/postings/{parts[-2]}",
-                "Lever/detail", params={"mode": "json"},
+                "Lever/detail", params={"mode": "json"}, _timeout=DETAIL_REQUEST_TIMEOUT,
             ) or []
             jobs = data if isinstance(data, list) else [data]
             match = next((job for job in jobs if str(job.get("id", "")) in url), jobs[0] if jobs else {})
@@ -361,22 +367,26 @@ def fetch_web_only_description(provider, url, session):
         elif provider_key == "greenhouse" and len(parts) >= 2:
             data = request_json(
                 session, "GET", f"https://boards-api.greenhouse.io/v1/jobs/{parts[-1]}",
-                "Greenhouse/detail", params={"content": "true"},
+                "Greenhouse/detail", params={"content": "true"}, _timeout=DETAIL_REQUEST_TIMEOUT,
             ) or {}
             value = data.get("content", "")
         elif provider_key == "ashby" and len(parts) >= 2:
             data = request_json(
                 session, "GET", f"https://api.ashbyhq.com/posting-api/job-board/{parts[-2]}",
-                "Ashby/detail",
+                "Ashby/detail", _timeout=DETAIL_REQUEST_TIMEOUT,
             ) or {}
             jobs = data.get("jobs", []) if isinstance(data, dict) else []
             match = next((job for job in jobs if str(job.get("jobUrl", "")) == url or str(job.get("id", "")) in url), jobs[0] if jobs else {})
             value = match.get("descriptionPlain", "")
         elif provider_key == "hellowork":
-            markup = request_text(session, "GET", url, "HelloWork/detail") or ""
+            markup = request_text(
+                session, "GET", url, "HelloWork/detail", _timeout=DETAIL_REQUEST_TIMEOUT
+            ) or ""
             value = extract_hellowork_job_detail(markup).get("description", "")
         elif provider_key in {"workday", "welcome_to_the_jungle"}:
-            markup = request_text(session, "GET", url, f"{provider}/detail") or ""
+            markup = request_text(
+                session, "GET", url, f"{provider}/detail", _timeout=DETAIL_REQUEST_TIMEOUT
+            ) or ""
             value = extract_jsonld_job_description(markup)
         description = normalize_job_description(value)
         WEB_ONLY_DETAIL_CACHE[url] = description

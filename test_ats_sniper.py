@@ -133,6 +133,25 @@ class WebOnlyDetailTests(unittest.TestCase):
             finally:
                 conn.close()
 
+    def test_blocked_hellowork_detail_does_not_block_notification(self):
+        with tempfile.TemporaryDirectory() as temp_dir, ExitStack() as patches:
+            patches.enter_context(patch.object(sniper, "DB_FILE", os.path.join(temp_dir, "fallback.db")))
+            patches.enter_context(patch.object(sniper, "INGESTION_API_URL", ""))
+            patches.enter_context(patch.object(sniper, "WEB_ONLY_MODE", False))
+            patches.enter_context(patch.object(sniper, "INGESTION_ENRICH_DETAILS", True))
+            patches.enter_context(patch.object(sniper, "fetch_web_only_description", return_value=""))
+            conn, _ = sniper.init_db()
+            try:
+                with patch.object(sniper, "send_alert", return_value=True) as alert:
+                    result = sniper.process_job(
+                        conn, "hellowork-fallback", "Example", "Data Engineer", "Paris, France",
+                        "https://example.test/hellowork-fallback", "HelloWork", False, object(),
+                    )
+                self.assertEqual(result, 1)
+                alert.assert_called_once()
+            finally:
+                conn.close()
+
     def test_web_only_retry_state_defers_repeated_failed_detail(self):
         with tempfile.TemporaryDirectory() as temp_dir, ExitStack() as patches:
             patches.enter_context(patch.object(sniper, "DB_FILE", os.path.join(temp_dir, "retry.db")))

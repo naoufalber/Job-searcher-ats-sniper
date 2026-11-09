@@ -11,6 +11,7 @@ export type JobListOptions = {
   page?: number;
   pageSize?: number;
   view?: "all" | "new";
+  descriptionView?: "ready" | "missing";
 };
 
 export type JobPage = {
@@ -31,6 +32,9 @@ export async function listJobsPage(options: JobListOptions = {}): Promise<JobPag
   const to = from + pageSize - 1;
   let query = supabase.from("jobs").select("*", { count: "exact" }).eq("is_active", true).order("last_seen_at", { ascending: options.sort === "oldest" }).range(from, to);
   if (options.view === "new") query = query.eq("is_new_since_baseline", true);
+  // Partition before range/count: each table gets its own real pagination.
+  if (options.descriptionView === "ready") query = query.eq("description_status", "complete");
+  if (options.descriptionView === "missing") query = query.neq("description_status", "complete");
   const safeSearch = options.search?.trim().replace(/[(),]/g, " ").slice(0, 80);
   if (safeSearch) query = query.or(`title.ilike.%${safeSearch}%,company_name.ilike.%${safeSearch}%,location.ilike.%${safeSearch}%`);
   if (options.country) query = query.eq("country", options.country);

@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
 
 const previewJobs = [
   ["MLOps Engineer", "Devoteam", "Paris · Hybrid"],
@@ -6,7 +8,10 @@ const previewJobs = [
   ["Machine Learning Engineer", "Northstar Labs", "Lyon · CDI"],
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const supabase = createClient();
+  const user = (await supabase?.auth.getUser())?.data.user;
+  if (user) redirect("/jobs");
   return <div className="mx-auto max-w-7xl px-6 pb-16 pt-12 lg:px-10 lg:pb-24 lg:pt-20">
     <section className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
       <div><p className="text-sm font-semibold uppercase tracking-[0.2em] text-moss">Personal job intelligence</p><h1 className="mt-5 max-w-3xl font-display text-5xl leading-[1.02] tracking-tight text-ink sm:text-7xl">Find the right jobs. Know where you stand.</h1><p className="mt-7 max-w-xl text-lg leading-8 text-slate-600">ATS Sniper brings relevant opportunities into one workspace, compares them with your CV, and helps you stay organized throughout your job search.</p><div className="mt-9 flex flex-wrap gap-3"><Link className="focus-ring rounded-full bg-moss px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#274b3e]" href="/login?mode=signup">Get started</Link><Link className="focus-ring rounded-full border border-line bg-white px-5 py-3 text-sm font-semibold text-ink transition hover:border-moss" href="/login">Sign in</Link></div><p className="mt-5 text-sm text-slate-500">Private by default. AI-assisted, never a promise of employment.</p></div>

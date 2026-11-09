@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 
 const privateNav = [
   ["Discover", "/jobs"],
+  ["Explore more", "/jobs/explore"],
   ["CV", "/cv"],
   ["Saved", "/saved"],
   ["Tracker", "/tracker"],
@@ -35,6 +36,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               </nav>
               <AccountControls signedIn={signedIn} />
             </div>
+            {signedIn && <nav aria-label="Mobile navigation" className="flex gap-5 overflow-x-auto px-6 pb-4 text-sm text-slate-600 md:hidden">{privateNav.map(([label, href]) => <Link className="focus-ring shrink-0 rounded py-1 hover:text-moss" href={href} key={href}>{label}</Link>)}</nav>}
           </header>
           <main>{children}</main>
         </div>

@@ -13,18 +13,23 @@ export type JobListOptions = {
   view?: "all" | "new";
 };
 
-export async function listJobs(options: JobListOptions = {}): Promise<Job[]> {
+export type JobPage = {
+  jobs: Job[];
+  total: number;
+};
+
+export async function listJobsPage(options: JobListOptions = {}): Promise<JobPage> {
   const supabase = createClient();
-  if (!supabase) return [];
+  if (!supabase) return { jobs: [], total: 0 };
   const { data: auth } = await supabase.auth.getUser();
-  if (!auth.user) return [];
+  if (!auth.user) return { jobs: [], total: 0 };
   // Allow the discovery page to request one look-ahead row so the final page
   // never renders a misleading Next button.
   const pageSize = Math.min(Math.max(options.pageSize ?? 24, 1), 51);
   const page = Math.max(options.page ?? 1, 1);
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
-  let query = supabase.from("jobs").select("*").eq("is_active", true).order("last_seen_at", { ascending: options.sort === "oldest" }).range(from, to);
+  let query = supabase.from("jobs").select("*", { count: "exact" }).eq("is_active", true).order("last_seen_at", { ascending: options.sort === "oldest" }).range(from, to);
   if (options.view === "new") query = query.eq("is_new_since_baseline", true);
   const safeSearch = options.search?.trim().replace(/[(),]/g, " ").slice(0, 80);
   if (safeSearch) query = query.or(`title.ilike.%${safeSearch}%,company_name.ilike.%${safeSearch}%,location.ilike.%${safeSearch}%`);
@@ -33,15 +38,16 @@ export async function listJobs(options: JobListOptions = {}): Promise<Job[]> {
   if (options.remoteType) query = query.eq("remote_type", options.remoteType);
   if (options.source) {
     const { data: source } = await supabase.from("sources").select("id").eq("name", options.source).maybeSingle();
-    if (!source) return [];
+    if (!source) return { jobs: [], total: 0 };
     const { data: links } = await supabase.from("job_sources").select("job_id").eq("source_id", source.id);
     const jobIds = (links ?? []).map((link) => link.job_id);
-    if (!jobIds.length) return [];
+    if (!jobIds.length) return { jobs: [], total: 0 };
     query = query.in("id", jobIds);
   }
-  const { data } = await query;
+  const { data, count } = await query;
   const jobs = (data ?? []) as Job[];
-  if (!jobs.length) return jobs;
+  const total = count ?? jobs.length;
+  if (!jobs.length) return { jobs: [], total };
   const { data: links } = await supabase.from("job_sources").select("job_id, sources(name)").in("job_id", jobs.map((job) => job.id));
   const sourceByJob = new Map<string, string>();
   for (const link of links ?? []) {
@@ -59,7 +65,11 @@ export async function listJobs(options: JobListOptions = {}): Promise<Job[]> {
   for (const status of statuses ?? []) applicationByJob.set(status.job_id as string, status.application_status as string);
   const seenByJob = new Map<string, string>();
   for (const row of seenRows ?? []) seenByJob.set(row.job_id as string, row.seen_at as string);
-  return jobs.map((job) => ({ ...job, source_name: sourceByJob.get(job.id) ?? null, match_score: analysisByJob.get(job.id)?.score ?? null, analysis_status: analysisByJob.get(job.id)?.status ?? null, analysis_result: analysisByJob.get(job.id)?.result ?? null, application_status: applicationByJob.get(job.id) ?? null, seen_at: seenByJob.get(job.id) ?? null }));
+  return { jobs: jobs.map((job) => ({ ...job, source_name: sourceByJob.get(job.id) ?? null, match_score: analysisByJob.get(job.id)?.score ?? null, analysis_status: analysisByJob.get(job.id)?.status ?? null, analysis_result: analysisByJob.get(job.id)?.result ?? null, application_status: applicationByJob.get(job.id) ?? null, seen_at: seenByJob.get(job.id) ?? null })), total };
+}
+
+export async function listJobs(options: JobListOptions = {}): Promise<Job[]> {
+  return (await listJobsPage(options)).jobs;
 }
 
 export async function listSources(): Promise<string[]> {

@@ -194,6 +194,14 @@ def create_http_session():
     return session
 
 
+def create_ingestion_session():
+    """Use queue-level retries instead of multiplying HTTP retries per scan."""
+    session = requests.Session()
+    session.mount("https://", HTTPAdapter(max_retries=Retry(total=0)))
+    session.headers.update({"User-Agent": "ATS-Job-Sniper/2.0"})
+    return session
+
+
 def request_json(session, method, url, source, **kwargs):
     started = time.monotonic()
     log_event("request_start", source=source, method=method)
@@ -600,7 +608,7 @@ def try_queue_ingestion(conn, job_id, company, title, location, url,
         print(f"[ERREUR SUPABASE] Mise en file ignoree: {type(exc).__name__}: {str(exc)[:300]}")
 
 
-def flush_ingestion_queue(conn, session):
+def flush_ingestion_queue(conn, session, deadline=None):
     if not ingestion_enabled():
         return 0
     try:
@@ -621,6 +629,9 @@ def flush_ingestion_queue(conn, session):
         return 0
     sent = 0
     for job_id, payload_json, attempts in rows:
+        if deadline is not None and time.monotonic() >= deadline:
+            log_event("ingestion_flush_deadline", pending_batch=len(rows) - sent)
+            break
         try:
             payload = json.loads(payload_json)
             if payload.get("first_seen_at"):
@@ -1189,7 +1200,7 @@ def run_provider_worker(provider_name, silent_init):
     if scanner is None:
         raise ValueError(f"Unknown provider: {provider_name}")
     conn, _ = init_db()
-    session = create_http_session()
+    session = create_ingestion_session()
     try:
         processed = scanner(conn, silent_init, session)
         print(
@@ -1362,7 +1373,9 @@ def run_single_scan(db_file=None, web_only=False):
             processed += found
             conn, _ = init_db()
             try:
-                provider_ingested = flush_ingestion_queue(conn, session)
+                provider_ingested = flush_ingestion_queue(
+                    conn, session, deadline=scan_deadline
+                )
                 ingested += provider_ingested
                 log_event(
                     "provider_ingestion_flush", provider=provider_name,

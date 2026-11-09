@@ -46,6 +46,7 @@ jobs:
           ATS_INGESTION_DETAIL_MAX_REQUESTS: '10'
           HELLOWORK_LOCATION: France
           HELLOWORK_MAX_PAGES: 2
+          WORKDAY_MAX_PAGES: 10
           WTTJ_MAX_HITS: 200
         run: python ats_sniper.py
 

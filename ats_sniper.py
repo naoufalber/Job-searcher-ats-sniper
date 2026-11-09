@@ -2,6 +2,7 @@ import html
 import json
 import os
 import re
+import signal
 import sqlite3
 import subprocess
 import sys
@@ -1201,6 +1202,23 @@ def run_provider_worker(provider_name, silent_init):
         conn.close()
 
 
+def terminate_provider_process(process):
+    """Terminate the worker and any descendants without an unbounded wait."""
+    if os.name == "nt":
+        subprocess.run(
+            ["taskkill", "/F", "/T", "/PID", str(process.pid)],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            check=False,
+        )
+    else:
+        try:
+            os.killpg(os.getpgid(process.pid), signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        except PermissionError:
+            process.kill()
+
+
 def run_provider_isolated(provider_name, silent_init, deadline):
     """Run a provider with a hard wall-clock deadline and terminate on timeout."""
     global SCAN_HAD_FAILURES
@@ -1227,6 +1245,10 @@ def run_provider_isolated(provider_name, silent_init, deadline):
             text=True,
             encoding="utf-8",
             errors="replace",
+            creationflags=(
+                subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0
+            ),
+            start_new_session=(os.name != "nt"),
         )
     except OSError as exc:
         SCAN_HAD_FAILURES = True
@@ -1241,9 +1263,17 @@ def run_provider_isolated(provider_name, silent_init, deadline):
         output, _ = process.communicate(timeout=timeout)
     except subprocess.TimeoutExpired as exc:
         timed_out = True
-        process.kill()
+        terminate_provider_process(process)
         output = exc.output or ""
-        tail, _ = process.communicate()
+        try:
+            tail, _ = process.communicate(timeout=5)
+        except subprocess.TimeoutExpired as cleanup_exc:
+            tail = cleanup_exc.output or ""
+            process.kill()
+            try:
+                process.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                pass
         chunks = [output, tail or ""]
         output = "".join(
             chunk.decode("utf-8", errors="replace")

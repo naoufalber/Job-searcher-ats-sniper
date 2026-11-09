@@ -27,6 +27,7 @@ jobs:
         env:
           ATS_INGESTION_API_URL: ${{ secrets.ATS_STAGING_INGESTION_API_URL }}
           ATS_INGESTION_SHARED_SECRET: ${{ secrets.ATS_STAGING_INGESTION_SHARED_SECRET }}
+          ATS_WEB_ONLY_ALLOWED_HOST: ats-sniper-staging.vercel.app
           ATS_WEB_ONLY_DB_FILE: ${{ runner.temp }}/ats-staging-state.db
           ATS_WEB_ONLY_MAX_JOBS: '10'
           ATS_WEB_ONLY_DETAIL_MAX_REQUESTS: '10'

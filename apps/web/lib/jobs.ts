@@ -10,6 +10,7 @@ export type JobListOptions = {
   sort?: "recent" | "oldest";
   page?: number;
   pageSize?: number;
+  view?: "all" | "new";
 };
 
 export async function listJobs(options: JobListOptions = {}): Promise<Job[]> {
@@ -22,6 +23,7 @@ export async function listJobs(options: JobListOptions = {}): Promise<Job[]> {
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
   let query = supabase.from("jobs").select("*").eq("is_active", true).order("last_seen_at", { ascending: options.sort === "oldest" }).range(from, to);
+  if (options.view === "new") query = query.eq("is_new_since_baseline", true);
   const safeSearch = options.search?.trim().replace(/[(),]/g, " ").slice(0, 80);
   if (safeSearch) query = query.or(`title.ilike.%${safeSearch}%,company_name.ilike.%${safeSearch}%,location.ilike.%${safeSearch}%`);
   if (options.country) query = query.eq("country", options.country);
@@ -46,13 +48,16 @@ export async function listJobs(options: JobListOptions = {}): Promise<Job[]> {
   }
   const analysisByJob = new Map<string, { status: "pending" | "completed" | "failed"; score: number | null; result: Record<string, unknown> }>();
   const applicationByJob = new Map<string, string>();
-  const [{ data: analyses }, { data: statuses }] = await Promise.all([
+  const [{ data: analyses }, { data: statuses }, { data: seenRows }] = await Promise.all([
     supabase.from("job_analyses").select("job_id,status,score,result,updated_at").eq("user_id", auth.user.id).in("job_id", jobs.map((job) => job.id)).order("updated_at", { ascending: false }),
     supabase.from("user_job_status").select("job_id,application_status").eq("user_id", auth.user.id).in("job_id", jobs.map((job) => job.id)),
+    supabase.from("user_job_seen").select("job_id,seen_at").eq("user_id", auth.user.id).in("job_id", jobs.map((job) => job.id)),
   ]);
   for (const analysis of analyses ?? []) if (!analysisByJob.has(analysis.job_id as string)) analysisByJob.set(analysis.job_id as string, { status: analysis.status as "pending" | "completed" | "failed", score: analysis.score as number | null, result: (analysis.result ?? {}) as Record<string, unknown> });
   for (const status of statuses ?? []) applicationByJob.set(status.job_id as string, status.application_status as string);
-  return jobs.map((job) => ({ ...job, source_name: sourceByJob.get(job.id) ?? null, match_score: analysisByJob.get(job.id)?.score ?? null, analysis_status: analysisByJob.get(job.id)?.status ?? null, analysis_result: analysisByJob.get(job.id)?.result ?? null, application_status: applicationByJob.get(job.id) ?? null }));
+  const seenByJob = new Map<string, string>();
+  for (const row of seenRows ?? []) seenByJob.set(row.job_id as string, row.seen_at as string);
+  return jobs.map((job) => ({ ...job, source_name: sourceByJob.get(job.id) ?? null, match_score: analysisByJob.get(job.id)?.score ?? null, analysis_status: analysisByJob.get(job.id)?.status ?? null, analysis_result: analysisByJob.get(job.id)?.result ?? null, application_status: applicationByJob.get(job.id) ?? null, seen_at: seenByJob.get(job.id) ?? null }));
 }
 
 export async function listSources(): Promise<string[]> {
@@ -69,8 +74,11 @@ export async function getJob(id: string): Promise<Job | null> {
   if (!supabase) return null;
   const { data: auth } = await supabase.auth.getUser();
   if (!auth.user) return null;
-  const { data } = await supabase.from("jobs").select("*").eq("id", id).maybeSingle();
-  return (data as Job | null) ?? null;
+  const [{ data }, { data: seen }] = await Promise.all([
+    supabase.from("jobs").select("*").eq("id", id).maybeSingle(),
+    supabase.from("user_job_seen").select("seen_at").eq("user_id", auth.user.id).eq("job_id", id).maybeSingle(),
+  ]);
+  return data ? ({ ...(data as Job), seen_at: seen?.seen_at ?? null } as Job) : null;
 }
 
 export async function getJobsForStatus(status: JobStatus): Promise<Job[]> {

@@ -51,3 +51,16 @@ export async function updateApplication(input: unknown) {
   revalidatePath("/saved"); revalidatePath("/tracker"); revalidatePath(`/jobs/${value.jobId}`);
   return { ok: true };
 }
+
+export async function markJobSeen(jobId: string) {
+  if (!/^[0-9a-f-]{36}$/i.test(jobId)) return { ok: false, error: "Invalid job." };
+  const supabase = createClient();
+  if (!supabase) return { ok: false, error: "Supabase is not configured." };
+  const { data } = await supabase.auth.getUser();
+  if (!data.user) return { ok: false, error: "You must be signed in." };
+  const { error } = await supabase.from("user_job_seen").upsert({ user_id: data.user.id, job_id: jobId, seen_at: new Date().toISOString() }, { onConflict: "user_id,job_id" });
+  if (error) return { ok: false, error: "Unable to mark this role as seen." };
+  revalidatePath("/jobs");
+  revalidatePath(`/jobs/${jobId}`);
+  return { ok: true };
+}

@@ -26,6 +26,8 @@ export type Job = {
   analysis_status?: "pending" | "completed" | "failed" | null;
   analysis_result?: Record<string, unknown> | null;
   application_status?: string | null;
+  is_new_since_baseline?: boolean;
+  seen_at?: string | null;
 };
 
 export type JobStatus = "new" | "saved" | "applied" | "rejected" | "archived";

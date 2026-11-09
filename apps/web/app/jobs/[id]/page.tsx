@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AnalyzeJobButton } from "@/components/analyze-job-button";
 import { StatusActions } from "@/components/status-actions";
+import { SeenJobButton } from "@/components/seen-job-button";
 import { getJob } from "@/lib/jobs";
 
 export default async function JobDetailPage({ params }: { params: { id: string } }) {
@@ -14,6 +15,7 @@ export default async function JobDetailPage({ params }: { params: { id: string }
       <article className="mt-10 rounded-3xl border border-line bg-white p-7 md:p-10">
         <p className="text-sm font-semibold uppercase tracking-[0.16em] text-moss">{job.company_name}</p>
         <h1 className="mt-3 text-4xl font-semibold tracking-tight text-ink">{job.title}</h1>
+        <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-slate-500"><span>First seen <time dateTime={job.first_seen_at}>{new Date(job.first_seen_at).toLocaleString()}</time></span>{job.is_new_since_baseline && <span className="rounded-full bg-moss/10 px-3 py-1 font-semibold text-moss">New</span>}<SeenJobButton jobId={job.id} seenAt={job.seen_at} /></div>
         <div className="mt-5 flex flex-wrap gap-2 text-sm text-slate-500">
           <span className="rounded-full bg-paper px-3 py-1">{job.location ?? "Location not listed"}</span>
           {job.remote_type && <span className="rounded-full bg-paper px-3 py-1">{job.remote_type}</span>}

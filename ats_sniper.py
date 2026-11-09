@@ -1122,8 +1122,13 @@ def validate_web_only_config():
             "ATS_INGESTION_SHARED_SECRET."
         )
     host = urllib.parse.urlparse(INGESTION_API_URL).hostname
-    if host not in {"127.0.0.1", "localhost", "::1", "host.docker.internal"}:
-        raise RuntimeError("Web-only mode only accepts a localhost ingestion API.")
+    local_hosts = {"127.0.0.1", "localhost", "::1", "host.docker.internal"}
+    allowed_remote_host = os.getenv("ATS_WEB_ONLY_ALLOWED_HOST", "").strip().lower()
+    if host not in local_hosts and host != allowed_remote_host:
+        raise RuntimeError(
+            "Web-only mode only accepts localhost or the explicitly configured "
+            "ATS_WEB_ONLY_ALLOWED_HOST."
+        )
     if DISCORD_WEBHOOK_URL or TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID:
         raise RuntimeError(
             "Web-only mode refuses to start while Discord or Telegram credentials are set."

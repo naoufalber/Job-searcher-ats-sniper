@@ -727,7 +727,11 @@ def process_job(conn, job_id, company, title, location, url, ats_source,
     global WEB_ONLY_ACCEPTED_JOBS
     if not matches_criteria(title, location, "", experience_level):
         return 0
-    if (WEB_ONLY_MODE or INGESTION_ENRICH_DETAILS) and not description:
+    already_seen = conn.execute(
+        "SELECT 1 FROM seen_jobs WHERE job_id = ?", (job_id,)
+    ).fetchone() is not None
+    should_enrich = WEB_ONLY_MODE or (INGESTION_ENRICH_DETAILS and not already_seen)
+    if should_enrich and not description:
         if web_only_enrichment_due(conn, job_id, url):
             description = fetch_web_only_description(ats_source, url, session)
             record_web_only_enrichment(conn, job_id, url, description)

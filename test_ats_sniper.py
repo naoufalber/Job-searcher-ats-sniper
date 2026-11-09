@@ -146,9 +146,9 @@ class WebOnlyDetailTests(unittest.TestCase):
             conn, _ = sniper.init_db()
             try:
                 conn.execute(
-                    "INSERT INTO seen_jobs(job_id, company, title, url, detected_at) "
-                    "VALUES (?, ?, ?, ?, ?)",
-                    ("existing-detail", "Example", "Data Engineer", "https://example.test/existing", "now"),
+                    "INSERT INTO seen_jobs(job_id, company, title, url, detected_at, "
+                    "notification_status) VALUES (?, ?, ?, ?, ?, ?)",
+                    ("existing-detail", "Example", "Data Engineer", "https://example.test/existing", "now", "sent"),
                 )
                 conn.commit()
                 with patch.object(sniper, "send_alert"):

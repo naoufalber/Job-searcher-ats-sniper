@@ -341,6 +341,7 @@ def fetch_web_only_description(provider, url, session):
     global WEB_ONLY_DETAIL_REQUESTS
     if url in WEB_ONLY_DETAIL_CACHE:
         return WEB_ONLY_DETAIL_CACHE[url]
+    provider_key = re.sub(r"[^a-z0-9]+", "_", provider.lower()).strip("_")
     detail_limit = WEB_ONLY_DETAIL_MAX_REQUESTS if WEB_ONLY_MODE else INGESTION_DETAIL_MAX_REQUESTS
     if provider_key == "hellowork":
         detail_limit = max(detail_limit, HELLOWORK_DETAIL_MAX_REQUESTS)
@@ -349,7 +350,6 @@ def fetch_web_only_description(provider, url, session):
     WEB_ONLY_DETAIL_REQUESTS += 1
     if WEB_ONLY_DETAIL_DELAY:
         time.sleep(WEB_ONLY_DETAIL_DELAY)
-    provider_key = re.sub(r"[^a-z0-9]+", "_", provider.lower()).strip("_")
     parts = _path_parts(url)
     try:
         value = ""

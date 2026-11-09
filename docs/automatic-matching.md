@@ -82,3 +82,9 @@ npm run gemini:worker
 ```
 
 Use `GEMINI_RATE_LIMIT_RPM=10` (the database also caps reservations at ten). Missing-description rows display a recorded provider error, budget deferral, or an explicit message that extraction details have not yet been recorded. No scores are fabricated.
+
+## Queue timing and contract extraction
+
+The hosted worker processes one task at a time, immediately starting the next task after a response unless the database's rolling ten-attempt/minute limit or provider retry guidance requires waiting. Each run is bounded to 660 seconds; unfinished tasks stay in PostgreSQL for the next run. GitHub Actions schedules can be delayed, so queued does not mean an API request is currently running. Ten RPM is shared across users and includes retries: 180 tasks require at least about 18 minutes of active worker time.
+
+The same Gemini response now includes `contract_type` and a verbatim `contract_evidence` quote from the job title or description. Unknown or conflicting contracts remain null. The worker rejects evidence not found in those job fields. These values are stored in `job_analyses.result`; the jobs table displays them as an AI-labeled fallback when provider contract metadata is absent. Provider values take precedence, and contract filters continue to use provider metadata. Existing cached results are not regenerated for this optional field. No additional Gemini request or database migration is required.

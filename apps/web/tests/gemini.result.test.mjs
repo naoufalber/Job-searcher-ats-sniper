@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { normalizeAnalysis, parseAnalysisResponse } from "../../../scripts/gemini-result.mjs";
+import { normalizeAnalysis, parseAnalysisResponse, verifiedContract } from "../../../scripts/gemini-result.mjs";
 
 const valid = {
   score: 82,
@@ -32,5 +32,19 @@ describe("Gemini result normalization", () => {
   it("rejects incomplete or unsafe results", () => {
     assert.equal(parseAnalysisResponse("not json"), null);
     assert.equal(normalizeAnalysis({ ...valid, score: 101 }), null);
+  });
+
+  it("preserves contract extraction without requiring it in older cached analyses", () => {
+    assert.equal(normalizeAnalysis(valid).contract_type, undefined);
+    const result = normalizeAnalysis({ ...valid, contract_type: "CDI", contract_evidence: "Poste en CDI" });
+    assert.equal(result.contract_type, "CDI");
+    assert.deepEqual(verifiedContract(result, "Data Scientist", "Poste en CDI à Paris."), { contract_type: "CDI", contract_evidence: "Poste en CDI" });
+  });
+
+  it("accepts evidence from the title and rejects unsupported or CV-only contract claims", () => {
+    assert.equal(verifiedContract({ contract_type: "Internship", contract_evidence: "Stage Data Scientist" }, "Stage Data Scientist", "Responsibilities").contract_type, "Internship");
+    assert.equal(verifiedContract({ contract_type: "CDI", contract_evidence: "Previous permanent role" }, "Data Scientist", "No contract stated").contract_type, null);
+    assert.equal(verifiedContract({ contract_type: "unknown", contract_evidence: "Data Scientist" }, "Data Scientist", "").contract_type, null);
+    assert.deepEqual(verifiedContract({ contract_type: null, contract_evidence: null }, "Data Scientist", "No contract stated"), { contract_type: null, contract_evidence: null });
   });
 });

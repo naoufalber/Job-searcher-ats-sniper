@@ -14,8 +14,10 @@ export const analysisResponseSchema = {
     explanation: { type: "STRING" },
     cv_adaptation_suggestions: stringList,
     recommended_action: { type: "STRING", enum: ["Apply", "Review", "Low priority"] },
+    contract_type: { type: "STRING", nullable: true, enum: ["CDI", "CDD", "Internship", "Apprenticeship", "Freelance", "Temporary", "Permanent", "Fixed-term", "Other"] },
+    contract_evidence: { type: "STRING", nullable: true },
   },
-  required: ["score", "confidence", "matching_skills", "missing_required_skills", "experience_gaps", "education_gaps", "language_location_considerations", "explanation", "cv_adaptation_suggestions", "recommended_action"],
+  required: ["score", "confidence", "matching_skills", "missing_required_skills", "experience_gaps", "education_gaps", "language_location_considerations", "explanation", "cv_adaptation_suggestions", "recommended_action", "contract_type", "contract_evidence"],
 };
 
 export async function requestGemini({ useMock, mockResponse, modelId, prompt, apiKey, fetchImpl = fetch }) {

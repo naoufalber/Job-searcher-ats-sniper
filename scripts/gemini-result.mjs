@@ -4,6 +4,17 @@ const ACTIONS = new Map([
   ["low priority", "Low priority"],
 ]);
 
+const CONTRACTS = new Set(["CDI", "CDD", "Internship", "Apprenticeship", "Freelance", "Temporary", "Permanent", "Fixed-term", "Other"]);
+
+export function verifiedContract(result, title, description) {
+  const evidence = text(result.contract_evidence, 500);
+  const normalize = (value) => String(value ?? "").normalize("NFKC").replace(/\s+/g, " ").trim().toLowerCase();
+  if (!CONTRACTS.has(result.contract_type) || !evidence || !normalize(`${title}\n${description}`).includes(normalize(evidence))) {
+    return { contract_type: null, contract_evidence: null };
+  }
+  return { contract_type: result.contract_type, contract_evidence: evidence };
+}
+
 function text(value, max) {
   return typeof value === "string" && value.trim() ? value.trim().slice(0, max) : null;
 }
@@ -72,7 +83,8 @@ export function normalizeAnalysis(value) {
   const suggestions = list(v.cv_adaptation_suggestions ?? v.suggestions, 500);
   if (!Number.isInteger(score) || score < 0 || score > 100) return null;
   if (!["low", "medium", "high"].includes(confidence) || !matching || !missing || !experience || !education || !languageLocation || !explanation || !suggestions || !recommendedAction) return null;
-  return { score, confidence, matching_skills: matching, missing_required_skills: missing, experience_gaps: experience, education_gaps: education, language_location_considerations: languageLocation, explanation, cv_adaptation_suggestions: suggestions, recommended_action: recommendedAction };
+  const contract = "contract_type" in v ? { contract_type: CONTRACTS.has(v.contract_type) ? v.contract_type : null, contract_evidence: text(v.contract_evidence, 500) } : {};
+  return { score, confidence, matching_skills: matching, missing_required_skills: missing, experience_gaps: experience, education_gaps: education, language_location_considerations: languageLocation, explanation, cv_adaptation_suggestions: suggestions, recommended_action: recommendedAction, ...contract };
 }
 
 export function parseAnalysisResponse(textValue) {

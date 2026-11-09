@@ -28,7 +28,8 @@ describe("Gemini worker provider boundary", () => {
       return new Response("{}", { status: 200 });
     } });
     assert.deepEqual(body.generationConfig.responseSchema, analysisResponseSchema);
-    assert.deepEqual(analysisResponseSchema.required.sort(), Object.keys(JSON.parse(result)).sort());
+    assert.deepEqual(analysisResponseSchema.required.sort(), [...Object.keys(JSON.parse(result)), "contract_type", "contract_evidence"].sort());
+    assert.equal(analysisResponseSchema.properties.contract_type.nullable, true);
     assert.equal(analysisResponseSchema.properties.score.maximum, 100);
     assert.deepEqual(analysisResponseSchema.properties.recommended_action.enum, ["Apply", "Review", "Low priority"]);
   });

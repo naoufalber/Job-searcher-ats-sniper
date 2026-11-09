@@ -7,7 +7,7 @@ export type JobListOptions = {
   country?: string;
   contractType?: string;
   remoteType?: string;
-  sort?: "recent" | "oldest";
+  sort?: "recent" | "oldest" | "newest";
   page?: number;
   pageSize?: number;
   view?: "all" | "new";
@@ -30,7 +30,7 @@ export async function listJobsPage(options: JobListOptions = {}): Promise<JobPag
   const page = Math.max(options.page ?? 1, 1);
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
-  let query = supabase.from("jobs").select("*", { count: "exact" }).eq("is_active", true).order("last_seen_at", { ascending: options.sort === "oldest" }).range(from, to);
+  let query = supabase.from("jobs").select("*", { count: "exact" }).eq("is_active", true).order(options.sort === "newest" ? "first_seen_at" : "last_seen_at", { ascending: options.sort === "oldest" }).order("id").range(from, to);
   if (options.view === "new") query = query.eq("is_new_since_baseline", true);
   // Partition before range/count: each table gets its own real pagination.
   if (options.descriptionView === "ready") query = query.eq("description_status", "complete");

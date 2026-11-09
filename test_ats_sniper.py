@@ -133,6 +133,33 @@ class WebOnlyDetailTests(unittest.TestCase):
             finally:
                 conn.close()
 
+    def test_production_mode_revisits_existing_job_for_detail(self):
+        with tempfile.TemporaryDirectory() as temp_dir, ExitStack() as patches:
+            patches.enter_context(patch.object(sniper, "DB_FILE", os.path.join(temp_dir, "existing.db")))
+            patches.enter_context(patch.object(sniper, "INGESTION_API_URL", ""))
+            patches.enter_context(patch.object(sniper, "WEB_ONLY_MODE", False))
+            patches.enter_context(patch.object(sniper, "INGESTION_ENRICH_DETAILS", True))
+            detail = patches.enter_context(patch.object(sniper, "fetch_web_only_description", return_value=(
+                "Responsibilities include building data pipelines and models. "
+                "Requirements include Python and SQL. Collaborate with stakeholders."
+            )))
+            conn, _ = sniper.init_db()
+            try:
+                conn.execute(
+                    "INSERT INTO seen_jobs(job_id, company, title, url, detected_at) "
+                    "VALUES (?, ?, ?, ?, ?)",
+                    ("existing-detail", "Example", "Data Engineer", "https://example.test/existing", "now"),
+                )
+                conn.commit()
+                with patch.object(sniper, "send_alert"):
+                    self.assertEqual(sniper.process_job(
+                        conn, "existing-detail", "Example", "Data Engineer", "Paris, France",
+                        "https://example.test/existing", "HelloWork", False, object(),
+                    ), 0)
+                detail.assert_called_once()
+            finally:
+                conn.close()
+
     def test_blocked_hellowork_detail_does_not_block_notification(self):
         with tempfile.TemporaryDirectory() as temp_dir, ExitStack() as patches:
             patches.enter_context(patch.object(sniper, "DB_FILE", os.path.join(temp_dir, "fallback.db")))

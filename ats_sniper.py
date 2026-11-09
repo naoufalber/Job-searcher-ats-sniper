@@ -76,6 +76,9 @@ INGESTION_ENRICH_DETAILS = os.getenv("ATS_INGESTION_ENRICH_DETAILS", "false").lo
 WEB_ONLY_MODE = False
 WEB_ONLY_DETAIL_MAX_REQUESTS = int(os.getenv("ATS_WEB_ONLY_DETAIL_MAX_REQUESTS", "50"))
 INGESTION_DETAIL_MAX_REQUESTS = max(1, int(os.getenv("ATS_INGESTION_DETAIL_MAX_REQUESTS", "10")))
+HELLOWORK_DETAIL_MAX_REQUESTS = max(
+    1, int(os.getenv("HELLOWORK_DETAIL_MAX_REQUESTS", "50"))
+)
 WEB_ONLY_MAX_JOBS = max(1, int(os.getenv("ATS_WEB_ONLY_MAX_JOBS", "50")))
 WEB_ONLY_DETAIL_WORKERS = max(1, min(int(os.getenv("ATS_WEB_ONLY_DETAIL_WORKERS", "4")), 8))
 WEB_ONLY_DETAIL_DELAY = max(0.0, float(os.getenv("ATS_WEB_ONLY_DETAIL_DELAY", "0.2")))
@@ -339,6 +342,8 @@ def fetch_web_only_description(provider, url, session):
     if url in WEB_ONLY_DETAIL_CACHE:
         return WEB_ONLY_DETAIL_CACHE[url]
     detail_limit = WEB_ONLY_DETAIL_MAX_REQUESTS if WEB_ONLY_MODE else INGESTION_DETAIL_MAX_REQUESTS
+    if provider_key == "hellowork":
+        detail_limit = max(detail_limit, HELLOWORK_DETAIL_MAX_REQUESTS)
     if WEB_ONLY_DETAIL_REQUESTS >= detail_limit:
         return ""
     WEB_ONLY_DETAIL_REQUESTS += 1
@@ -799,10 +804,10 @@ def process_job(conn, job_id, company, title, location, url, ats_source,
     global WEB_ONLY_ACCEPTED_JOBS
     if not matches_criteria(title, location, "", experience_level):
         return 0
-    already_seen = conn.execute(
-        "SELECT 1 FROM seen_jobs WHERE job_id = ?", (job_id,)
-    ).fetchone() is not None
-    should_enrich = WEB_ONLY_MODE or (INGESTION_ENRICH_DETAILS and not already_seen)
+    # Detail enrichment is additive and independently backoff-controlled. It
+    # must also revisit already-seen offers, otherwise rows discovered before
+    # enrichment was enabled can remain permanently without descriptions.
+    should_enrich = WEB_ONLY_MODE or INGESTION_ENRICH_DETAILS
     if should_enrich and not description:
         if web_only_enrichment_due(conn, job_id, url):
             description = fetch_web_only_description(ats_source, url, session)

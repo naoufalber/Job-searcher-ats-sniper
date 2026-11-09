@@ -63,6 +63,7 @@ INGESTION_BATCH_SIZE = int(os.getenv("ATS_INGESTION_BATCH_SIZE", "50"))
 INGESTION_ENRICH_DETAILS = os.getenv("ATS_INGESTION_ENRICH_DETAILS", "false").lower() == "true"
 WEB_ONLY_MODE = False
 WEB_ONLY_DETAIL_MAX_REQUESTS = int(os.getenv("ATS_WEB_ONLY_DETAIL_MAX_REQUESTS", "50"))
+INGESTION_DETAIL_MAX_REQUESTS = max(1, int(os.getenv("ATS_INGESTION_DETAIL_MAX_REQUESTS", "10")))
 WEB_ONLY_MAX_JOBS = max(1, int(os.getenv("ATS_WEB_ONLY_MAX_JOBS", "50")))
 WEB_ONLY_DETAIL_WORKERS = max(1, min(int(os.getenv("ATS_WEB_ONLY_DETAIL_WORKERS", "4")), 8))
 WEB_ONLY_DETAIL_DELAY = max(0.0, float(os.getenv("ATS_WEB_ONLY_DETAIL_DELAY", "0.2")))
@@ -279,7 +280,8 @@ def fetch_web_only_description(provider, url, session):
     global WEB_ONLY_DETAIL_REQUESTS
     if url in WEB_ONLY_DETAIL_CACHE:
         return WEB_ONLY_DETAIL_CACHE[url]
-    if WEB_ONLY_DETAIL_REQUESTS >= WEB_ONLY_DETAIL_MAX_REQUESTS:
+    detail_limit = WEB_ONLY_DETAIL_MAX_REQUESTS if WEB_ONLY_MODE else INGESTION_DETAIL_MAX_REQUESTS
+    if WEB_ONLY_DETAIL_REQUESTS >= detail_limit:
         return ""
     WEB_ONLY_DETAIL_REQUESTS += 1
     if WEB_ONLY_DETAIL_DELAY:

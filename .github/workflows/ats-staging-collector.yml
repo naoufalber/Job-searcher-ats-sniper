@@ -3,7 +3,8 @@ name: ATS staging collector
 # Scheduled and manually dispatchable; activation still requires the workflow on the default branch.
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    # Offset from the quarter-hour burst; still runs every 15 minutes.
+    - cron: '7,22,37,52 * * * *'
   workflow_dispatch:
 
 permissions:

@@ -119,7 +119,7 @@ let processedTasks = 0;
 while (!stopping) {
   const count = await runOnce();
   processedTasks += count;
-  if (once || stopping || processedTasks >= maxTasks) break;
+  if ((once && !count) || stopping || processedTasks >= maxTasks) break;
   if (!count) await sleep(2_000);
 }
 console.log("Gemini worker stopped.");

@@ -1,6 +1,7 @@
 import os
 import sqlite3
 import tempfile
+import time
 import unittest
 from pathlib import Path
 from contextlib import ExitStack
@@ -204,6 +205,33 @@ class WebOnlyDetailTests(unittest.TestCase):
 
 
 class DatabaseTests(unittest.TestCase):
+    def test_permanently_hanging_provider_is_terminated(self):
+        real_popen = sniper.subprocess.Popen
+        children = []
+
+        def sleeping_provider(command, **kwargs):
+            child = real_popen([sniper.sys.executable, "-c", "import time; time.sleep(60)"], **kwargs)
+            children.append(child)
+            return child
+
+        with patch.object(sniper, "PROVIDER_TIMEOUT_SECONDS", 0.2), \
+             patch.object(sniper, "SCAN_HAD_FAILURES", False), \
+             patch.object(sniper.subprocess, "Popen", side_effect=sleeping_provider):
+            # taskkill also uses Popen on Windows; restore the actual constructor
+            # during cleanup so only the owned provider process is terminated.
+            terminate = sniper.terminate_provider_process
+
+            def terminate_child(child):
+                with patch.object(sniper.subprocess, "Popen", real_popen):
+                    terminate(child)
+
+            started = time.monotonic()
+            with patch.object(sniper, "terminate_provider_process", side_effect=terminate_child):
+                self.assertEqual(sniper.run_provider_isolated("HelloWork", False, started + 5), 0)
+            self.assertTrue(sniper.SCAN_HAD_FAILURES)
+            self.assertLess(time.monotonic() - started, 5)
+            self.assertIsNotNone(children[0].poll())
+
     def test_smartrecruiters_dictionary_sections_are_preserved(self):
         with patch.object(sniper, "INGESTION_ENRICH_DETAILS", True), \
              patch.object(sniper, "WEB_ONLY_DETAIL_CACHE", {}), \

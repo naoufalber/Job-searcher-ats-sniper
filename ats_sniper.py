@@ -703,6 +703,14 @@ def flush_ingestion_queue(conn, session, deadline=None):
                 timeout=INGESTION_TIMEOUT,
             )
             response.raise_for_status()
+            acknowledgment = response.json()
+            if isinstance(acknowledgment, dict):
+                log_event(
+                    "ingestion_delivered", external_job_id=job_id,
+                    job_id=acknowledgment.get("job_id"),
+                    description_status=acknowledgment.get("description_status"),
+                    auto_match=acknowledgment.get("auto_match"),
+                )
         except (requests.RequestException, ValueError) as exc:
             SCAN_HAD_FAILURES = True
             log_event("ingestion_delivery_failed", job_id=job_id, error_type=type(exc).__name__)
@@ -884,6 +892,9 @@ def process_job(conn, job_id, company, title, location, url, ats_source,
         return 0
     if WEB_ONLY_MODE:
         WEB_ONLY_ACCEPTED_JOBS += 1
+    if not already_seen:
+        log_event("job_discovered", provider=ats_source, external_job_id=job_id,
+                  company=company, title=title, description_length=len(description or ""))
     try_queue_ingestion(
         conn, job_id, company, title, location, url, ats_source,
         description, experience_level,

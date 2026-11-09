@@ -3,6 +3,7 @@ import json
 import os
 import re
 import sqlite3
+import subprocess
 import sys
 import time
 import unicodedata
@@ -28,6 +29,11 @@ TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
 DB_FILE = os.getenv("ATS_DB_FILE", "jobs_seen.db")
 REQUEST_TIMEOUT = int(os.getenv("ATS_REQUEST_TIMEOUT", "20"))
 WORKDAY_MAX_PAGES = int(os.getenv("WORKDAY_MAX_PAGES", "100"))
+PROVIDER_TIMEOUT_SECONDS = max(10, int(os.getenv("ATS_PROVIDER_TIMEOUT_SECONDS", "90")))
+SCAN_TIMEOUT_SECONDS = max(
+    PROVIDER_TIMEOUT_SECONDS,
+    int(os.getenv("ATS_SCAN_TIMEOUT_SECONDS", "780")),
+)
 HELLOWORK_MAX_PAGES = int(os.getenv("HELLOWORK_MAX_PAGES", "2"))
 HELLOWORK_LOCATION = os.getenv("HELLOWORK_LOCATION", "France")
 HELLOWORK_QUERIES = tuple(
@@ -73,6 +79,19 @@ WEB_ONLY_DETAIL_REQUESTS = 0
 WEB_ONLY_ACCEPTED_JOBS = 0
 WEB_ONLY_DETAIL_LAST_ERROR = {}
 WEB_ONLY_ENRICH_MAX_ATTEMPTS = max(1, int(os.getenv("ATS_WEB_ONLY_ENRICH_MAX_ATTEMPTS", "4")))
+SCAN_HAD_FAILURES = False
+
+
+def log_event(event, provider=None, **fields):
+    """Emit machine-readable progress without including URLs, payloads, or secrets."""
+    record = {
+        "ts": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "event": event,
+    }
+    if provider:
+        record["provider"] = provider
+    record.update(fields)
+    print("[ATS_EVENT] " + json.dumps(record, ensure_ascii=False, sort_keys=True), flush=True)
 
 
 # Les textes sont normalises sans accents avant application des expressions.
@@ -174,22 +193,45 @@ def create_http_session():
 
 
 def request_json(session, method, url, source, **kwargs):
+    started = time.monotonic()
+    log_event("request_start", source=source, method=method)
     try:
         response = session.request(method, url, timeout=REQUEST_TIMEOUT, **kwargs)
         response.raise_for_status()
-        return response.json()
+        payload = response.json()
+        log_event(
+            "request_success", source=source, method=method,
+            elapsed_ms=round((time.monotonic() - started) * 1000),
+        )
+        return payload
     except (requests.RequestException, ValueError) as exc:
-        print(f"[ERREUR API] {source}: {exc}")
+        log_event(
+            "request_error", source=source, method=method,
+            elapsed_ms=round((time.monotonic() - started) * 1000),
+            error_type=type(exc).__name__, error=str(exc)[:200],
+        )
+        print(f"[ERREUR API] {source}: {exc}", flush=True)
         return None
 
 
 def request_text(session, method, url, source, **kwargs):
+    started = time.monotonic()
+    log_event("request_start", source=source, method=method)
     try:
         response = session.request(method, url, timeout=REQUEST_TIMEOUT, **kwargs)
         response.raise_for_status()
+        log_event(
+            "request_success", source=source, method=method,
+            elapsed_ms=round((time.monotonic() - started) * 1000),
+        )
         return response.text
     except (requests.RequestException, AttributeError) as exc:
-        print(f"[ERREUR HTTP] {source}: {exc}")
+        log_event(
+            "request_error", source=source, method=method,
+            elapsed_ms=round((time.monotonic() - started) * 1000),
+            error_type=type(exc).__name__, error=str(exc)[:200],
+        )
+        print(f"[ERREUR HTTP] {source}: {exc}", flush=True)
         return None
 
 
@@ -1122,6 +1164,120 @@ def scan_workday(conn, silent_init, session):
     return processed
 
 
+def provider_scanners():
+    return {
+        "SmartRecruiters": scan_smartrecruiters,
+        "Lever": scan_lever,
+        "Greenhouse": scan_greenhouse,
+        "Ashby": scan_ashby,
+        "Workday": scan_workday,
+        "HelloWork": scan_hellowork,
+        "WelcomeToTheJungle": scan_welcome_to_jungle,
+    }
+
+
+def run_provider_worker(provider_name, silent_init):
+    """Run one provider in a separately killable process.
+
+    The worker owns the SQLite connection and notification session. The parent
+    only reopens the database after the worker exits, so a killed worker cannot
+    leave the parent holding a stale SQLite connection.
+    """
+    scanner = provider_scanners().get(provider_name)
+    if scanner is None:
+        raise ValueError(f"Unknown provider: {provider_name}")
+    conn, _ = init_db()
+    session = create_http_session()
+    try:
+        processed = scanner(conn, silent_init, session)
+        print(
+            "[ATS_PROVIDER_RESULT] "
+            + json.dumps({"provider": provider_name, "processed": processed}),
+            flush=True,
+        )
+        return 0
+    finally:
+        session.close()
+        conn.close()
+
+
+def run_provider_isolated(provider_name, silent_init, deadline):
+    """Run a provider with a hard wall-clock deadline and terminate on timeout."""
+    global SCAN_HAD_FAILURES
+    if time.monotonic() >= deadline:
+        SCAN_HAD_FAILURES = True
+        log_event("provider_skipped_scan_deadline", provider=provider_name)
+        return 0
+    started = time.monotonic()
+    log_event("provider_start", provider=provider_name, timeout_seconds=PROVIDER_TIMEOUT_SECONDS)
+    command = [sys.executable, str(Path(__file__).resolve()), "--provider-worker", provider_name]
+    if silent_init:
+        command.append("--silent-init")
+    child_env = os.environ.copy()
+    child_env["ATS_DB_FILE"] = DB_FILE
+    remaining = max(1, int(deadline - time.monotonic()))
+    timeout = min(PROVIDER_TIMEOUT_SECONDS, remaining)
+    try:
+        process = subprocess.Popen(
+            command,
+            cwd=str(Path(__file__).resolve().parent),
+            env=child_env,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+    except OSError as exc:
+        SCAN_HAD_FAILURES = True
+        log_event(
+            "provider_start_failed", provider=provider_name,
+            error_type=type(exc).__name__, error=str(exc)[:200],
+        )
+        return 0
+    output = ""
+    timed_out = False
+    try:
+        output, _ = process.communicate(timeout=timeout)
+    except subprocess.TimeoutExpired as exc:
+        timed_out = True
+        process.kill()
+        output = (exc.output or "")
+        tail, _ = process.communicate()
+        output += tail or ""
+    if isinstance(output, bytes):
+        output = output.decode("utf-8", errors="replace")
+    if output:
+        print(output, end="" if output.endswith("\n") else "\n", flush=True)
+    elapsed_ms = round((time.monotonic() - started) * 1000)
+    if timed_out:
+        SCAN_HAD_FAILURES = True
+        log_event(
+            "provider_timeout", provider=provider_name,
+            elapsed_ms=elapsed_ms, timeout_seconds=timeout,
+        )
+        return 0
+    if process.returncode != 0:
+        SCAN_HAD_FAILURES = True
+        log_event(
+            "provider_failed", provider=provider_name,
+            elapsed_ms=elapsed_ms, exit_code=process.returncode,
+        )
+        return 0
+    match = re.findall(r"\[ATS_PROVIDER_RESULT\] (\{.*\})", output)
+    processed = 0
+    if match:
+        try:
+            processed = int(json.loads(match[-1]).get("processed", 0))
+        except (TypeError, ValueError, json.JSONDecodeError):
+            processed = 0
+    log_event(
+        "provider_complete", provider=provider_name,
+        elapsed_ms=elapsed_ms, processed=processed,
+    )
+    return processed
+
+
 def validate_web_only_config():
     if not ingestion_enabled():
         raise RuntimeError(
@@ -1149,7 +1305,7 @@ def web_only_db_file():
 
 
 def run_single_scan(db_file=None, web_only=False):
-    global DB_FILE, WEB_ONLY_MODE, WEB_ONLY_DETAIL_CACHE, WEB_ONLY_DETAIL_STATS, WEB_ONLY_DETAIL_REQUESTS, WEB_ONLY_ACCEPTED_JOBS, WEB_ONLY_DETAIL_LAST_ERROR
+    global DB_FILE, WEB_ONLY_MODE, WEB_ONLY_DETAIL_CACHE, WEB_ONLY_DETAIL_STATS, WEB_ONLY_DETAIL_REQUESTS, WEB_ONLY_ACCEPTED_JOBS, WEB_ONLY_DETAIL_LAST_ERROR, SCAN_HAD_FAILURES
     previous_db_file = DB_FILE
     previous_web_only = WEB_ONLY_MODE
     previous_detail_cache = WEB_ONLY_DETAIL_CACHE
@@ -1165,39 +1321,40 @@ def run_single_scan(db_file=None, web_only=False):
     WEB_ONLY_DETAIL_REQUESTS = 0
     WEB_ONLY_ACCEPTED_JOBS = 0
     WEB_ONLY_DETAIL_LAST_ERROR = {}
+    SCAN_HAD_FAILURES = False
     conn, is_first_run = init_db()
+    conn.close()
     session = create_http_session()
+    ingested = 0
+    processed = 0
+    scan_deadline = time.monotonic() + SCAN_TIMEOUT_SECONDS
     if is_first_run:
         print("Initialisation: les offres deja presentes seront enregistrees sans alerte.")
     try:
-        providers = (
-            ("SmartRecruiters", scan_smartrecruiters),
-            ("Lever", scan_lever),
-            ("Greenhouse", scan_greenhouse),
-            ("Ashby", scan_ashby),
-            ("Workday", scan_workday),
-            ("HelloWork", scan_hellowork),
-            ("WelcomeToTheJungle", scan_welcome_to_jungle),
-        )
-        processed = 0
-        for provider_name, scanner in providers:
+        for provider_name in provider_scanners():
+            found = run_provider_isolated(provider_name, is_first_run, scan_deadline)
+            processed += found
+            conn, _ = init_db()
             try:
-                found = scanner(conn, is_first_run, session)
-                processed += found
+                provider_ingested = flush_ingestion_queue(conn, session)
+                ingested += provider_ingested
+                log_event(
+                    "provider_ingestion_flush", provider=provider_name,
+                    delivered=provider_ingested,
+                )
                 if web_only:
                     print(f"[WEB ONLY] {provider_name}: {found} nouvelle(s) offre(s).")
-            except Exception as exc:
-                if not web_only:
-                    raise
-                print(
-                    f"[WEB ONLY][ERREUR {provider_name}] {type(exc).__name__}: "
-                    f"{str(exc)[:300]}"
-                )
-        ingested = flush_ingestion_queue(conn, session)
+            finally:
+                conn.close()
+            if time.monotonic() >= scan_deadline:
+                log_event("scan_deadline_reached", processed=processed)
+                break
         if web_only:
+            conn, _ = init_db()
             pending = conn.execute(
                 "SELECT COUNT(*) FROM supabase_ingestion_queue WHERE status = 'pending'"
             ).fetchone()[0]
+            conn.close()
             print(
                 f"[WEB ONLY] discovered={processed} delivered={ingested} "
                 f"pending={pending} notifications=disabled "
@@ -1205,7 +1362,6 @@ def run_single_scan(db_file=None, web_only=False):
             )
     finally:
         session.close()
-        conn.close()
         DB_FILE = previous_db_file
         WEB_ONLY_MODE = previous_web_only
         WEB_ONLY_DETAIL_CACHE = previous_detail_cache
@@ -1223,7 +1379,18 @@ def run_single_scan(db_file=None, web_only=False):
 
 
 if __name__ == "__main__":
-    if "--web-only" in sys.argv:
+    if "--provider-worker" in sys.argv:
+        try:
+            provider_index = sys.argv.index("--provider-worker") + 1
+            provider_name = sys.argv[provider_index]
+            raise_code = run_provider_worker(
+                provider_name, "--silent-init" in sys.argv
+            )
+        except (IndexError, ValueError) as exc:
+            print(f"[ATS_PROVIDER_WORKER][ERREUR] {exc}", flush=True)
+            raise SystemExit(2)
+        raise SystemExit(raise_code)
+    elif "--web-only" in sys.argv:
         try:
             validate_web_only_config()
             local_db = web_only_db_file()
@@ -1250,3 +1417,5 @@ if __name__ == "__main__":
             time.sleep(SCAN_INTERVAL_SECONDS)
     else:
         run_single_scan()
+    if SCAN_HAD_FAILURES:
+        raise SystemExit(1)

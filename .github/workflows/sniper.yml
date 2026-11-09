@@ -44,6 +44,8 @@ jobs:
           ATS_INGESTION_SHARED_SECRET: ${{ secrets.ATS_STAGING_INGESTION_SHARED_SECRET }}
           ATS_INGESTION_ENRICH_DETAILS: 'true'
           ATS_INGESTION_DETAIL_MAX_REQUESTS: '10'
+          ATS_PROVIDER_TIMEOUT_SECONDS: '90'
+          ATS_SCAN_TIMEOUT_SECONDS: '780'
           HELLOWORK_LOCATION: France
           HELLOWORK_MAX_PAGES: 2
           WORKDAY_MAX_PAGES: 10
@@ -51,6 +53,7 @@ jobs:
         run: python ats_sniper.py
 
       - name: 5. Sauvegarde des offres vues (SQLite)
+        if: always()
         run: |
           git config --global user.name "ATS Sniper Bot"
           git config --global user.email "bot@noreply.github.com"

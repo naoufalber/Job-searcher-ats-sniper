@@ -558,6 +558,7 @@ def build_ingestion_payload(job_id, company, title, location, url, ats_source,
     source = re.sub(r"[^a-z0-9]+", "_", ats_source.lower()).strip("_")
     location_value = (location or "").strip() or None
     country = "France" if re.search(r"\b(?:france|fr)\b", location_value or "", re.IGNORECASE) else None
+    manager_search_url, recruiter_search_url = build_xray_links(company)
     return {
         "source": source,
         "external_job_id": str(job_id),
@@ -571,7 +572,13 @@ def build_ingestion_payload(job_id, company, title, location, url, ats_source,
         "description": description or None,
         "first_seen_at": ingestion_timestamp(),
         "publication_date": None,
-        "metadata": {"experience_level": experience_level or None},
+        "metadata": {
+            "experience_level": experience_level or None,
+            "contacts": {
+                "manager_search_url": manager_search_url,
+                "recruiter_search_url": recruiter_search_url,
+            },
+        },
     }
 
 

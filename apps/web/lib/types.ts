@@ -30,6 +30,11 @@ export type Job = {
   seen_at?: string | null;
 };
 
+export type JobContacts = {
+  manager_search_url?: string;
+  recruiter_search_url?: string;
+};
+
 export type JobStatus = "new" | "saved" | "applied" | "rejected" | "archived";
 export type ApplicationStatus = "to_review" | "ready_to_apply" | "applied" | "interview" | "offer" | "rejected" | "withdrawn" | "closed";
 

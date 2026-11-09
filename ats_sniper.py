@@ -85,6 +85,8 @@ WEB_ONLY_DETAIL_DELAY = max(0.0, float(os.getenv("ATS_WEB_ONLY_DETAIL_DELAY", "0
 WEB_ONLY_DETAIL_CACHE = {}
 WEB_ONLY_DETAIL_STATS = {}
 WEB_ONLY_DETAIL_REQUESTS = 0
+WEB_ONLY_DETAIL_REQUESTS_NEW = 0
+WEB_ONLY_DETAIL_REQUESTS_EXISTING = 0
 WEB_ONLY_ACCEPTED_JOBS = 0
 WEB_ONLY_DETAIL_LAST_ERROR = {}
 WEB_ONLY_ENRICH_MAX_ATTEMPTS = max(1, int(os.getenv("ATS_WEB_ONLY_ENRICH_MAX_ATTEMPTS", "4")))
@@ -334,19 +336,26 @@ def _path_parts(url):
     return [part for part in urllib.parse.urlparse(url).path.split("/") if part]
 
 
-def fetch_web_only_description(provider, url, session):
+def fetch_web_only_description(provider, url, session, existing_job=False):
     """Fetch permitted public detail data for the explicit ingestion/web-only paths."""
     if not (WEB_ONLY_MODE or INGESTION_ENRICH_DETAILS) or not url:
         return ""
-    global WEB_ONLY_DETAIL_REQUESTS
+    global WEB_ONLY_DETAIL_REQUESTS, WEB_ONLY_DETAIL_REQUESTS_NEW, WEB_ONLY_DETAIL_REQUESTS_EXISTING
     if url in WEB_ONLY_DETAIL_CACHE:
         return WEB_ONLY_DETAIL_CACHE[url]
     provider_key = re.sub(r"[^a-z0-9]+", "_", provider.lower()).strip("_")
     detail_limit = WEB_ONLY_DETAIL_MAX_REQUESTS if WEB_ONLY_MODE else INGESTION_DETAIL_MAX_REQUESTS
     if provider_key == "hellowork":
         detail_limit = max(detail_limit, HELLOWORK_DETAIL_MAX_REQUESTS)
-    if WEB_ONLY_DETAIL_REQUESTS >= detail_limit:
-        return ""
+    if existing_job:
+        detail_limit = min(detail_limit, INGESTION_DETAIL_MAX_REQUESTS)
+        if WEB_ONLY_DETAIL_REQUESTS_EXISTING >= detail_limit:
+            return ""
+        WEB_ONLY_DETAIL_REQUESTS_EXISTING += 1
+    else:
+        if WEB_ONLY_DETAIL_REQUESTS_NEW >= detail_limit:
+            return ""
+        WEB_ONLY_DETAIL_REQUESTS_NEW += 1
     WEB_ONLY_DETAIL_REQUESTS += 1
     if WEB_ONLY_DETAIL_DELAY:
         time.sleep(WEB_ONLY_DETAIL_DELAY)
@@ -804,13 +813,18 @@ def process_job(conn, job_id, company, title, location, url, ats_source,
     global WEB_ONLY_ACCEPTED_JOBS
     if not matches_criteria(title, location, "", experience_level):
         return 0
+    already_seen = conn.execute(
+        "SELECT 1 FROM seen_jobs WHERE job_id = ?", (job_id,)
+    ).fetchone() is not None
     # Detail enrichment is additive and independently backoff-controlled. It
     # must also revisit already-seen offers, otherwise rows discovered before
     # enrichment was enabled can remain permanently without descriptions.
     should_enrich = WEB_ONLY_MODE or INGESTION_ENRICH_DETAILS
     if should_enrich and not description:
         if web_only_enrichment_due(conn, job_id, url):
-            description = fetch_web_only_description(ats_source, url, session)
+            description = fetch_web_only_description(
+                ats_source, url, session, existing_job=already_seen
+            )
             record_web_only_enrichment(conn, job_id, url, description)
         else:
             description = WEB_ONLY_DETAIL_CACHE.get(url, "")
@@ -1364,12 +1378,14 @@ def web_only_db_file():
 
 
 def run_single_scan(db_file=None, web_only=False):
-    global DB_FILE, WEB_ONLY_MODE, WEB_ONLY_DETAIL_CACHE, WEB_ONLY_DETAIL_STATS, WEB_ONLY_DETAIL_REQUESTS, WEB_ONLY_ACCEPTED_JOBS, WEB_ONLY_DETAIL_LAST_ERROR, SCAN_HAD_FAILURES
+    global DB_FILE, WEB_ONLY_MODE, WEB_ONLY_DETAIL_CACHE, WEB_ONLY_DETAIL_STATS, WEB_ONLY_DETAIL_REQUESTS, WEB_ONLY_DETAIL_REQUESTS_NEW, WEB_ONLY_DETAIL_REQUESTS_EXISTING, WEB_ONLY_ACCEPTED_JOBS, WEB_ONLY_DETAIL_LAST_ERROR, SCAN_HAD_FAILURES
     previous_db_file = DB_FILE
     previous_web_only = WEB_ONLY_MODE
     previous_detail_cache = WEB_ONLY_DETAIL_CACHE
     previous_detail_stats = WEB_ONLY_DETAIL_STATS
     previous_detail_requests = WEB_ONLY_DETAIL_REQUESTS
+    previous_detail_requests_new = WEB_ONLY_DETAIL_REQUESTS_NEW
+    previous_detail_requests_existing = WEB_ONLY_DETAIL_REQUESTS_EXISTING
     previous_accepted_jobs = WEB_ONLY_ACCEPTED_JOBS
     previous_detail_errors = WEB_ONLY_DETAIL_LAST_ERROR
     if db_file:
@@ -1378,6 +1394,8 @@ def run_single_scan(db_file=None, web_only=False):
     WEB_ONLY_DETAIL_CACHE = {}
     WEB_ONLY_DETAIL_STATS = {}
     WEB_ONLY_DETAIL_REQUESTS = 0
+    WEB_ONLY_DETAIL_REQUESTS_NEW = 0
+    WEB_ONLY_DETAIL_REQUESTS_EXISTING = 0
     WEB_ONLY_ACCEPTED_JOBS = 0
     WEB_ONLY_DETAIL_LAST_ERROR = {}
     SCAN_HAD_FAILURES = False
@@ -1428,6 +1446,8 @@ def run_single_scan(db_file=None, web_only=False):
         WEB_ONLY_DETAIL_CACHE = previous_detail_cache
         WEB_ONLY_DETAIL_STATS = previous_detail_stats
         WEB_ONLY_DETAIL_REQUESTS = previous_detail_requests
+        WEB_ONLY_DETAIL_REQUESTS_NEW = previous_detail_requests_new
+        WEB_ONLY_DETAIL_REQUESTS_EXISTING = previous_detail_requests_existing
         WEB_ONLY_ACCEPTED_JOBS = previous_accepted_jobs
         WEB_ONLY_DETAIL_LAST_ERROR = previous_detail_errors
     print(f"[COUVERTURE NON DISPONIBLE] {', '.join(UNSUPPORTED_COMPANIES)}")

@@ -13,8 +13,8 @@ export async function GET(request: Request) {
   const { data: auth } = await supabase.auth.getUser();
   const jobId = new URL(request.url).searchParams.get("jobId");
   if (!auth.user || !jobId) return NextResponse.json({ error: "Unauthorized or missing job id." }, { status: 401 });
-  const { data: queue } = await supabase.from("gemini_analysis_queue").select("id,status,attempts,next_attempt_at,last_error,updated_at").eq("user_id", auth.user.id).eq("job_id", jobId).order("updated_at", { ascending: false }).limit(1).maybeSingle();
-  const { data: analysis } = await supabase.from("job_analyses").select("id,status,score,result,error_message,updated_at").eq("user_id", auth.user.id).eq("job_id", jobId).order("updated_at", { ascending: false }).limit(1).maybeSingle();
+  const { data: queue } = await supabase.from("gemini_analysis_queue").select("id,status,attempts,next_attempt_at,last_error,updated_at").eq("user_id", auth.user.id).eq("model_id", process.env.GEMINI_MODEL || "gemini-3.5-flash-lite").eq("job_id", jobId).order("updated_at", { ascending: false }).limit(1).maybeSingle();
+  const { data: analysis } = await supabase.from("job_analyses").select("id,status,score,result,error_message,updated_at").eq("user_id", auth.user.id).eq("model_id", process.env.GEMINI_MODEL || "gemini-3.5-flash-lite").eq("job_id", jobId).order("updated_at", { ascending: false }).limit(1).maybeSingle();
   return NextResponse.json({ queue, analysis });
 }
 
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
   if (!job) return NextResponse.json({ error: "Job not found." }, { status: 404 });
   if (!cv) return NextResponse.json({ error: "Upload an active CV first." }, { status: 422 });
   if (!isDescriptionComplete(job.description)) return NextResponse.json({ status: "insufficient", error: "This job does not contain enough description text for a reliable analysis." }, { status: 422 });
-  const model = process.env.GEMINI_MODEL || "gemini-2.0-flash";
+  const model = process.env.GEMINI_MODEL || "gemini-3.5-flash-lite";
   const rubric = process.env.GEMINI_RUBRIC_VERSION || "v1";
   const inputHash = analysisInputHash(cv.content_hash, job.id, job.description!, model, rubric);
   const legacyHash = createHash("sha256").update(JSON.stringify({ cv: cv.content_hash, job: job.id, description: job.description, model, rubric })).digest("hex");

@@ -38,7 +38,7 @@ if (mockMode && !mockResponse) throw new Error("--mock requires GEMINI_MOCK_RESP
 if (!apiKey && !mockResponse) throw new Error("GEMINI_API_KEY or GEMINI_MOCK_RESPONSE is required for the Gemini worker.");
 const supabase = createClient(url, serviceRoleKey, { auth: { autoRefreshToken: false, persistSession: false } });
 const workerId = `gemini-worker-${randomUUID()}`;
-const model = process.env.GEMINI_MODEL || "gemini-2.0-flash";
+const model = process.env.GEMINI_MODEL || "gemini-3.5-flash-lite";
 const rubric = process.env.GEMINI_RUBRIC_VERSION || "v1";
 const rpm = Math.min(10, Math.max(1, Number.parseInt(process.env.GEMINI_RATE_LIMIT_RPM || "10", 10) || 10));
 const maxAttempts = Math.max(1, Number.parseInt(process.env.GEMINI_MAX_ATTEMPTS || "5", 10) || 5);
@@ -80,12 +80,12 @@ async function processTask(task) {
       return 86_400_000;
     }
   }
-  const { data: slot, error: slotError } = await supabase.rpc("reserve_gemini_api_slot", { p_api_key_scope: scope, p_limit: rpm, p_window_seconds: 60, p_queue_id: task.id });
+  const { data: slot, error: slotError } = await supabase.rpc("reserve_gemini_model_slot", { p_api_key_scope: scope, p_model_id: task.model_id, p_limit: rpm, p_window_seconds: 60, p_queue_id: task.id });
   const reservation = Array.isArray(slot) ? slot[0] : slot;
   if (slotError) { await scheduleFailure(task, "Rate limiter unavailable.", 5_000); return 0; }
   if (!reservation?.allowed) {
     const wait = Math.max(1, Number(reservation?.wait_seconds || 1));
-    const { data: cooldown } = await supabase.from("gemini_api_cooldowns").select("reason").eq("api_key_scope", scope).gt("blocked_until", new Date().toISOString()).maybeSingle();
+    const { data: cooldown } = await supabase.from("gemini_api_cooldowns").select("reason").eq("api_key_scope", `${scope}:${task.model_id}`).gt("blocked_until", new Date().toISOString()).maybeSingle();
     await supabase.from("gemini_analysis_queue").update({ status: "pending", last_error: cooldown?.reason ?? task.last_error, next_attempt_at: new Date(Date.now() + wait * 1000).toISOString(), processing_started_at: null, worker_id: null, updated_at: new Date().toISOString() }).eq("id", task.id);
     return wait * 1000;
   }
@@ -103,7 +103,7 @@ async function processTask(task) {
   if (response.status === 429) {
     const guidance = providerQuotaGuidance(await response.json().catch(() => null), response.headers.get("retry-after"));
     const blockedUntil = new Date(Date.now() + guidance.waitMs).toISOString();
-    const { error } = await supabase.rpc("defer_gemini_api_key", { p_api_key_scope: scope, p_blocked_until: blockedUntil, p_reason: guidance.reason });
+    const { error } = await supabase.rpc("defer_gemini_api_key", { p_api_key_scope: `${scope}:${task.model_id}`, p_blocked_until: blockedUntil, p_reason: guidance.reason });
     if (error) throw new Error("Unable to persist shared Gemini quota cooldown.");
     await scheduleFailure(task, guidance.reason, guidance.waitMs, false, true);
     console.warn(JSON.stringify({ event: "gemini_provider_quota", ...guidance, blocked_until: blockedUntil }));
@@ -123,7 +123,7 @@ async function processTask(task) {
 }
 
 async function runOnce() {
-  const { data: tasks, error } = await supabase.rpc("claim_gemini_analysis_tasks", { p_limit: 1, p_worker_id: workerId });
+  const { data: tasks, error } = await supabase.rpc("claim_gemini_analysis_tasks", { p_limit: 1, p_worker_id: workerId, p_model_id: model });
   if (error) throw new Error("Unable to claim Gemini queue tasks.");
   let waitMs = 0;
   for (const task of tasks || []) waitMs = Math.max(waitMs, await processTask(task));
@@ -154,7 +154,7 @@ while (!stopping && performance.now() < deadline - 35_000) {
     if (waitMs >= deadline - performance.now() - 35_000) break;
     await sleep(waitMs);
   } else if (!count && drain) {
-    const { data: next, error } = await supabase.from("gemini_analysis_queue").select("next_attempt_at").eq("status", "pending").order("next_attempt_at").limit(1).maybeSingle();
+    const { data: next, error } = await supabase.from("gemini_analysis_queue").select("next_attempt_at").eq("model_id", model).eq("status", "pending").order("next_attempt_at").limit(1).maybeSingle();
     if (error) throw new Error("Unable to inspect pending queue deadline.");
     if (!next) break;
     const wait = Math.max(1000, Date.parse(next.next_attempt_at) - Date.now());

@@ -36,7 +36,7 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.ATS_STAGING_SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.ATS_STAGING_SUPABASE_SERVICE_ROLE_KEY }}
           GEMINI_API_KEY: ${{ secrets.ATS_STAGING_GEMINI_API_KEY }}
-          GEMINI_MODEL: ${{ vars.ATS_STAGING_GEMINI_MODEL || 'gemini-2.0-flash' }}
+          GEMINI_MODEL: ${{ vars.ATS_STAGING_GEMINI_MODEL || 'gemini-3.5-flash-lite' }}
           GEMINI_RATE_LIMIT_RPM: '10'
           GEMINI_DAILY_REQUEST_BUDGET: '0'
         run: node scripts/gemini-worker.mjs --drain --max-runtime-seconds 660

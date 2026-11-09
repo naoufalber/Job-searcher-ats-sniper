@@ -59,10 +59,10 @@ export async function listJobsPage(options: JobListOptions = {}): Promise<JobPag
   const { data: activeCv } = await supabase.from("cv_documents").select("id").eq("user_id", auth.user.id).eq("is_active", true).maybeSingle();
   const applicationByJob = new Map<string, string>();
   const [{ data: analyses }, { data: statuses }, { data: seenRows }, { data: queueRows }] = await Promise.all([
-    supabase.from("job_analyses").select("job_id,status,score,result,updated_at").eq("user_id", auth.user.id).eq("cv_document_id", activeCv?.id ?? "00000000-0000-0000-0000-000000000000").in("job_id", jobs.map((job) => job.id)).order("updated_at", { ascending: false }),
+    supabase.from("job_analyses").select("job_id,status,score,result,updated_at").eq("user_id", auth.user.id).eq("model_id", process.env.GEMINI_MODEL || "gemini-3.5-flash-lite").eq("cv_document_id", activeCv?.id ?? "00000000-0000-0000-0000-000000000000").in("job_id", jobs.map((job) => job.id)).order("updated_at", { ascending: false }),
     supabase.from("user_job_status").select("job_id,application_status").eq("user_id", auth.user.id).in("job_id", jobs.map((job) => job.id)),
     supabase.from("user_job_seen").select("job_id,seen_at").eq("user_id", auth.user.id).in("job_id", jobs.map((job) => job.id)),
-    supabase.from("gemini_analysis_queue").select("job_id,status,last_error,next_attempt_at,updated_at").eq("user_id", auth.user.id).eq("cv_document_id", activeCv?.id ?? "00000000-0000-0000-0000-000000000000").in("job_id", jobs.map((job) => job.id)).order("updated_at", { ascending: false }),
+    supabase.from("gemini_analysis_queue").select("job_id,status,last_error,next_attempt_at,updated_at").eq("user_id", auth.user.id).eq("model_id", process.env.GEMINI_MODEL || "gemini-3.5-flash-lite").eq("cv_document_id", activeCv?.id ?? "00000000-0000-0000-0000-000000000000").in("job_id", jobs.map((job) => job.id)).order("updated_at", { ascending: false }),
   ]);
   for (const row of queueRows ?? []) if (!queueByJob.has(row.job_id)) queueByJob.set(row.job_id, row);
   for (const analysis of analyses ?? []) if (!analysisByJob.has(analysis.job_id as string)) analysisByJob.set(analysis.job_id as string, { status: analysis.status as "pending" | "completed" | "failed", score: analysis.score as number | null, result: (analysis.result ?? {}) as Record<string, unknown> });
@@ -75,7 +75,7 @@ export async function listJobsPage(options: JobListOptions = {}): Promise<JobPag
 export async function getMatchingProviderStatus() {
   const supabase = createClient();
   if (!supabase) return null;
-  const { data, error } = await supabase.rpc("matching_provider_status").maybeSingle();
+  const { data, error } = await supabase.rpc("matching_provider_status", { p_model_id: process.env.GEMINI_MODEL || "gemini-3.5-flash-lite" }).maybeSingle();
   if (error) console.error("Unable to read matching provider status", { code: error.code });
   return data as { blocked_until: string; reason: string } | null;
 }

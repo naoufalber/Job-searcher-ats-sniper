@@ -66,7 +66,7 @@ export async function POST(request: Request) {
   await admin.rpc("record_staging_collector_state", { p_source: job.source, p_external_job_id: job.external_job_id, p_job_id: result.result_job_id, p_canonical_url: job.canonical_url, p_status: complete ? "complete" : "needs_description" });
   let autoMatch = "disabled";
   if (process.env.ATS_AUTO_MATCH_ENABLED === "true" && complete) {
-    const model = process.env.GEMINI_MODEL || "gemini-2.0-flash";
+    const model = process.env.GEMINI_MODEL || "gemini-3.5-flash-lite";
     const rubric = process.env.GEMINI_RUBRIC_VERSION || "v1";
     const { data: queued, error } = await admin.rpc("enqueue_matching_for_job", { p_job_id: result.result_job_id, p_model_id: model, p_rubric_version: rubric });
     if (error) {

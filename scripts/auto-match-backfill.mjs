@@ -9,7 +9,7 @@ const userId = process.env.ATS_AUTO_MATCH_USER_ID;
 const limit = Math.min(Math.max(Number.parseInt(process.env.ATS_AUTO_MATCH_BACKFILL_LIMIT || "5", 10) || 5, 1), 5);
 if (!url || !key || !userId) throw new Error("NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY and ATS_AUTO_MATCH_USER_ID are required.");
 const supabase = createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } });
-const model = process.env.GEMINI_MODEL || "gemini-2.0-flash";
+const model = process.env.GEMINI_MODEL || "gemini-3.5-flash-lite";
 const rubric = process.env.GEMINI_RUBRIC_VERSION || "v1";
 const relevant = /data|machine learning|ai|mlops|scientist|engineer/i;
 const excluded = /intern|stage|stagiaire|senior|director|head of/i;

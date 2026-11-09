@@ -38,5 +38,5 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.ATS_STAGING_GEMINI_API_KEY }}
           GEMINI_MODEL: ${{ vars.ATS_STAGING_GEMINI_MODEL || 'gemini-3.5-flash-lite' }}
           GEMINI_RATE_LIMIT_RPM: '10'
-          GEMINI_DAILY_REQUEST_BUDGET: '0'
+          # PostgreSQL enforces 450 attempts/day across keys and workers.
         run: node scripts/gemini-worker.mjs --drain --max-runtime-seconds 660
